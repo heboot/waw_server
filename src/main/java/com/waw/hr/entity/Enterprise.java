@@ -1,5 +1,8 @@
 package com.waw.hr.entity;
 
+/**
+ * 企业类
+ */
 public class Enterprise {
 
     //主键

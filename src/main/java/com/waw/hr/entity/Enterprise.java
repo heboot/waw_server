@@ -1,24 +1,79 @@
 package com.waw.hr.entity;
 
+import java.util.Date;
+
 /**
- * 企业类
+ * 企业类Enterprise
  */
 public class Enterprise {
+
+    /**
+     * 无参构造
+     */
+    public Enterprise() {
+    }
+
+    /**
+     * 有参构造
+     */
+    public Enterprise(Integer id, String name, String salary, String salaryDate, String salaryBasic, String salaryInfo, String eatInfo, String dormInfo, String trafficInfo, String age, String icon, String tip, String info, String contractualInfo, String contractualSalary, String contractualInsurance, String jobContent, String jobInfo, String jobEnvironment, String physicalInfo, String idCardInfo, String diplomaInfo, String photoInfo, String employIdCardInfo, String employDiplomaInfo, String employSexAageInfo, String employTattoo, String employSmoke, String employReturnInfo, String employEnglish, String employArithmetic, String employFace, String employClearGarment, String employPhysical, String employForeign, String address, String lat, String lng, Date gmtCreate, Date gmtModified) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.salaryDate = salaryDate;
+        this.salaryBasic = salaryBasic;
+        this.salaryInfo = salaryInfo;
+        this.eatInfo = eatInfo;
+        this.dormInfo = dormInfo;
+        this.trafficInfo = trafficInfo;
+        this.age = age;
+        this.icon = icon;
+        this.tip = tip;
+        this.info = info;
+        this.contractualInfo = contractualInfo;
+        this.contractualSalary = contractualSalary;
+        this.contractualInsurance = contractualInsurance;
+        this.jobContent = jobContent;
+        this.jobInfo = jobInfo;
+        this.jobEnvironment = jobEnvironment;
+        this.physicalInfo = physicalInfo;
+        this.idCardInfo = idCardInfo;
+        this.diplomaInfo = diplomaInfo;
+        this.photoInfo = photoInfo;
+        this.employIdCardInfo = employIdCardInfo;
+        this.employDiplomaInfo = employDiplomaInfo;
+        this.employSexAageInfo = employSexAageInfo;
+        this.employTattoo = employTattoo;
+        this.employSmoke = employSmoke;
+        this.employReturnInfo = employReturnInfo;
+        this.employEnglish = employEnglish;
+        this.employArithmetic = employArithmetic;
+        this.employFace = employFace;
+        this.employClearGarment = employClearGarment;
+        this.employPhysical = employPhysical;
+        this.employForeign = employForeign;
+        this.address = address;
+        this.lat = lat;
+        this.lng = lng;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
+    }
+
 
     //主键
     private Integer id;
 
     //企业名称
-    private  String name;
+    private String name;
 
     //综合薪资 比如3000-4500元
-    private Double salary;
+    private String salary;
 
     //发薪日 比如 每月5日
     private String salaryDate;
 
     //底薪 比如2020元/月
-    private  Double salaryBasic;
+    private String salaryBasic;
 
     //薪资介绍 比如 加班费 1940元计算，1.5倍 2倍
     private String salaryInfo;
@@ -33,10 +88,10 @@ public class Enterprise {
     private String trafficInfo;
 
     //年龄要求 比如男：19-35岁 女18-40岁
-    private  String age;
+    private String age;
 
     //小图标
-    private  String icon;
+    private String icon;
 
     //温馨提示
     private String tip;
@@ -51,7 +106,7 @@ public class Enterprise {
     private String contractualSalary;
 
     //合同中关于保险部分的说明
-    private  String contractualInsurance;
+    private String contractualInsurance;
 
     //工作内容
     private String jobContent;
@@ -60,7 +115,7 @@ public class Enterprise {
     private String jobInfo;
 
     //工作环境
-    private  String jobEnvironment;
+    private String jobEnvironment;
 
     //体检说明
     private String physicalInfo;
@@ -120,6 +175,10 @@ public class Enterprise {
     private String lng;
 
 
+    private Date gmtCreate;
+    private Date gmtModified;
+
+
     public Integer getId() {
         return id;
     }
@@ -136,11 +195,11 @@ public class Enterprise {
         this.name = name;
     }
 
-    public Double getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
@@ -152,11 +211,11 @@ public class Enterprise {
         this.salaryDate = salaryDate;
     }
 
-    public Double getSalaryBasic() {
+    public String getSalaryBasic() {
         return salaryBasic;
     }
 
-    public void setSalaryBasic(Double salaryBasic) {
+    public void setSalaryBasic(String salaryBasic) {
         this.salaryBasic = salaryBasic;
     }
 
@@ -423,4 +482,21 @@ public class Enterprise {
     public void setLng(String lng) {
         this.lng = lng;
     }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
 }

@@ -20,7 +20,7 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
 
     @Override
     public List<Enterprise> getAllEnterprise() {
-        return enterpriseMapper.getEnterpriseList();
+        return enterpriseMapper.getAllEnterprise();
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EnterpriseMapper extends Mapper<Enterprise> {
 
-    List<Enterprise> getEnterpriseList();
+    List<Enterprise> getAllEnterprise();
 
     Enterprise getEnterpriseInfoById(Integer id);
 

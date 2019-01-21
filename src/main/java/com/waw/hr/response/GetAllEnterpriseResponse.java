@@ -16,7 +16,7 @@ public class GetAllEnterpriseResponse extends BaseResponse {
         this.list = list;
     }
 
-    public GetAllEnterpriseResponse(int page, int size, int totalPage, List<Enterprise> data) {
+    public GetAllEnterpriseResponse(int page, int size, int totalPage, List<Enterprise> list) {
         this.page = page;
         this.size = size;
         this.totalPage = totalPage;

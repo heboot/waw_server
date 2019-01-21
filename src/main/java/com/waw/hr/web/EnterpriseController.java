@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 
 
 @RequestMapping("/enterprise")
-public class TbEnterpriseController {
+public class EnterpriseController {
 
     @Resource
     private EnterpriseService enterpriseService;

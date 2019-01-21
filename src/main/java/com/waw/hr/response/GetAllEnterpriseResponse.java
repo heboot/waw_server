@@ -6,20 +6,20 @@ import java.util.List;
 
 public class GetAllEnterpriseResponse extends BaseResponse {
 
-    private List<Enterprise> data;
+    private List<Enterprise> list;
 
-    public List<Enterprise> getData() {
-        return data;
+    public List<Enterprise> getList() {
+        return list;
     }
 
-    public void setData(List<Enterprise> data) {
-        this.data = data;
+    public void setList(List<Enterprise> list) {
+        this.list = list;
     }
 
     public GetAllEnterpriseResponse(int page, int size, int totalPage, List<Enterprise> data) {
         this.page = page;
         this.size = size;
         this.totalPage = totalPage;
-        this.data = data;
+        this.list = list;
     }
 }

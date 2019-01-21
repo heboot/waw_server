@@ -1,9 +1,15 @@
 package com.waw.hr.service;
 
-import com.waw.hr.core.AbstractService;
+import com.waw.hr.entity.Enterprise;
 
-public interface EnterpriseService{
+import java.util.List;
 
+public interface EnterpriseService {
 
+    List<Enterprise> getAllEnterprise();
+
+    int updateEnterpriseById(Enterprise enterprise);
+
+    int addEnterprise(Enterprise enterprise);
 
 }

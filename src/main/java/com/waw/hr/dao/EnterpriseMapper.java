@@ -13,5 +13,7 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
 
     Enterprise getEnterpriseInfoByName(String name);
 
+    int updateEnterpriseById(Enterprise enterprise);
 
+    int addEnterprise(Enterprise enterprise);
 }

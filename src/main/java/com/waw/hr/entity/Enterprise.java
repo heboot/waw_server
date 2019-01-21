@@ -1,10 +1,12 @@
 package com.waw.hr.entity;
 
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
  * 企业类Enterprise
  */
+@Table(name = "tb_enterprise")
 public class Enterprise {
 
     /**

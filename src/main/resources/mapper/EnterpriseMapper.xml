@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waw.hr.dao.EnterpriseMapper">
+
+    <!--查询所有的企业信息-->
+    <select id="getAllEnterprise" resultType="com.waw.hr.entity.Enterprise">
+        <!-- 写出sql语句 -->
+        select * from tb_enterprise
+    </select>
+
+
+    <!--插入一条企业信息-->
+    <insert id="addEnterprise" parameterType="com.waw.hr.entity.Enterprise">
+    </insert>
+
+    <update id="updateEnterpriseById" parameterType="com.waw.hr.entity.Enterprise">
+    </update>
+
+</mapper>

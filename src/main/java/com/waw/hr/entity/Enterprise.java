@@ -18,7 +18,18 @@ public class Enterprise {
     /**
      * 有参构造
      */
-    public Enterprise(Integer id, String name, String salary, String salaryDate, String salaryBasic, String salaryInfo, String eatInfo, String dormInfo, String trafficInfo, String age, String icon, String tip, String info, String contractualInfo, String contractualSalary, String contractualInsurance, String jobContent, String jobInfo, String jobEnvironment, String physicalInfo, String idCardInfo, String diplomaInfo, String photoInfo, String employIdCardInfo, String employDiplomaInfo, String employSexAageInfo, String employTattoo, String employSmoke, String employReturnInfo, String employEnglish, String employArithmetic, String employFace, String employClearGarment, String employPhysical, String employForeign, String address, String lat, String lng, Date gmtCreate, Date gmtModified) {
+    public Enterprise(Integer id, String name, String salary,String salaryDate, String salaryBasic,
+                      String salaryInfo, String eatInfo,String dormInfo,
+                      String trafficInfo,String age, String icon,
+                      String tip, String info,String contractualInfo,
+                      String contractualSalary,String contractualInsurance, String jobContent,
+                      String jobInfo, String jobEnvironment,String physicalInfo,
+                      String idCardInfo, String diplomaInfo,String photoInfo,
+                      String employIdCardInfo, String employDiplomaInfo,String employSexAageInfo,
+                      String employTattoo, String employSmoke,String employReturnInfo,
+                      String employEnglish, String employArithmetic,String employFace,
+                      String employClearGarment, String employPhysical,String employForeign,
+                      String address,String lat, String lng,Date gmtCreate, Date gmtModified,Integer isDeleted) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -59,6 +70,7 @@ public class Enterprise {
         this.lng = lng;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
+        this.isDeleted = isDeleted;
     }
 
 
@@ -179,6 +191,10 @@ public class Enterprise {
 
     private Date gmtCreate;
     private Date gmtModified;
+
+    private Integer isDeleted;
+
+
 
 
     public Integer getId() {
@@ -501,4 +517,11 @@ public class Enterprise {
         this.gmtModified = gmtModified;
     }
 
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 }

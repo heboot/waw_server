@@ -4,98 +4,109 @@
 <mapper namespace="com.waw.hr.dao.EnterpriseMapper">
 
 
-
     <!--查询所有的企业信息-->
     <select id="getAllEnterprise" resultType="com.waw.hr.entity.Enterprise">
-        <!-- 写出sql语句 -->
-        select * from tb_enterprise
+        select * from `tb_enterprise`
     </select>
 
+    <!--根据企业ID查询某个企业-->
+    <select id="getEnterpriseById" resultType="com.waw.hr.entity.Enterprise">
+        select * from `tb_enterprise` where `id` = #{id}
+    </select>
+
+    <!--根据企业名模糊查询企业集合-->
+    <select id="getEnterpriseByName" resultType="com.waw.hr.entity.Enterprise">
+        select * from `tb_enterprise` where `name` like CONCAT('%',#{name},'%');
+    </select>
 
     <!--插入一条企业信息-->
     <insert id="addEnterprise">
-              INSERT INTO `waw_hr`.`tb_enterprise` (
-                    `name`,
-                    `salary`,
-                    `salary_date`,
-                    `salary_basic`,
-                    `salary_info`,
-                    `eat_info`,
-                    `dorm_info`,
-                    `traffic_info`,
-                    `age`,
-                    `icon`,
-                    `tip`,
-                    `info`,
-                    `contractual_info`,
-                    `contractual_salary`,
-                    `contractual_insurance`,
-                    `job_content`,
-                    `job_environment`,
-                    `physical_info`,
-                    `id_card_info`,
-                    `diploma_info`,
-                    `photo_info`,
-                    `employ_id_card_info`,
-                    `employ_diploma_info`,
-                    `employ_sex_age_info`,
-                    `employ_tattoo`,
-                    `employ_smoke`,
-                    `employ_return_info`,
-                    `employ_english`,
-                    `employ_arithmetic`,
-                    `employ_face`,
-                    `employ_clear_garment`,
-                    `employ_physical`,
-                    `employ_foreign`,
-                    `address`,
-                    `lat`,
-                    `lng`,
-                    `gmt_create`
-              )VALUES(
-                    #{name},
-                    #{salary},
-                    #{salary_date},
-                    #{salary_basic},
-                    #{salary_info},
-                    #{eat_info},
-                    #{dorm_info},
-                    #{traffic_info},
-                    #{age},
-                    #{icon},
-                    #{tip},
-                    #{info},
-                    #{contractual_info},
-                    #{contractual_salary},
-                    #{contractual_insurance},
-                    #{job_content},
-                    #{job_environment},
-                    #{physical_info},
-                    #{id_card_info},
-                    #{diploma_info},
-                    #{photo_info},
-                    #{employ_id_card_info},
-                    #{employ_diploma_info},
-                    #{employ_sex_age_info},
-                    #{employ_tattoo},
-                    #{employ_smoke},
-                    #{employ_return_info},
-                    #{employ_english},
-                    #{employ_arithmetic},
-                    #{employ_face},
-                    #{employ_clear_garment},
-                    #{employ_physical},
-                    #{employ_foreign},
-                    #{address},
-                    #{lat},
-                    #{lng},
-                    #{gmt_create}
-              );
+          INSERT INTO `waw_hr`.`tb_enterprise` (
+                `name`,
+                `salary`,
+                `salary_date`,
+                `salary_basic`,
+                `salary_info`,
+                `eat_info`,
+                `dorm_info`,
+                `traffic_info`,
+                `age`,
+                `icon`,
+                `tip`,
+                `info`,
+                `contractual_info`,
+                `contractual_salary`,
+                `contractual_insurance`,
+                `job_content`,
+                `job_environment`,
+                `physical_info`,
+                `id_card_info`,
+                `diploma_info`,
+                `photo_info`,
+                `employ_id_card_info`,
+                `employ_diploma_info`,
+                `employ_sex_age_info`,
+                `employ_tattoo`,
+                `employ_smoke`,
+                `employ_return_info`,
+                `employ_english`,
+                `employ_arithmetic`,
+                `employ_face`,
+                `employ_clear_garment`,
+                `employ_physical`,
+                `employ_foreign`,
+                `address`,
+                `lat`,
+                `lng`,
+                `gmt_create`,
+                `gmt_modified`,
+                `is_deleted`
+          )VALUES(
+                #{name},
+                #{salary},
+                #{salaryDate},
+                #{salaryBasic},
+                #{salaryInfo},
+                #{eatInfo},
+                #{dormInfo},
+                #{trafficInfo},
+                #{age},
+                #{icon},
+                #{tip},
+                #{info},
+                #{contractualInfo},
+                #{contractualSalary},
+                #{contractualInsurance},
+                #{jobContent},
+                #{jobEnvironment},
+                #{physicalInfo},
+                #{idCardInfo},
+                #{diplomaInfo},
+                #{photoInfo},
+                #{employIdCardInfo},
+                #{employDiplomaInfo},
+                #{employSexAgeInfo},
+                #{employTattoo},
+                #{employSmoke},
+                #{employReturnInfo},
+                #{employEnglish},
+                #{employArithmetic},
+                #{employFace},
+                #{employClearGarment},
+                #{employPhysical},
+                #{employForeign},
+                #{address},
+                #{lat},
+                #{lng},
+                #{gmtCreate},
+                #{gmtModified},
+                #{isDeleted}
+          );
 
     </insert>
 
     <!--更新企业信息-->
-    <update id="updateEnterpriseById">
+    <update id="updateEnterprise">
 
     UPDATE `waw_hr`.`tb_enterprise`
         SET
@@ -105,52 +116,42 @@
         <if test="salaryBasic!=null and salaryBasic!=''">`salary_basic` = #{salaryBasic},</if>
         <if test="salaryInfo!=null and salaryInfo!=''">`salary_info` = #{salaryInfo},</if>
         <if test="eatInfo!=null and eatInfo!=''">`eat_info` = #{eatInfo},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-        <if test="name!=null and name!=''">`name` = #{name},</if>
-            `eat_info` = 'eat_info' ,
-            `dorm_info` = 'dorm_info' ,
-            `traffic_info` = 'traffic_info' ,
-            `age` = 'age' ,
-            `icon` = 'icon' ,
-            `tip` = 'tip' ,
-            `info` = 'info' ,
-            `contractual_info` = 'contractual_info' ,
-            `contractual_salary` = 'contractual_salary' ,
-            `contractual_insurance` = 'contractual_insurance' ,
-            `job_content` = 'job_content' ,
-            `job_environment` = 'job_environment' ,
-            `physical_info` = 'physical_info' ,
-            `id_card_info` = 'id_card_info' ,
-            `diploma_info` = 'diploma_info' ,
-            `photo_info` = 'photo_info' ,
-            `employ_id_card_info` = 'employ_id_card_info' ,
-            `employ_diploma_info` = 'employ_diploma_info' ,
-            `employ_sex_age_info` = 'employ_sex_age_info' ,
-            `employ_tattoo` = 'employ_tattoo' ,
-            `employ_smoke` = 'employ_smoke' ,
-            `employ_return_info` = 'employ_return_info' ,
-            `employ_english` = 'employ_english' ,
-            `employ_arithmetic` = 'employ_arithmetic' ,
-            `employ_face` = 'employ_face' ,
-            `employ_clear_garment` = 'employ_clear_garment' ,
-            `employ_physical` = 'employ_physical' ,
-            `employ_foreign` = 'employ_foreign' ,
-            `address` = 'address' ,
-            `lat` = 'lat' ,
-            `lng` = 'lng' ,
-            `gmt_modified` = 'gmt_modified'
+        <if test="dormInfo!=null and dormInfo!=''">`dorm_info` = #{dormInfo},</if>
+        <if test="trafficInfo!=null and trafficInfo!=''">`traffic_info` = #{trafficInfo},</if>
+        <if test="age!=null and age!=''">`age` = #{age},</if>
+        <if test="icon!=null and icon!=''">`icon` = #{icon},</if>
+        <if test="tip!=null and tip!=''">`tip` = #{tip},</if>
+        <if test="info!=null and info!=''">`info` = #{info},</if>
+        <if test="contractualInfo!=null and contractualInfo!=''">`contractual_info` = #{contractualInfo},</if>
+        <if test="contractualSalary!=null and contractualSalary!=''">`contractual_salary` = #{contractualSalary},</if>
+        <if test="contractualInsurance!=null and contractualInsurance!=''">`contractual_insurance` = #{contractualInsurance},</if>
+        <if test="jobContent!=null and jobContent!=''">`job_content` = #{jobContent},</if>
+        <if test="jobInfo!=null and jobInfo!=''">`job_info` = #{jobInfo},</if>
+        <if test="jobEnvironment!=null and jobEnvironment!=''">`job_environment` = #{jobEnvironment},</if>
+        <if test="physicalInfo!=null and physicalInfo!=''">`physical_info` = #{physicalInfo},</if>
+        <if test="idCardInfo!=null and idCardInfo!=''">`id_card_info` = #{id_cardInfo},</if>
+        <if test="diplomaInfo!=null and diplomaInfo!=''">`diploma_info` = #{diplomaInfo},</if>
+        <if test="photoInfo!=null and photoInfo!=''">`photo_info` = #{photoInfo},</if>
+        <if test="employIdCardInfo!=null and employIdCardInfo!=''">`employ_id_card_info` = #{employIdCardInfo},</if>
+        <if test="employDiplomaInfo!=null and employDiplomaInfo!=''">`employ_diploma_info` = #{employDiplomaInfo},</if>
+        <if test="employSexAgeInfo!=null and employSexAgeInfo!=''">`employ_sex_age_info` = #{employSexAgeInfo},</if>
+        <if test="employTattoo!=null and employTattoo!=''">`employ_tattoo` = #{employTattoo},</if>
+        <if test="employSmoke!=null and employSmoke!=''">`employ_smoke` = #{employSmoke},</if>
+        <if test="employReturnInfo!=null and employReturnInfo!=''">`employ_return_info` = #{employReturnInfo},</if>
+        <if test="employEnglish!=null and employEnglish!=''">`employ_english` = #{employEnglish},</if>
+        <if test="employArithmetic!=null and employArithmetic!=''">`employ_arithmetic` = #{employArithmetic},</if>
+        <if test="employFace!=null and employFace!=''">`employ_face` = #{employFace},</if>
+        <if test="employClearGarment!=null and employClearGarment!=''">`employ_clear_garment` = #{employClearGarment},</if>
+        <if test="employPhysical!=null and employPhysical!=''">`employ_physical` = #{employPhysical},</if>
+        <if test="employForeign!=null and employForeign!=''">`employ_foreign` = #{employForeign},</if>
+        <if test="address!=null and address!=''">`address` = #{address},</if>
+        <if test="lat!=null and lat!=''">`lat` = #{lat},</if>
+        <if test="lng!=null and lng!=''">`lng` = #{lng},</if>
+        <if test="gmtCreate!=null and gmtCreate!=''">`gmt_create` = #{gmtCreate},</if>
+        <if test="gmtModified!=null and gmtModified!=''">`gmt_modified` = #{gmtModified}</if>
+        <if test="isDeleted!=null and isDeleted!=''">`is_deleted` = #{isDeleted}</if>
         WHERE
             `id` = #{id} ;
-
     </update>
 
 

@@ -2,6 +2,7 @@ package com.waw.hr.dao;
 
 import com.waw.hr.core.Mapper;
 import com.waw.hr.entity.Enterprise;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,11 +10,12 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
 
     List<Enterprise> getAllEnterprise();
 
-    Enterprise getEnterpriseInfoById(Integer id);
+    Enterprise getEnterpriseById(@Param("id") Integer id);
 
-    Enterprise getEnterpriseInfoByName(String name);
+    Enterprise getEnterpriseByName(@Param("name") String name);
 
-    int updateEnterpriseById(Enterprise enterprise);
+    Integer updateEnterprise(Enterprise enterprise);
 
-    int addEnterprise(Enterprise enterprise);
+    Integer addEnterprise(Enterprise enterprise);
+
 }

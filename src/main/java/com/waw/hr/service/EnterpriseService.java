@@ -8,8 +8,13 @@ public interface EnterpriseService {
 
     List<Enterprise> getAllEnterprise();
 
-    int updateEnterpriseById(Enterprise enterprise);
+    List<Enterprise> getEnterpriseByName(String name);
 
-    int addEnterprise(Enterprise enterprise);
+    Enterprise getEnterpriseById(Integer id);
+
+    Integer updateEnterprise(Enterprise enterprise);
+
+    Integer addEnterprise(Enterprise enterprise);
+
 
 }

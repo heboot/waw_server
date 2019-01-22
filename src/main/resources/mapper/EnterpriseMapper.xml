@@ -3,6 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.waw.hr.dao.EnterpriseMapper">
 
+
+
     <!--查询所有的企业信息-->
     <select id="getAllEnterprise" resultType="com.waw.hr.entity.Enterprise">
         <!-- 写出sql语句 -->
@@ -11,10 +13,146 @@
 
 
     <!--插入一条企业信息-->
-    <insert id="addEnterprise" parameterType="com.waw.hr.entity.Enterprise">
+    <insert id="addEnterprise">
+              INSERT INTO `waw_hr`.`tb_enterprise` (
+                    `name`,
+                    `salary`,
+                    `salary_date`,
+                    `salary_basic`,
+                    `salary_info`,
+                    `eat_info`,
+                    `dorm_info`,
+                    `traffic_info`,
+                    `age`,
+                    `icon`,
+                    `tip`,
+                    `info`,
+                    `contractual_info`,
+                    `contractual_salary`,
+                    `contractual_insurance`,
+                    `job_content`,
+                    `job_environment`,
+                    `physical_info`,
+                    `id_card_info`,
+                    `diploma_info`,
+                    `photo_info`,
+                    `employ_id_card_info`,
+                    `employ_diploma_info`,
+                    `employ_sex_age_info`,
+                    `employ_tattoo`,
+                    `employ_smoke`,
+                    `employ_return_info`,
+                    `employ_english`,
+                    `employ_arithmetic`,
+                    `employ_face`,
+                    `employ_clear_garment`,
+                    `employ_physical`,
+                    `employ_foreign`,
+                    `address`,
+                    `lat`,
+                    `lng`,
+                    `gmt_create`
+              )VALUES(
+                    #{name},
+                    #{salary},
+                    #{salary_date},
+                    #{salary_basic},
+                    #{salary_info},
+                    #{eat_info},
+                    #{dorm_info},
+                    #{traffic_info},
+                    #{age},
+                    #{icon},
+                    #{tip},
+                    #{info},
+                    #{contractual_info},
+                    #{contractual_salary},
+                    #{contractual_insurance},
+                    #{job_content},
+                    #{job_environment},
+                    #{physical_info},
+                    #{id_card_info},
+                    #{diploma_info},
+                    #{photo_info},
+                    #{employ_id_card_info},
+                    #{employ_diploma_info},
+                    #{employ_sex_age_info},
+                    #{employ_tattoo},
+                    #{employ_smoke},
+                    #{employ_return_info},
+                    #{employ_english},
+                    #{employ_arithmetic},
+                    #{employ_face},
+                    #{employ_clear_garment},
+                    #{employ_physical},
+                    #{employ_foreign},
+                    #{address},
+                    #{lat},
+                    #{lng},
+                    #{gmt_create}
+              );
+
     </insert>
 
-    <update id="updateEnterpriseById" parameterType="com.waw.hr.entity.Enterprise">
+    <!--更新企业信息-->
+    <update id="updateEnterpriseById">
+
+    UPDATE `waw_hr`.`tb_enterprise`
+        SET
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="salary!=null and salary!=''">`salary` = #{salary},</if>
+        <if test="salaryDate!=null and salaryDate!=''">`salary_date` = #{salaryDate},</if>
+        <if test="salaryBasic!=null and salaryBasic!=''">`salary_basic` = #{salaryBasic},</if>
+        <if test="salaryInfo!=null and salaryInfo!=''">`salary_info` = #{salaryInfo},</if>
+        <if test="eatInfo!=null and eatInfo!=''">`eat_info` = #{eatInfo},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+        <if test="name!=null and name!=''">`name` = #{name},</if>
+            `eat_info` = 'eat_info' ,
+            `dorm_info` = 'dorm_info' ,
+            `traffic_info` = 'traffic_info' ,
+            `age` = 'age' ,
+            `icon` = 'icon' ,
+            `tip` = 'tip' ,
+            `info` = 'info' ,
+            `contractual_info` = 'contractual_info' ,
+            `contractual_salary` = 'contractual_salary' ,
+            `contractual_insurance` = 'contractual_insurance' ,
+            `job_content` = 'job_content' ,
+            `job_environment` = 'job_environment' ,
+            `physical_info` = 'physical_info' ,
+            `id_card_info` = 'id_card_info' ,
+            `diploma_info` = 'diploma_info' ,
+            `photo_info` = 'photo_info' ,
+            `employ_id_card_info` = 'employ_id_card_info' ,
+            `employ_diploma_info` = 'employ_diploma_info' ,
+            `employ_sex_age_info` = 'employ_sex_age_info' ,
+            `employ_tattoo` = 'employ_tattoo' ,
+            `employ_smoke` = 'employ_smoke' ,
+            `employ_return_info` = 'employ_return_info' ,
+            `employ_english` = 'employ_english' ,
+            `employ_arithmetic` = 'employ_arithmetic' ,
+            `employ_face` = 'employ_face' ,
+            `employ_clear_garment` = 'employ_clear_garment' ,
+            `employ_physical` = 'employ_physical' ,
+            `employ_foreign` = 'employ_foreign' ,
+            `address` = 'address' ,
+            `lat` = 'lat' ,
+            `lng` = 'lng' ,
+            `gmt_modified` = 'gmt_modified'
+        WHERE
+            `id` = #{id} ;
+
     </update>
+
+
 
 </mapper>

@@ -25,7 +25,7 @@ public class Enterprise {
                       String contractualSalary,String contractualInsurance, String jobContent,
                       String jobInfo, String jobEnvironment,String physicalInfo,
                       String idCardInfo, String diplomaInfo,String photoInfo,
-                      String employIdCardInfo, String employDiplomaInfo,String employSexAageInfo,
+                      String employIdCardInfo, String employDiplomaInfo,String employSexAgeInfo,
                       String employTattoo, String employSmoke,String employReturnInfo,
                       String employEnglish, String employArithmetic,String employFace,
                       String employClearGarment, String employPhysical,String employForeign,
@@ -55,7 +55,7 @@ public class Enterprise {
         this.photoInfo = photoInfo;
         this.employIdCardInfo = employIdCardInfo;
         this.employDiplomaInfo = employDiplomaInfo;
-        this.employSexAageInfo = employSexAageInfo;
+        this.employSexAgeInfo = employSexAgeInfo;
         this.employTattoo = employTattoo;
         this.employSmoke = employSmoke;
         this.employReturnInfo = employReturnInfo;
@@ -150,7 +150,7 @@ public class Enterprise {
     private String employDiplomaInfo;
 
     //性别年龄信息
-    private String employSexAageInfo;
+    private String employSexAgeInfo;
 
     //纹身
     private String employTattoo;
@@ -188,14 +188,10 @@ public class Enterprise {
     //企业地址经度
     private String lng;
 
-
+    //必备字段
     private Date gmtCreate;
     private Date gmtModified;
-
     private Integer isDeleted;
-
-
-
 
     public Integer getId() {
         return id;
@@ -397,12 +393,12 @@ public class Enterprise {
         this.employDiplomaInfo = employDiplomaInfo;
     }
 
-    public String getEmploySexAageInfo() {
-        return employSexAageInfo;
+    public String getEmploySexAgeInfo() {
+        return employSexAgeInfo;
     }
 
-    public void setEmploySexAageInfo(String employSexAageInfo) {
-        this.employSexAageInfo = employSexAageInfo;
+    public void setEmploySexAgeInfo(String employSexAgeInfo) {
+        this.employSexAgeInfo = employSexAgeInfo;
     }
 
     public String getEmployTattoo() {

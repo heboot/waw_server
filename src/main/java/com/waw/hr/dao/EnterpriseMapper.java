@@ -10,12 +10,13 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
 
     List<Enterprise> getAllEnterprise();
 
-    Enterprise getEnterpriseById(@Param("id") Integer id);
+    List<Enterprise> getEnterpriseByName(@Param("name") String name);
 
-    Enterprise getEnterpriseByName(@Param("name") String name);
+    Enterprise getEnterpriseById(@Param("id") Integer id);
 
     Integer updateEnterprise(Enterprise enterprise);
 
     Integer addEnterprise(Enterprise enterprise);
 
+    Integer removeEnterprise(@Param("id") Integer id);
 }

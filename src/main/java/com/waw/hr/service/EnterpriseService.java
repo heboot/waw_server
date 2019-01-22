@@ -10,11 +10,12 @@ public interface EnterpriseService {
 
     List<Enterprise> getEnterpriseByName(String name);
 
+    Integer removeEnterprise(Integer id);
+
     Enterprise getEnterpriseById(Integer id);
 
     Integer updateEnterprise(Enterprise enterprise);
 
     Integer addEnterprise(Enterprise enterprise);
-
 
 }

@@ -60,7 +60,7 @@ public class EnterpriseController {
      * @return
      */
     @PostMapping("/getEnterpriseById")
-    public Result getEnterpriseById(@RequestParam(defaultValue = "1") Integer id) {
+    public Result getEnterpriseById(@RequestParam(value = "id") Integer id) {
         Enterprise enterprise = enterpriseService.getEnterpriseById(id);
         return ResultGenerator.genSuccessResult(enterprise);
     }
@@ -87,6 +87,21 @@ public class EnterpriseController {
     @PostMapping("/addEnterprise")
     public Object addEnterprise(Enterprise enterprise, Map map) {
         Integer num = enterpriseService.addEnterprise(enterprise);
+        if(num>0){
+            map.put("result","success");
+        }else{
+            map.put("result","error");
+        }
+        return JSONArray.toJSON(map);
+    }
+
+    /**
+     * 删除企业信息
+     * @return  success表示成功   error表示失败
+     */
+    @PostMapping("/removeEnterprise")
+    public Object removeEnterprise(Integer id, Map map) {
+        Integer num = enterpriseService.removeEnterprise(id);
         if(num>0){
             map.put("result","success");
         }else{

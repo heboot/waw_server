@@ -24,12 +24,27 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
     }
 
     @Override
-    public int updateEnterpriseById(Enterprise enterprise) {
-        return enterpriseMapper.updateEnterpriseById(enterprise);
+    public List<Enterprise> getEnterpriseByName(String name) {
+        return enterpriseMapper.getEnterpriseByName(name);
     }
 
     @Override
-    public int addEnterprise(Enterprise enterprise) {
+    public Integer removeEnterprise(Integer id) {
+        return enterpriseMapper.removeEnterprise(id);
+    }
+
+    @Override
+    public Enterprise getEnterpriseById(Integer id) {
+        return enterpriseMapper.getEnterpriseById(id);
+    }
+
+    @Override
+    public Integer updateEnterprise(Enterprise enterprise) {
+        return enterpriseMapper.updateEnterprise(enterprise);
+    }
+
+    @Override
+    public Integer addEnterprise(Enterprise enterprise) {
         return enterpriseMapper.addEnterprise(enterprise);
     }
 

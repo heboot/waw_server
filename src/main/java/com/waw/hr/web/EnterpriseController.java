@@ -1,6 +1,5 @@
 package com.waw.hr.web;
 
-import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.waw.hr.core.Result;
@@ -8,18 +7,19 @@ import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.Enterprise;
 import com.waw.hr.response.GetAllEnterpriseResponse;
 import com.waw.hr.service.EnterpriseService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/enterprise")
 public class EnterpriseController {
 
@@ -32,13 +32,14 @@ public class EnterpriseController {
      * @param size 代表每页显示多少行
      * @return
      */
-    @PostMapping("/getAllEnterprise")
-    public Result getAppConfig(@RequestParam(defaultValue = "1") Integer page,
-                               @RequestParam(defaultValue = "20") Integer size) {
+    @GetMapping("/getAllEnterprise")
+    public String getAppConfig(@RequestParam(defaultValue = "1") Integer page,
+                               @RequestParam(defaultValue = "20") Integer size,Model model) {
         PageHelper.startPage(page, size);
         List<Enterprise> enterprises = enterpriseService.getAllEnterprise();
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+        model.addAttribute("enterpriseList",ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList())));
+        return "index";
     }
 
     /**

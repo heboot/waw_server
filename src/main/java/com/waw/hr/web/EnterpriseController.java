@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,14 +71,13 @@ public class EnterpriseController {
      * @return  success表示成功   error表示失败
      */
     @PostMapping("/updateEnterprise")
-    public Object updateEnterprise(Enterprise enterprise, Map map) {
+    public Result updateEnterprise(Enterprise enterprise) {
        Integer num = enterpriseService.updateEnterprise(enterprise);
        if(num>0){
-           map.put("result","success");
+           return ResultGenerator.genSuccessResult("success");
        }else{
-           map.put("result","error");
+           return ResultGenerator.genFailResult("error");
        }
-       return JSONArray.toJSON(map);
     }
 
     /**
@@ -85,14 +85,13 @@ public class EnterpriseController {
      * @return  success表示成功   error表示失败
      */
     @PostMapping("/addEnterprise")
-    public Object addEnterprise(Enterprise enterprise, Map map) {
+    public Result addEnterprise(Enterprise enterprise) {
         Integer num = enterpriseService.addEnterprise(enterprise);
         if(num>0){
-            map.put("result","success");
+            return ResultGenerator.genSuccessResult("success");
         }else{
-            map.put("result","error");
+            return ResultGenerator.genFailResult("error");
         }
-        return JSONArray.toJSON(map);
     }
 
     /**
@@ -100,14 +99,13 @@ public class EnterpriseController {
      * @return  success表示成功   error表示失败
      */
     @PostMapping("/removeEnterprise")
-    public Object removeEnterprise(Integer id, Map map) {
+    public Result removeEnterprise(Integer id) {
         Integer num = enterpriseService.removeEnterprise(id);
         if(num>0){
-            map.put("result","success");
+            return ResultGenerator.genSuccessResult("success");
         }else{
-            map.put("result","error");
+            return ResultGenerator.genFailResult("error");
         }
-        return JSONArray.toJSON(map);
     }
 
 

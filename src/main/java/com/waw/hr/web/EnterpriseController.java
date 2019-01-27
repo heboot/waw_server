@@ -9,17 +9,14 @@ import com.waw.hr.response.GetAllEnterpriseResponse;
 import com.waw.hr.service.EnterpriseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/enterprise")
 public class EnterpriseController {
 
@@ -28,29 +25,30 @@ public class EnterpriseController {
 
     /**
      * 获取所有企业
+     *
      * @param page 代表当前页数
      * @param size 代表每页显示多少行
      * @return
      */
     @GetMapping("/getAllEnterprise")
-    public String getAppConfig(@RequestParam(defaultValue = "1") Integer page,
-                               @RequestParam(defaultValue = "20") Integer size,Model model) {
+    public Result getAppConfig(@RequestParam(defaultValue = "1") Integer page,
+                               @RequestParam(defaultValue = "20") Integer size, Model model) {
         PageHelper.startPage(page, size);
         List<Enterprise> enterprises = enterpriseService.getAllEnterprise();
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        model.addAttribute("enterpriseList",ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList())));
-        return "index";
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
     /**
      * 根据模糊查询企业集合
+     *
      * @param page 代表当前页数
      * @param size 代表每页显示多少行
      * @return
      */
     @PostMapping("/getEnterpriseByName")
     public Result getEnterpriseByName(@RequestParam(defaultValue = "1") Integer page,
-                               @RequestParam(defaultValue = "20") Integer size,String name) {
+                                      @RequestParam(defaultValue = "20") Integer size, String name) {
         PageHelper.startPage(page, size);
         List<Enterprise> enterprises = enterpriseService.getEnterpriseByName(name);
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
@@ -59,6 +57,7 @@ public class EnterpriseController {
 
     /**
      * 根据企业ID获取企业信息
+     *
      * @return
      */
     @PostMapping("/getEnterpriseById")
@@ -69,47 +68,48 @@ public class EnterpriseController {
 
     /**
      * 更新企业信息
-     * @return  success表示成功   error表示失败
+     *
+     * @return success表示成功   error表示失败
      */
     @PostMapping("/updateEnterprise")
     public Result updateEnterprise(Enterprise enterprise) {
-       Integer num = enterpriseService.updateEnterprise(enterprise);
-       if(num>0){
-           return ResultGenerator.genSuccessResult("success");
-       }else{
-           return ResultGenerator.genFailResult("error");
-       }
+        Integer num = enterpriseService.updateEnterprise(enterprise);
+        if (num > 0) {
+            return ResultGenerator.genSuccessResult("success");
+        } else {
+            return ResultGenerator.genFailResult("error");
+        }
     }
 
     /**
      * 添加企业信息
-     * @return  success表示成功   error表示失败
+     *
+     * @return success表示成功   error表示失败
      */
     @PostMapping("/addEnterprise")
     public Result addEnterprise(Enterprise enterprise) {
         Integer num = enterpriseService.addEnterprise(enterprise);
-        if(num>0){
+        if (num > 0) {
             return ResultGenerator.genSuccessResult("success");
-        }else{
+        } else {
             return ResultGenerator.genFailResult("error");
         }
     }
 
     /**
      * 删除企业信息
-     * @return  success表示成功   error表示失败
+     *
+     * @return success表示成功   error表示失败
      */
     @PostMapping("/removeEnterprise")
     public Result removeEnterprise(Integer id) {
         Integer num = enterpriseService.removeEnterprise(id);
-        if(num>0){
+        if (num > 0) {
             return ResultGenerator.genSuccessResult("success");
-        }else{
+        } else {
             return ResultGenerator.genFailResult("error");
         }
     }
-
-
 
 
 }

@@ -92,7 +92,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                     }
                     logger.error(message, e);
                 }
-                responseResult(response, result);
+                logger.error(result.getMessage());
+//                responseResult(response, result);
                 return new ModelAndView();
             }
 
@@ -102,7 +103,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     //解决跨域问题
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        //registry.addMapping("/**");
+        registry.addMapping("/**");
     }
 
     //添加拦截器

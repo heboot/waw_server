@@ -8,6 +8,8 @@ public class BaseResponse {
 
     protected int totalPage;
 
+    protected String token;
+
     public int getPage() {
         return page;
     }
@@ -32,4 +34,25 @@ public class BaseResponse {
         this.totalPage = totalPage;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public BaseResponse(int page, int size, int totalPage, String token) {
+        this.page = page;
+        this.size = size;
+        this.totalPage = totalPage;
+        this.token = token;
+    }
+
+    public BaseResponse(String token) {
+        this.token = token;
+    }
+
+    public BaseResponse() {
+    }
 }

@@ -48,5 +48,10 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
         return enterpriseMapper.addEnterprise(enterprise);
     }
 
+    @Override
+    public Integer updateEnterpriseSubsidy(Integer id, Integer money, String info) {
+        return enterpriseMapper.updateEnterpriseSubsidy(id, money, info);
+    }
+
 
 }

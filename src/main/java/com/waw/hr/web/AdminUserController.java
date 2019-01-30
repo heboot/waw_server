@@ -48,10 +48,13 @@ public class AdminUserController {
         }
         AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
         ArrayList arrayList = new ArrayList();
-        if (adminUser.getRole() == 10) {
+        if (adminUser.getRole() == 10) {//管理员
             arrayList.add("admin");
             arrayList.add("editor");
+            arrayList.add("daili");
             adminUser.setRoles(arrayList);
+        } else if (adminUser.getRole() == 5) {//
+
         }
         return ResultGenerator.genSuccessResult(adminUser);
     }

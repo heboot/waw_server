@@ -15,63 +15,63 @@ public class Enterprise {
     public Enterprise() {
     }
 
-    /**
-     * 有参构造
-     */
-    public Enterprise(Integer id, String name, String salary,String salaryDate, String salaryBasic,
-                      String salaryInfo, String eatInfo,String dormInfo,
-                      String trafficInfo,String age, String icon,
-                      String tip, String info,String contractualInfo,
-                      String contractualSalary,String contractualInsurance, String jobContent,
-                      String jobInfo, String jobEnvironment,String physicalInfo,
-                      String idCardInfo, String diplomaInfo,String photoInfo,
-                      String employIdCardInfo, String employDiplomaInfo,String employSexAgeInfo,
-                      String employTattoo, String employSmoke,String employReturnInfo,
-                      String employEnglish, String employArithmetic,String employFace,
-                      String employClearGarment, String employPhysical,String employForeign,
-                      String address,String lat, String lng,Date gmtCreate, Date gmtModified,Integer isDeleted) {
-        this.id = id;
-        this.name = name;
-        this.salary = salary;
-        this.salaryDate = salaryDate;
-        this.salaryBasic = salaryBasic;
-        this.salaryInfo = salaryInfo;
-        this.eatInfo = eatInfo;
-        this.dormInfo = dormInfo;
-        this.trafficInfo = trafficInfo;
-        this.age = age;
-        this.icon = icon;
-        this.tip = tip;
-        this.info = info;
-        this.contractualInfo = contractualInfo;
-        this.contractualSalary = contractualSalary;
-        this.contractualInsurance = contractualInsurance;
-        this.jobContent = jobContent;
-        this.jobInfo = jobInfo;
-        this.jobEnvironment = jobEnvironment;
-        this.physicalInfo = physicalInfo;
-        this.idCardInfo = idCardInfo;
-        this.diplomaInfo = diplomaInfo;
-        this.photoInfo = photoInfo;
-        this.employIdCardInfo = employIdCardInfo;
-        this.employDiplomaInfo = employDiplomaInfo;
-        this.employSexAgeInfo = employSexAgeInfo;
-        this.employTattoo = employTattoo;
-        this.employSmoke = employSmoke;
-        this.employReturnInfo = employReturnInfo;
-        this.employEnglish = employEnglish;
-        this.employArithmetic = employArithmetic;
-        this.employFace = employFace;
-        this.employClearGarment = employClearGarment;
-        this.employPhysical = employPhysical;
-        this.employForeign = employForeign;
-        this.address = address;
-        this.lat = lat;
-        this.lng = lng;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
-        this.isDeleted = isDeleted;
-    }
+//    /**
+//     * 有参构造
+//     */
+//    public Enterprise(Integer id, String name, String salary, String salaryDate, String salaryBasic,
+//                      String salaryInfo, String eatInfo, String dormInfo,
+//                      String trafficInfo, String age, String icon,
+//                      String tip, String info, String contractualInfo,
+//                      String contractualSalary, String contractualInsurance, String jobContent,
+//                      String jobInfo, String jobEnvironment, String physicalInfo,
+//                      String idCardInfo, String diplomaInfo, String photoInfo,
+//                      String employIdCardInfo, String employDiplomaInfo, String employSexAgeInfo,
+//                      String employTattoo, String employSmoke, String employReturnInfo,
+//                      String employEnglish, String employArithmetic, String employFace,
+//                      String employClearGarment, String employPhysical, String employForeign,
+//                      String address, String lat, String lng, Date gmtCreate, Date gmtModified, Integer status) {
+//        this.id = id;
+//        this.name = name;
+//        this.salary = salary;
+//        this.salaryDate = salaryDate;
+//        this.salaryBasic = salaryBasic;
+//        this.salaryInfo = salaryInfo;
+//        this.eatInfo = eatInfo;
+//        this.dormInfo = dormInfo;
+//        this.trafficInfo = trafficInfo;
+//        this.age = age;
+//        this.icon = icon;
+//        this.tip = tip;
+//        this.info = info;
+//        this.contractualInfo = contractualInfo;
+//        this.contractualSalary = contractualSalary;
+//        this.contractualInsurance = contractualInsurance;
+//        this.jobContent = jobContent;
+//        this.jobInfo = jobInfo;
+//        this.jobEnvironment = jobEnvironment;
+//        this.physicalInfo = physicalInfo;
+//        this.idCardInfo = idCardInfo;
+//        this.diplomaInfo = diplomaInfo;
+//        this.photoInfo = photoInfo;
+//        this.employIdCardInfo = employIdCardInfo;
+//        this.employDiplomaInfo = employDiplomaInfo;
+//        this.employSexAgeInfo = employSexAgeInfo;
+//        this.employTattoo = employTattoo;
+//        this.employSmoke = employSmoke;
+//        this.employReturnInfo = employReturnInfo;
+//        this.employEnglish = employEnglish;
+//        this.employArithmetic = employArithmetic;
+//        this.employFace = employFace;
+//        this.employClearGarment = employClearGarment;
+//        this.employPhysical = employPhysical;
+//        this.employForeign = employForeign;
+//        this.address = address;
+//        this.lat = lat;
+//        this.lng = lng;
+//        this.gmtCreate = gmtCreate;
+//        this.gmtModified = gmtModified;
+//        this.status = status;
+//    }
 
 
     //主键
@@ -191,7 +191,30 @@ public class Enterprise {
     //必备字段
     private Date gmtCreate;
     private Date gmtModified;
-    private Integer isDeleted;
+    private Integer status;
+
+
+    //企业补贴金额
+    private Integer subsidy_money;
+
+    //企业补贴说明
+    private String subsidy_info;
+
+    public Integer getSubsidy_money() {
+        return subsidy_money;
+    }
+
+    public void setSubsidy_money(Integer subsidy_money) {
+        this.subsidy_money = subsidy_money;
+    }
+
+    public String getSubsidy_info() {
+        return subsidy_info;
+    }
+
+    public void setSubsidy_info(String subsidy_info) {
+        this.subsidy_info = subsidy_info;
+    }
 
     public Integer getId() {
         return id;
@@ -513,11 +536,11 @@ public class Enterprise {
         this.gmtModified = gmtModified;
     }
 
-    public Integer getIsDeleted() {
-        return isDeleted;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

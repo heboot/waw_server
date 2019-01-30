@@ -19,4 +19,6 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
     Integer addEnterprise(Enterprise enterprise);
 
     Integer removeEnterprise(@Param("id") Integer id);
+
+    Integer updateEnterpriseSubsidy(@Param("id") Integer id, @Param("money") Integer money, @Param("info") String info);
 }

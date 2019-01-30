@@ -18,4 +18,6 @@ public interface EnterpriseService {
 
     Integer addEnterprise(Enterprise enterprise);
 
+    Integer updateEnterpriseSubsidy(Integer id, Integer money, String info);
+
 }

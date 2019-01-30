@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
+import com.waw.hr.core.ServiceException;
 import com.waw.hr.entity.Enterprise;
 import com.waw.hr.response.GetAllEnterpriseResponse;
 import com.waw.hr.service.EnterpriseService;
@@ -108,6 +109,20 @@ public class EnterpriseController {
             return ResultGenerator.genSuccessResult("success");
         } else {
             return ResultGenerator.genFailResult("error");
+        }
+    }
+
+    @PostMapping("updateEnterpriseSubsidy")
+    public Result updateEnterpriseSubsidy(@RequestParam() Integer id, @RequestParam(required = false) Integer subsidy_money, @RequestParam(required = false) String subsidy_info) {
+        if (enterpriseService.getEnterpriseById(id) != null) {
+            Integer num = enterpriseService.updateEnterpriseSubsidy(id, subsidy_money, subsidy_info);
+            if (num != null && num > 0) {
+                return ResultGenerator.genSuccessResult();
+            } else {
+                throw new ServiceException("更新失败，请联系管理员");
+            }
+        } else {
+            throw new ServiceException("更新失败2，请联系管理员");
         }
     }
 

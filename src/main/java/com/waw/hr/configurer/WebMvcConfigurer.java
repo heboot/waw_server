@@ -92,7 +92,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                     }
                     logger.error(message, e);
                 }
-                logger.error(result.getMessage());
+//                logger.error(result.getMessage());
 //                responseResult(response, result);
                 return new ModelAndView();
             }

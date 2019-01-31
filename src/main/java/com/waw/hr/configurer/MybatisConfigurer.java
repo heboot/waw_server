@@ -42,6 +42,7 @@ public class MybatisConfigurer {
         factory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
         //****开启驼峰命名
         factory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
+
         return factory.getObject();
     }
 

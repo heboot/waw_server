@@ -6,6 +6,7 @@ import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.dao.EmployeeSignLogMapper;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.entity.EmployeeSignLog;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.service.EmployeeSignLogService;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
 
 @Service
 @Transactional
-public class EmployeeSignLogServiceImpl extends AbstractService<Employee> implements EmployeeSignLogService {
+public class EmployeeSignLogServiceImpl extends AbstractService<EmployeeSignLog> implements EmployeeSignLogService {
 
     @Resource
     private EmployeeSignLogMapper employeeSignLogMapper;

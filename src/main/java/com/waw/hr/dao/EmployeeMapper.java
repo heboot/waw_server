@@ -5,7 +5,7 @@ import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
 import org.apache.ibatis.annotations.Param;
 
-public interface EmployeeMapper extends Mapper<AdminUser> {
+public interface EmployeeMapper extends Mapper<Employee> {
 
     Integer registerEmployee(@Param("name") String name, @Param("mobile") String mobile, @Param("time") String time);
 

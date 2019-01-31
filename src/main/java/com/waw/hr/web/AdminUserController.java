@@ -5,16 +5,13 @@ import com.waw.hr.core.MValue;
 import com.waw.hr.core.ROLE;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
-import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.response.BaseResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.utils.JWTUtil;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-
 import java.util.ArrayList;
 
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
@@ -73,7 +70,7 @@ public class AdminUserController {
      * @param mobile
      * @return
      */
-    @PostMapping
+    @PostMapping("/addAdminUser")
     public Result addAdminUser(@RequestParam String token, @RequestParam String username, @RequestParam String password, @RequestParam String mobile, @RequestParam Integer role) {
         if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
@@ -92,7 +89,7 @@ public class AdminUserController {
         return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
     }
 
-    @PostMapping
+    @PostMapping("/updateAdminUserStatus")
     public Result updateAdminUserStatus(@RequestParam String token, @RequestParam Integer uid, @RequestParam Integer status) {
         if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
@@ -104,7 +101,7 @@ public class AdminUserController {
             result = adminUserService.updateAdminUserStatus(uid, status);
         } else if (adminUser.getRole() == ROLE.ROLE_EDITOR) {
             AdminUser updateUser = adminUserService.getAdminUserByID(uid);
-            if (adminUser.getRole() > updateUser.getRole() && updateUser.getCreate_uid() == adminUser.getId()) {
+            if (adminUser.getRole() > updateUser.getRole() && updateUser.getCreateUid() == adminUser.getId()) {
                 result = adminUserService.updateAdminUserStatus(uid, status);
             } else {
                 return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);

@@ -195,25 +195,25 @@ public class Enterprise {
 
 
     //企业补贴金额
-    private Integer subsidy_money;
+    private Integer subsidyMoney;
 
     //企业补贴说明
-    private String subsidy_info;
+    private String subsidyInfo;
 
-    public Integer getSubsidy_money() {
-        return subsidy_money;
+    public Integer getSubsidyMoney() {
+        return subsidyMoney;
     }
 
-    public void setSubsidy_money(Integer subsidy_money) {
-        this.subsidy_money = subsidy_money;
+    public void setSubsidyMoney(Integer subsidyMoney) {
+        this.subsidyMoney = subsidyMoney;
     }
 
-    public String getSubsidy_info() {
-        return subsidy_info;
+    public String getSubsidyInfo() {
+        return subsidyInfo;
     }
 
-    public void setSubsidy_info(String subsidy_info) {
-        this.subsidy_info = subsidy_info;
+    public void setSubsidyInfo(String subsidyInfo) {
+        this.subsidyInfo = subsidyInfo;
     }
 
     public Integer getId() {

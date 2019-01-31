@@ -7,9 +7,9 @@ public class EmployeeSignLog {
 
     private Integer id;
 
-    private Integer employee_id;
+    private Integer employeeId;
 
-    private String sign_time;
+    private String signTime;
 
     public Integer getId() {
         return id;
@@ -19,19 +19,19 @@ public class EmployeeSignLog {
         this.id = id;
     }
 
-    public Integer getEmployee_id() {
-        return employee_id;
+    public Integer getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee_id(Integer employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public String getSign_time() {
-        return sign_time;
+    public String getSignTime() {
+        return signTime;
     }
 
-    public void setSign_time(String sign_time) {
-        this.sign_time = sign_time;
+    public void setSignTime(String signTime) {
+        this.signTime = signTime;
     }
 }

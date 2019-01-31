@@ -11,34 +11,58 @@ public class Employee {
 
     private String mobile;
 
-    private String create_time;
+    private String createTime;
 
-    private Integer broker_id;
+    private Integer brokerId;
 
-    private String join_work_time;
+    private String joinWorkTime;
 
     private int sex;
 
     private int age;
 
-    private String id_card_pic_face;
+    private String idCardPicFace;
 
-    private String id_card_pic;
+    private String idCardPic;
 
-    public String getId_card_pic_face() {
-        return id_card_pic_face;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setId_card_pic_face(String id_card_pic_face) {
-        this.id_card_pic_face = id_card_pic_face;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getId_card_pic() {
-        return id_card_pic;
+    public Integer getBrokerId() {
+        return brokerId;
     }
 
-    public void setId_card_pic(String id_card_pic) {
-        this.id_card_pic = id_card_pic;
+    public void setBrokerId(Integer brokerId) {
+        this.brokerId = brokerId;
+    }
+
+    public String getJoinWorkTime() {
+        return joinWorkTime;
+    }
+
+    public void setJoinWorkTime(String joinWorkTime) {
+        this.joinWorkTime = joinWorkTime;
+    }
+
+    public String getIdCardPicFace() {
+        return idCardPicFace;
+    }
+
+    public void setIdCardPicFace(String idCardPicFace) {
+        this.idCardPicFace = idCardPicFace;
+    }
+
+    public String getIdCardPic() {
+        return idCardPic;
+    }
+
+    public void setIdCardPic(String idCardPic) {
+        this.idCardPic = idCardPic;
     }
 
     public Integer getId() {
@@ -63,30 +87,6 @@ public class Employee {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public Integer getBroker_id() {
-        return broker_id;
-    }
-
-    public void setBroker_id(Integer broker_id) {
-        this.broker_id = broker_id;
-    }
-
-    public String getJoin_work_time() {
-        return join_work_time;
-    }
-
-    public void setJoin_work_time(String join_work_time) {
-        this.join_work_time = join_work_time;
     }
 
     public int getSex() {

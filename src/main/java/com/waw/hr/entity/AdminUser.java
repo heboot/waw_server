@@ -19,17 +19,17 @@ public class AdminUser {
 
     private int role;
 
-    private Integer create_uid;
+    private Integer createUid;
 
     @Transient
     private List<String> roles;
 
-    public Integer getCreate_uid() {
-        return create_uid;
+    public Integer getCreateUid() {
+        return createUid;
     }
 
-    public void setCreate_uid(Integer create_uid) {
-        this.create_uid = create_uid;
+    public void setCreateUid(Integer createUid) {
+        this.createUid = createUid;
     }
 
     public int getRole() {

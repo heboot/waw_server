@@ -29,4 +29,19 @@ public class AdminUserServiceImpl extends AbstractService<AdminUser> implements 
     public AdminUser getAdminUserByName(String name) {
         return adminUserMapper.getAdminUserByName(name);
     }
+
+    @Override
+    public AdminUser getAdminUserByID(Integer id) {
+        return adminUserMapper.getAdminUserByID(id);
+    }
+
+    @Override
+    public Integer addAdminUser(String name, String password, String mobile, int role, int uid) {
+        return adminUserMapper.addAdminUser(name, password, mobile, role, uid);
+    }
+
+    @Override
+    public Integer updateAdminUserStatus(Integer uid, Integer status) {
+        return adminUserMapper.updateAdminUserStatus(uid, status);
+    }
 }

@@ -13,4 +13,25 @@
         select * from tb_admin_user where name=#{arg0}
     </select>
 
+    <insert id="addAdminUser">
+        INSERT  INTO tb_admin_user(name,password,mobile,role,create_uid) VALUES (#{name},#{password},#{mobile},#{role},#{uid})
+    </insert>
+
+    <select id="getAdminUserByID" resultType="com.waw.hr.entity.AdminUser">
+        select * from tb_admin_user where ID=#{id}
+    </select>
+
+    <update id="updateAdminUserStatus">
+        UPDATE tb_admin_user SET status = #{status} WHERE id = #{uid}
+    </update>
+
+    <!--<insert id="addEditUser">-->
+    <!--INSERT  INTO tb_admin_user(name,password,mobile,role) VALUES (#{name},#{password},#{mobile},5)-->
+    <!--</insert>-->
+
+    <!--&lt;!&ndash;添加经纪人&ndash;&gt;-->
+    <!--<insert id="addBrokerUser">-->
+    <!--INSERT  INTO tb_admin_user(name,password,mobile,role) VALUES (#{name},#{password},#{mobile},0)-->
+    <!--</insert>-->
+
 </mapper>

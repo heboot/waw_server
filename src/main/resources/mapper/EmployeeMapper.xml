@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waw.hr.dao.EmployeeMapper">
+
+
+    <insert id="registerEmployee">
+        INSERT INTO tb_employee (
+        name,
+        mobile,
+        create_time VALUES  (#{name},#{mobile},#{time})
+    </insert>
+
+    <update id="updateEmployeeStatus">
+
+        UPDATE tb_employee SET status = #{status} WHERE id = #{id}
+
+    </update>
+
+
+    <update id="updateEmployeeBroker">
+
+        UPDATE tb_employee SET broker_id = #{brokerId} WHERE id = #{id}
+
+    </update>
+
+    <update id="updateEmployeeJoinWorkTime">
+
+        UPDATE tb_employee SET join_work_time = #{time} WHERE id = #{id}
+
+    </update>
+
+    <update id="updateEmployeeName">
+
+        UPDATE tb_employee SET name = #{name} WHERE id = #{id}
+
+    </update>
+
+    <select id="getEmployeeByMobile">
+
+        SELECT * FROM tb_employee where mobile = #{mobile}
+
+    </select>
+
+</mapper>

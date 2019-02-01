@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -58,5 +59,20 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
         // TODO: 2019/1/31 接入七牛SDK 上传头像数据 返回Url 再入库
 
         return null;
+    }
+
+    @Override
+    public List<Employee> getEmployeeList() {
+        return employeeMapper.getEmployeeList();
+    }
+
+    @Override
+    public List<Employee> getEmployeeListByParentID(Integer parentId) {
+        return employeeMapper.getEmployeeListByParentID(parentId);
+    }
+
+    @Override
+    public List<Employee> getEmployeeListByBrokerId(Integer BrokerId) {
+        return employeeMapper.getEmployeeListByBrokerId(BrokerId);
     }
 }

@@ -1,18 +1,23 @@
 package com.waw.hr.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.waw.hr.core.AbstractService;
+import com.waw.hr.core.ROLE;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.dao.EmployeeSignLogMapper;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.entity.EmployeeSignLog;
+import com.waw.hr.response.GetEmployeeListResponse;
+import com.waw.hr.response.GetEmployeeSignLogListResponse;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.service.EmployeeSignLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -30,4 +35,24 @@ public class EmployeeSignLogServiceImpl extends AbstractService<EmployeeSignLog>
         }
         return ResultGenerator.genFailResult("");
     }
+
+    @Override
+    public Result getEmployeeSignLogList(Integer role, Integer uid, Integer page, Integer size) {
+        List<EmployeeSignLog> employeeSignLogList = null;
+        if (role == ROLE.ROLE_ADMIN) {
+            employeeSignLogList = employeeSignLogMapper.getEmployeeSignLogList();
+        } else if (role == ROLE.ROLE_EDITOR) {
+            employeeSignLogList = employeeSignLogMapper.getEmployeeSignLogListByParentId(uid);
+        } else if (role == ROLE.ROLE_BROKER) {
+            employeeSignLogList = employeeSignLogMapper.getEmployeeSignLogListByBrokerId(uid);
+        }
+        PageInfo<EmployeeSignLog> pageInfo = new PageInfo<>(employeeSignLogList);
+        return ResultGenerator.genSuccessResult(new GetEmployeeSignLogListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+    }
+
+    @Override
+    public List<EmployeeSignLog> getEmployeeSignLogListByEmployeeId(Integer employeeId) {
+        return null;
+    }
+
 }

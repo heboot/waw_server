@@ -5,6 +5,8 @@ import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface EmployeeMapper extends Mapper<Employee> {
 
     Integer registerEmployee(@Param("name") String name, @Param("mobile") String mobile, @Param("time") String time);
@@ -24,4 +26,10 @@ public interface EmployeeMapper extends Mapper<Employee> {
     Integer updateEmployeeSex(@Param("id") Integer id, @Param("sex") int sex);
 
     Integer updateEmployeeIDCardInfo(@Param("id") Integer id, @Param("id_card_pic_face") String id_card_pic_face, @Param("id_card_pic") String id_card_pic);
+
+    List<Employee> getEmployeeList();
+
+    List<Employee> getEmployeeListByParentID(@Param("parentId") Integer parentId);
+
+    List<Employee> getEmployeeListByBrokerId(@Param("brokerId") Integer BrokerId);
 }

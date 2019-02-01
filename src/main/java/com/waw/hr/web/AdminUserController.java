@@ -49,12 +49,12 @@ public class AdminUserController {
         ArrayList<String> arrayList = new ArrayList();
         if (adminUser.getRole() == 10) {//管理员
             arrayList.add(ROLE.ROLE_ADMIN_S);
-            arrayList.add(ROLE.ROLE_EDITOR_S);
-            arrayList.add(ROLE.ROLE_BROKER_S);
+//            arrayList.add(ROLE.ROLE_EDITOR_S);
+//            arrayList.add(ROLE.ROLE_BROKER_S);
             adminUser.setRoles(arrayList);
         } else if (adminUser.getRole() == 5) {//
             arrayList.add(ROLE.ROLE_EDITOR_S);
-            arrayList.add(ROLE.ROLE_BROKER_S);
+//            arrayList.add(ROLE.ROLE_BROKER_S);
         } else if (adminUser.getRole() == 0) {
             arrayList.add(ROLE.ROLE_BROKER_S);
         }

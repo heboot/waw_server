@@ -11,6 +11,26 @@
         create_time VALUES  (#{name},#{mobile},#{time})
     </insert>
 
+    <select id="getEmployeeList">
+
+        SELECT * FROM tb_employee
+
+    </select>
+
+    <select id="getEmployeeListByParentID">
+
+        SELECT * FROM tb_employee WHERE parent_id = #{parentId}
+
+    </select>
+
+    <select id="getEmployeeListByBrokerId">
+
+          SELECT * FROM tb_employee WHERE broker_id = #{brokerId}
+
+    </select>
+
+
+
     <update id="updateEmployeeStatus">
 
         UPDATE tb_employee SET status = #{status} WHERE id = #{id}

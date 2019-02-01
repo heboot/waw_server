@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waw.hr.dao.EmployeeSignLogMapper">
+
+    <update id="doEmployeeSign">
+
+        UPDATE tb_employee_sign_log SET sign_time = #{time} WHERE id = #{employeeId}
+
+    </update>
+
+    <select id="getEmployeeSignLogListByParentId">
+
+
+    </select>
+
+    <select id="getEmployeeSignLogListByBrokerId">
+
+
+    </select>
+
+    <select id="getEmployeeSignLogList">
+
+        SELECT * FROM tb_employee_sign_log
+
+    </select>
+
+    <select id="getEmployeeSignLogListByEmployeeId">
+
+         SELECT * FROM tb_employee_sign_log WHERE id = #{employeeId}
+
+    </select>
+
+
+</mapper>

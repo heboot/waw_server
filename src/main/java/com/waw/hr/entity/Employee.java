@@ -25,6 +25,36 @@ public class Employee {
 
     private String idCardPic;
 
+    private int status;
+
+    private int jobStatus;
+
+    private int cashStatus;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getJobStatus() {
+        return jobStatus;
+    }
+
+    public void setJobStatus(int jobStatus) {
+        this.jobStatus = jobStatus;
+    }
+
+    public int getCashStatus() {
+        return cashStatus;
+    }
+
+    public void setCashStatus(int cashStatus) {
+        this.cashStatus = cashStatus;
+    }
+
     public String getCreateTime() {
         return createTime;
     }

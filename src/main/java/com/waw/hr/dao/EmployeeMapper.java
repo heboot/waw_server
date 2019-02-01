@@ -13,6 +13,10 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     Integer updateEmployeeStatus(@Param("id") Integer id, @Param("status") Integer status);
 
+    Integer updateEmployeeJobStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    Integer updateEmployeeCashStatus(@Param("id") Integer id, @Param("status") Integer status);
+
     Integer updateEmployeeBroker(@Param("id") Integer id, @Param("brokerId") Integer brokerId);
 
     Employee getEmployeeByMobile(@Param("mobile") String mobile);

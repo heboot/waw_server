@@ -14,6 +14,8 @@ public class MValue {
 
     public static final String MESSAGE_UPDATE_SUC = "更新成功";
 
+    public static final String MESSAGE_UPDATE_FAIL = "更新失败，请联系管理员";
+
     public static final String MESSAGE_LOGIN_FAIL = "登录异常，请稍后重试";
 
 }

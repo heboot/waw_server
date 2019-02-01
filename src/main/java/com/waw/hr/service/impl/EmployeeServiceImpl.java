@@ -31,6 +31,16 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
+    public Integer updateEmployeeJobStatus(Integer id, Integer status) {
+        return employeeMapper.updateEmployeeJobStatus(id, status);
+    }
+
+    @Override
+    public Integer updateEmployeeCashStatus(Integer id, Integer status) {
+        return employeeMapper.updateEmployeeCashStatus(id, status);
+    }
+
+    @Override
     public Integer updateEmployeeBroker(Integer id, Integer brokerId) {
         return employeeMapper.updateEmployeeBroker(id, brokerId);
     }

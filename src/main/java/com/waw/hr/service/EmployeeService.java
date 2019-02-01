@@ -12,6 +12,10 @@ public interface EmployeeService {
 
     Integer updateEmployeeStatus(Integer id, Integer status);
 
+    Integer updateEmployeeJobStatus(Integer id, Integer status);
+
+    Integer updateEmployeeCashStatus(Integer id, Integer status);
+
     Integer updateEmployeeBroker(Integer id, Integer brokerId);
 
     Result doLogin(String mobile, String smsCode);

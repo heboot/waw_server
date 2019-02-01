@@ -11,7 +11,7 @@
         create_time VALUES  (#{name},#{mobile},#{time})
     </insert>
 
-    <select id="getEmployeeList">
+    <select id="getEmployeeList" resultType="com.waw.hr.entity.Employee">
 
         SELECT * FROM tb_employee
 
@@ -30,10 +30,21 @@
     </select>
 
 
-
     <update id="updateEmployeeStatus">
 
         UPDATE tb_employee SET status = #{status} WHERE id = #{id}
+
+    </update>
+
+    <update id="updateEmployeeJobStatus">
+
+        UPDATE tb_employee SET job_status = #{status} WHERE id = #{id}
+
+    </update>
+
+    <update id="updateEmployeeCashStatus">
+
+        UPDATE tb_employee SET cash_status = #{status} WHERE id = #{id}
 
     </update>
 

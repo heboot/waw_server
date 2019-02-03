@@ -1,6 +1,7 @@
 package com.waw.hr.entity;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "tb_emplpyee")
 public class Employee {
@@ -30,6 +31,30 @@ public class Employee {
     private int jobStatus;
 
     private int cashStatus;
+
+
+    @Transient
+    private AdminUser parentUser;
+
+
+    @Transient
+    private AdminUser brokerUser;
+
+    public AdminUser getParentUser() {
+        return parentUser;
+    }
+
+    public void setParentUser(AdminUser parentUser) {
+        this.parentUser = parentUser;
+    }
+
+    public AdminUser getBrokerUser() {
+        return brokerUser;
+    }
+
+    public void setBrokerUser(AdminUser brokerUser) {
+        this.brokerUser = brokerUser;
+    }
 
     public int getStatus() {
         return status;

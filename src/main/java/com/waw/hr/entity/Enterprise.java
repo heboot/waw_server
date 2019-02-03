@@ -189,8 +189,8 @@ public class Enterprise {
     private String lng;
 
     //必备字段
-    private Date gmtCreate;
-    private Date gmtModified;
+    private String gmtCreate;
+    private String gmtModified;
     private Integer status;
 
 
@@ -520,19 +520,19 @@ public class Enterprise {
         this.lng = lng;
     }
 
-    public Date getGmtCreate() {
+    public String getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(String gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public String getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
+    public void setGmtModified(String gmtModified) {
         this.gmtModified = gmtModified;
     }
 

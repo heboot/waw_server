@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 import static com.waw.hr.core.ResultCode.USER_NOT_FOUND;
@@ -36,7 +37,8 @@ public class AdminUserController {
         if (adminUser == null) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_USER_NOT_FOUND, USER_NOT_FOUND);
         }
-        return ResultGenerator.genSuccessResult(new BaseResponse(JWTUtil.sign(username, CommonValue.SECRET)));
+        System.out.print("登录角色为" + adminUser.getRole());
+        return ResultGenerator.genSuccessResult(new BaseResponse(JWTUtil.sign(username, adminUser.getRole(), CommonValue.SECRET)));
     }
 
 

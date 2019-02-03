@@ -125,18 +125,18 @@ public class EmployeeController {
      *
      * @param token
      * @param page
-     * @param size
+     * @param limit
      * @return
      */
     @GetMapping("/getEmployeeList")
     public Result getEmployeeList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "20") Integer size) {
+                                  @RequestParam(defaultValue = "20") Integer limit) {
 
         if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
-        PageHelper.startPage(page, size);
+        PageHelper.startPage(page, limit);
         List<Employee> enterprises = null;
 
         AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
@@ -150,7 +150,7 @@ public class EmployeeController {
 
 
         PageInfo<Employee> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetEmployeeListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetEmployeeListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
 

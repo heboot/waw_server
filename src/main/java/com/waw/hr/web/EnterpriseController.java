@@ -1,13 +1,17 @@
 package com.waw.hr.web;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.waw.hr.core.Result;
-import com.waw.hr.core.ResultGenerator;
-import com.waw.hr.core.ServiceException;
+import com.waw.hr.CommonValue;
+import com.waw.hr.core.*;
+import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Enterprise;
 import com.waw.hr.response.GetAllEnterpriseResponse;
+import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EnterpriseService;
+import com.waw.hr.utils.JWTUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +21,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
+
 @RestController
 @RequestMapping("/enterprise")
 public class EnterpriseController {
 
     @Resource
     private EnterpriseService enterpriseService;
+
+    @Resource
+    private AdminUserService adminUserService;
+
 
     /**
      * 获取所有企业
@@ -73,12 +83,24 @@ public class EnterpriseController {
      * @return success表示成功   error表示失败
      */
     @PostMapping("/updateEnterprise")
-    public Result updateEnterprise(Enterprise enterprise) {
-        Integer num = enterpriseService.updateEnterprise(enterprise);
-        if (num > 0) {
-            return ResultGenerator.genSuccessResult("success");
+    public Result updateEnterprise(@RequestParam String token, @RequestParam String enterprise) {
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        Enterprise enterpriseData = JSON.parseObject(enterprise, Enterprise.class);
+
+        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+
+        if (adminUser != null && adminUser.getRole() == ROLE.ROLE_ADMIN) {
+            Integer num = enterpriseService.updateEnterprise(enterpriseData);
+            if (num > 0) {
+                return ResultGenerator.genSuccessResult("success");
+            } else {
+                return ResultGenerator.genFailResult("error");
+            }
         } else {
-            return ResultGenerator.genFailResult("error");
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
     }
 
@@ -88,12 +110,24 @@ public class EnterpriseController {
      * @return success表示成功   error表示失败
      */
     @PostMapping("/addEnterprise")
-    public Result addEnterprise(Enterprise enterprise) {
-        Integer num = enterpriseService.addEnterprise(enterprise);
-        if (num > 0) {
-            return ResultGenerator.genSuccessResult("success");
+    public Result addEnterprise(@RequestParam String token, @RequestParam String enterprise) {
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+
+        Enterprise addEnterprise = JSON.parseObject(enterprise, Enterprise.class);
+
+        if (adminUser != null && adminUser.getRole() == ROLE.ROLE_ADMIN) {
+            Integer num = enterpriseService.addEnterprise(addEnterprise);
+            if (num > 0) {
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
+            } else {
+                return ResultGenerator.genFailResult(MValue.MESSAGE_CREATE_FAIL);
+            }
         } else {
-            return ResultGenerator.genFailResult("error");
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
     }
 

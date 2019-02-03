@@ -14,7 +14,7 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
 
     Enterprise getEnterpriseById(@Param("id") Integer id);
 
-    Integer updateEnterprise(Enterprise enterprise);
+    Integer updateEnterprise( Enterprise enterprise);
 
     Integer addEnterprise(Enterprise enterprise);
 

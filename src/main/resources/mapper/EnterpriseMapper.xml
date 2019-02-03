@@ -37,7 +37,7 @@
     </update>
     <!--插入一条企业信息-->
     <insert id="addEnterprise">
-          INSERT INTO `waw_hr`.`tb_enterprise` (
+          INSERT INTO tb_enterprise (
                 `name`,
                 `salary`,
                 `salary_date`,
@@ -75,8 +75,7 @@
                 `lat`,
                 `lng`,
                 `gmt_create`,
-                `gmt_modified`,
-                `is_deleted`
+                `gmt_modified`
           )VALUES(
                 #{name},
                 #{salary},
@@ -115,14 +114,13 @@
                 #{lat},
                 #{lng},
                 #{gmtCreate},
-                #{gmtModified},
-                #{isDeleted}
+                #{gmtModified}
           );
 
     </insert>
 
     <!--更新企业信息-->
-    <update id="updateEnterprise">
+    <update id="updateEnterprise" parameterType="com.waw.hr.entity.Enterprise">
 
         UPDATE `waw_hr`.`tb_enterprise`
         <set>
@@ -148,7 +146,7 @@
             <if test="jobInfo!=null and jobInfo!=''">`job_info` = #{jobInfo},</if>
             <if test="jobEnvironment!=null and jobEnvironment!=''">`job_environment` = #{jobEnvironment},</if>
             <if test="physicalInfo!=null and physicalInfo!=''">`physical_info` = #{physicalInfo},</if>
-            <if test="idCardInfo!=null and idCardInfo!=''">`id_card_info` = #{id_cardInfo},</if>
+            <if test="idCardInfo!=null and idCardInfo!=''">`id_card_info` = #{idCardInfo},</if>
             <if test="diplomaInfo!=null and diplomaInfo!=''">`diploma_info` = #{diplomaInfo},</if>
             <if test="photoInfo!=null and photoInfo!=''">`photo_info` = #{photoInfo},</if>
             <if test="employIdCardInfo!=null and employIdCardInfo!=''">`employ_id_card_info` = #{employIdCardInfo},</if>
@@ -171,10 +169,9 @@
             <if test="lng!=null and lng!=''">`lng` = #{lng},</if>
             <if test="gmtCreate!=null and gmtCreate!=''">`gmt_create` = #{gmtCreate},</if>
             <if test="gmtModified!=null and gmtModified!=''">`gmt_modified` = #{gmtModified},</if>
-            <if test="isDeleted!=null and isDeleted!=''">`is_deleted` = #{isDeleted}</if>
         </set>
         WHERE
-        `id` = #{id}
+        id = #{id}
     </update>
 
     <!--根据ID删除企业（字段表名）-->

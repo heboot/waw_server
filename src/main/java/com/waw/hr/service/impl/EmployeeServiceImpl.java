@@ -72,17 +72,17 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public List<Employee> getEmployeeList() {
-        return employeeMapper.getEmployeeList();
+    public List<Employee> getEmployeeList(String key) {
+        return employeeMapper.getEmployeeList(key);
     }
 
     @Override
-    public List<Employee> getEmployeeListByParentID(Integer parentId) {
-        return employeeMapper.getEmployeeListByParentID(parentId);
+    public List<Employee> getEmployeeListByParentID(Integer parentId,String key) {
+        return employeeMapper.getEmployeeListByParentID(parentId,key);
     }
 
     @Override
-    public List<Employee> getEmployeeListByBrokerId(Integer BrokerId) {
-        return employeeMapper.getEmployeeListByBrokerId(BrokerId);
+    public List<Employee> getEmployeeListByBrokerId(Integer BrokerId,String key) {
+        return employeeMapper.getEmployeeListByBrokerId(BrokerId,key);
     }
 }

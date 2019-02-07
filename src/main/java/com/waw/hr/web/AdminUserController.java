@@ -1,18 +1,24 @@
 package com.waw.hr.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.MValue;
 import com.waw.hr.core.ROLE;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.AdminUser;
+import com.waw.hr.entity.Employee;
 import com.waw.hr.response.BaseResponse;
+import com.waw.hr.response.GetAdminUserListResponse;
+import com.waw.hr.response.GetEmployeeListResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.utils.JWTUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
@@ -117,4 +123,32 @@ public class AdminUserController {
     }
 
 
+    /**
+     * 获取代理列表
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/getEditorList")
+    public Result getEditorList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer page,
+                                @RequestParam(defaultValue = "20") Integer limit, @RequestParam(required = false) String key) {
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+
+        PageHelper.startPage(page, limit);
+        List<AdminUser> adminUsers = null;
+
+        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+        if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
+            adminUsers = adminUserService.getEditorsList(null,key);
+        } else if (adminUser.getRole() == ROLE.ROLE_EDITOR) {
+            adminUsers = adminUserService.getEditorsList(adminUser.getId(),key);
+        } else {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
+        }
+        PageInfo<AdminUser> pageInfo = new PageInfo<>(adminUsers);
+        return ResultGenerator.genSuccessResult(new GetAdminUserListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
+    }
 }

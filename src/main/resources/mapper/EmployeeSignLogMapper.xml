@@ -19,7 +19,7 @@
 
     </select>
 
-    <select id="getEmployeeSignLogList">
+    <select id="getEmployeeSignLogList" resultType="com.waw.hr.entity.EmployeeSignLog">
 
         SELECT * FROM tb_employee_sign_log
 

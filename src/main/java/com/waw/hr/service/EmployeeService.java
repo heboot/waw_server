@@ -24,10 +24,10 @@ public interface EmployeeService {
 
     String updateEmployeeAvatar(Integer id, String avatar);
 
-    List<Employee> getEmployeeList();
+    List<Employee> getEmployeeList(String key);
 
-    List<Employee> getEmployeeListByParentID(Integer parentId);
+    List<Employee> getEmployeeListByParentID(Integer parentId,String key);
 
-    List<Employee> getEmployeeListByBrokerId(Integer BrokerId);
+    List<Employee> getEmployeeListByBrokerId(Integer BrokerId,String key);
 
 }

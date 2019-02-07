@@ -21,4 +21,12 @@ public interface AdminUserMapper extends Mapper<AdminUser> {
 
 
     Integer addAdminUser(@Param("name") String name, @Param("password") String password, @Param("mobile") String mobile, @Param("role") Integer role, @Param("uid") Integer uid);
+
+    /**
+     * 获取属于自己的代理列表
+     *
+     * @param createId
+     * @return
+     */
+    List<AdminUser> getEditorsList(@Param("createUid") Integer createId,@Param("key") String key);
 }

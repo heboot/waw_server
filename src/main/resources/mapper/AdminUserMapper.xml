@@ -25,6 +25,23 @@
         UPDATE tb_admin_user SET status = #{status} WHERE id = #{uid}
     </update>
 
+    <select id="getEditorsList" resultType="com.waw.hr.entity.AdminUser">
+        SELECT * FROM tb_admin_user WHERE role = 5
+
+        <if test="createUid != null and createUid != ''">
+
+            AND create_uid = #{createUid}
+
+        </if>
+
+        <if test="key != null and key != ''">
+
+            AND name LIKE #{key} or mobile like #{key}
+
+        </if>
+
+    </select>
+
     <!--<insert id="addEditUser">-->
     <!--INSERT  INTO tb_admin_user(name,password,mobile,role) VALUES (#{name},#{password},#{mobile},5)-->
     <!--</insert>-->

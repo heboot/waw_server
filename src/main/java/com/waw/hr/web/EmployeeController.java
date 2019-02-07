@@ -130,7 +130,7 @@ public class EmployeeController {
      */
     @GetMapping("/getEmployeeList")
     public Result getEmployeeList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "20") Integer limit) {
+                                  @RequestParam(defaultValue = "20") Integer limit,@RequestParam(required = false) String key) {
 
         if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
@@ -141,11 +141,11 @@ public class EmployeeController {
 
         AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
         if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
-            enterprises = employeeService.getEmployeeList();
+            enterprises = employeeService.getEmployeeList(key);
         } else if (adminUser.getRole() == ROLE.ROLE_EDITOR) {
-            enterprises = employeeService.getEmployeeListByParentID(adminUser.getId());
+            enterprises = employeeService.getEmployeeListByParentID(adminUser.getId(),key);
         } else if (adminUser.getRole() == ROLE.ROLE_BROKER) {
-            enterprises = employeeService.getEmployeeListByBrokerId(adminUser.getId());
+            enterprises = employeeService.getEmployeeListByBrokerId(adminUser.getId(),key);
         }
 
 

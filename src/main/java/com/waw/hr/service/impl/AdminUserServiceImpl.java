@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -43,5 +44,16 @@ public class AdminUserServiceImpl extends AbstractService<AdminUser> implements 
     @Override
     public Integer updateAdminUserStatus(Integer uid, Integer status) {
         return adminUserMapper.updateAdminUserStatus(uid, status);
+    }
+
+    /**
+     * 获取属于自己的代理列表
+     *
+     * @param createId
+     * @return
+     */
+    @Override
+    public List<AdminUser> getEditorsList(Integer createId,String key) {
+        return adminUserMapper.getEditorsList(createId,key);
     }
 }

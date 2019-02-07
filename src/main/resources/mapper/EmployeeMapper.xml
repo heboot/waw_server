@@ -15,17 +15,35 @@
 
         SELECT * FROM tb_employee
 
+        <if test="key != null and key != ''">
+
+            WHERE name LIKE #{key} OR mobile LIKE #{key}
+
+        </if>
+
     </select>
 
     <select id="getEmployeeListByParentID">
 
         SELECT * FROM tb_employee WHERE parent_id = #{parentId}
 
+        <if test="key != null and key != ''">
+
+            WHERE name LIKE #{key} OR mobile LIKE #{key}
+
+        </if>
+
     </select>
 
     <select id="getEmployeeListByBrokerId">
 
-          SELECT * FROM tb_employee WHERE broker_id = #{brokerId}
+        SELECT * FROM tb_employee WHERE broker_id = #{brokerId}
+
+        <if test="key != null and key != ''">
+
+            WHERE name LIKE #{key} OR mobile LIKE #{key}
+
+        </if>
 
     </select>
 

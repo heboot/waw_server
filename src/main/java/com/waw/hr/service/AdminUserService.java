@@ -25,4 +25,11 @@ public interface AdminUserService {
      */
     List<AdminUser> getEditorsList(Integer createId,String key);
 
+    /**
+     * 创建代理
+     * @param createId
+     * @return
+     */
+    Integer addEditor(String name,String mobile,Integer createId);
+
 }

@@ -142,13 +142,38 @@ public class AdminUserController {
 
         AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
         if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
-            adminUsers = adminUserService.getEditorsList(null,key);
+            adminUsers = adminUserService.getEditorsList(null, key);
         } else if (adminUser.getRole() == ROLE.ROLE_EDITOR) {
-            adminUsers = adminUserService.getEditorsList(adminUser.getId(),key);
+            adminUsers = adminUserService.getEditorsList(adminUser.getId(), key);
         } else {
             return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
         }
         PageInfo<AdminUser> pageInfo = new PageInfo<>(adminUsers);
         return ResultGenerator.genSuccessResult(new GetAdminUserListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
+
+    /**
+     * 新增代理
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/addEditor")
+    public Result addEditor(@RequestParam String token, @RequestParam String name, @RequestParam String mobile) {
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+        if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
+            int result = adminUserService.addEditor(name, mobile, adminUser.getId());
+            if (result > 0) {
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
+            } else {
+                return ResultGenerator.genFailResult(MValue.MESSAGE_CREATE_FAIL);
+            }
+        }
+        return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
+    }
+
+
 }

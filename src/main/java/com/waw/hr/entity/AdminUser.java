@@ -21,11 +21,31 @@ public class AdminUser {
 
     private Integer createUid;
 
+    private String createTime;
+
+    private String lastLoginTime;
+
     @Transient
     private List<String> roles;
 
     public Integer getCreateUid() {
         return createUid;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
     public void setCreateUid(Integer createUid) {

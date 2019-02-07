@@ -53,7 +53,12 @@ public class AdminUserServiceImpl extends AbstractService<AdminUser> implements 
      * @return
      */
     @Override
-    public List<AdminUser> getEditorsList(Integer createId,String key) {
-        return adminUserMapper.getEditorsList(createId,key);
+    public List<AdminUser> getEditorsList(Integer createId, String key) {
+        return adminUserMapper.getEditorsList(createId, key);
+    }
+
+    @Override
+    public Integer addEditor(String name, String mobile, Integer createId) {
+        return adminUserMapper.addEditor(name, mobile, createId, String.valueOf(System.currentTimeMillis()));
     }
 }

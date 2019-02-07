@@ -42,6 +42,12 @@
 
     </select>
 
+    <insert id="addEditor">
+
+        INSERT INTO tb_admin_user(name,mobile,create_uid,create_time,role,status) VALUES(#{name},#{mobile},#{createUid},#{createTime},5,1)
+
+    </insert>
+
     <!--<insert id="addEditUser">-->
     <!--INSERT  INTO tb_admin_user(name,password,mobile,role) VALUES (#{name},#{password},#{mobile},5)-->
     <!--</insert>-->

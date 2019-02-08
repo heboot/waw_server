@@ -152,6 +152,36 @@ public class AdminUserController {
         return ResultGenerator.genSuccessResult(new GetAdminUserListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
+
+    /**
+     * 获取代理列表
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/getBrokerList")
+    public Result getBrokerList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer page,
+                                @RequestParam(defaultValue = "20") Integer limit, @RequestParam(required = false) String key) {
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+
+        PageHelper.startPage(page, limit);
+        List<AdminUser> adminUsers = null;
+
+        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+        if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
+            adminUsers = adminUserService.getBrokerList(null, key);
+        } else if (adminUser.getRole() == ROLE.ROLE_EDITOR) {
+            adminUsers = adminUserService.getBrokerList(adminUser.getId(), key);
+        } else {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
+        }
+        PageInfo<AdminUser> pageInfo = new PageInfo<>(adminUsers);
+        return ResultGenerator.genSuccessResult(new GetAdminUserListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
+    }
+
     /**
      * 新增代理
      *
@@ -165,6 +195,29 @@ public class AdminUserController {
         }
         AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
         if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
+            int result = adminUserService.addBroker(name, mobile, adminUser.getId());
+            if (result > 0) {
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
+            } else {
+                return ResultGenerator.genFailResult(MValue.MESSAGE_CREATE_FAIL);
+            }
+        }
+        return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
+    }
+
+    /**
+     * 新增经纪人
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/addBroker")
+    public Result addBroker(@RequestParam String token, @RequestParam String name, @RequestParam String mobile) {
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+        if (adminUser.getRole() == ROLE.ROLE_ADMIN || adminUser.getRole() == ROLE.ROLE_EDITOR) {
             int result = adminUserService.addEditor(name, mobile, adminUser.getId());
             if (result > 0) {
                 return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);

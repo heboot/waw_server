@@ -58,7 +58,17 @@ public class AdminUserServiceImpl extends AbstractService<AdminUser> implements 
     }
 
     @Override
+    public List<AdminUser> getBrokerList(Integer createId, String key) {
+        return adminUserMapper.getBrokerList(createId, key);
+    }
+
+    @Override
     public Integer addEditor(String name, String mobile, Integer createId) {
         return adminUserMapper.addEditor(name, mobile, createId, String.valueOf(System.currentTimeMillis()));
+    }
+
+    @Override
+    public Integer addBroker(String name, String mobile, Integer createId) {
+        return null;
     }
 }

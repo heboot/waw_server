@@ -36,5 +36,22 @@ public interface AdminUserMapper extends Mapper<AdminUser> {
      * @param createId
      * @return
      */
-    Integer addEditor(@Param("name") String name,@Param("mobile") String mobile,@Param("createUid") Integer createId,@Param("createTime") String createTime);
+    Integer addEditor(@Param("name") String name, @Param("mobile") String mobile, @Param("createUid") Integer createId, @Param("createTime") String createTime);
+
+    /**
+     * 获取属于自己的经纪人列表
+     *
+     * @param createId
+     * @return
+     */
+    List<AdminUser> getBrokerList(@Param("createUid") Integer createId, @Param("key") String key);
+
+
+    /**
+     * 创建经纪人
+     *
+     * @param createId
+     * @return
+     */
+    Integer addBroker(@Param("name") String name, @Param("mobile") String mobile, @Param("createUid") Integer createId);
 }

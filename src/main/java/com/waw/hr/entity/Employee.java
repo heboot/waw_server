@@ -16,6 +16,8 @@ public class Employee {
 
     private Integer brokerId;
 
+    private Integer parentId;
+
     private String joinWorkTime;
 
     private int sex;
@@ -32,6 +34,13 @@ public class Employee {
 
     private int cashStatus;
 
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
 
     @Transient
     private AdminUser parentUser;

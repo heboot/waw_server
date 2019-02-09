@@ -28,6 +28,7 @@ public class AdminUser {
     @Transient
     private List<String> roles;
 
+
     public Integer getCreateUid() {
         return createUid;
     }
@@ -107,4 +108,5 @@ public class AdminUser {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
 }

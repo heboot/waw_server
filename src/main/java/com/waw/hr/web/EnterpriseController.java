@@ -24,7 +24,7 @@ import java.util.Map;
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
-@RequestMapping("/enterprise")
+@RequestMapping(value = {"/enterprise", "app/enterprise"})
 public class EnterpriseController {
 
     @Resource

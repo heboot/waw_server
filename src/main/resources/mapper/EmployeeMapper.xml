@@ -11,17 +11,63 @@
         create_time VALUES  (#{name},#{mobile},#{time})
     </insert>
 
-    <select id="getEmployeeList" resultType="com.waw.hr.entity.Employee">
+    <select id="getEmployeeList" resultMap="EmployeeListMap">
 
-        SELECT * FROM tb_employee
+        select * from tb_employee a
+
+        left join tb_admin_user p on a.parent_id = p.id
+
+        left join tb_admin_user b on a.broker_id = b.id
 
         <if test="key != null and key != ''">
 
-            WHERE name LIKE #{key} OR mobile LIKE #{key}
+            WHERE a.name LIKE #{key} OR a.mobile LIKE #{key}
 
         </if>
 
     </select>
+
+    <resultMap type="com.waw.hr.entity.Employee"
+               id="EmployeeListMap">
+
+
+        <result property="id" column="id" />
+        <result property="name" column="name"></result>
+        <result property="mobile" column="mobile"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="brokerId" column="broker_id"></result>
+        <result property="joinWorkTime" column="join_work_time"></result>
+        <result property="sex" column="sex" />
+        <result property="age" column="age" />
+        <result property="idCardPicFace" column="id_card_pic_face" />
+        <result property="idCardPic" column="id_card_pic" />
+        <result property="status" column="status" />
+        <result property="jobStatus" column="job_status" />
+        <result property="cashStatus" column="cash_status" />
+
+        <association column="parent_id" property="parentUser" select="com.waw.hr.dao.AdminUserMapper.getAdminUserByID">
+        </association>
+
+        <association column="broker_id" property="brokerUser" select="com.waw.hr.dao.AdminUserMapper.getAdminUserByID">
+        </association>
+
+        <!--<result property="id" column="id" />-->
+        <!--<result property="name" column="name"></result>-->
+        <!--<result property="icon" column="icon"></result>-->
+        <!--<result property="apk_url" column="apk_url"></result>-->
+        <!--<result property="package_name" column="package_name"></result>-->
+        <!--<result property="execute_time" column="execute_time"></result>-->
+        <!--<result property="is_choose" column="is_choose" />-->
+        <!--<collection property="pages"-->
+                    <!--ofType="com.xrl.script.server.entity.AppPage">-->
+            <!--&lt;!&ndash; collection:一对多时使用，association:多对一使用 &ndash;&gt;-->
+            <!--<result property="id" column="id" />-->
+            <!--<result property="app_id" column="app_id" />-->
+            <!--<result property="page_type" column="page_type" />-->
+            <!--<result property="page_name" column="page_name" />-->
+        <!--</collection>-->
+    </resultMap>
+
 
     <select id="getEmployeeListByParentID">
 

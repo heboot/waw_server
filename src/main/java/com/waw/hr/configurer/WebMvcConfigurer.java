@@ -109,11 +109,12 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     //添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-        if (!"dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new HandlerInterceptorAdapter() {
-                @Override
-                public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
+//        if (!"dev".equals(env)) { //开发环境忽略签名认证
+        registry.addInterceptor(new HandlerInterceptorAdapter() {
+            @Override
+            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                if (request.getRequestURI().indexOf("app") > -1) {
                     //验证签名
                     boolean pass = validateSign(request);
                     if (pass) {
@@ -128,8 +129,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                         return false;
                     }
                 }
-            });
-        }
+                return true;
+            }
+        });
+//        }
     }
 
     private void responseResult(HttpServletResponse response, Result result) {
@@ -165,7 +168,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         String linkString = sb.toString();
         linkString = StringUtils.substring(linkString, 0, linkString.length() - 1);//去除最后一个'&'
 
-        String secret = "Potato";//密钥，自己修改
+        String secret = "wawhr";//密钥，自己修改
         String sign = DigestUtils.md5Hex(linkString + secret);//混合密钥md5
 
         return StringUtils.equals(sign, requestSign);//比较

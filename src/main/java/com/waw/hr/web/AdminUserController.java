@@ -195,7 +195,7 @@ public class AdminUserController {
         }
         AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
         if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
-            int result = adminUserService.addBroker(name, mobile, adminUser.getId());
+            int result = adminUserService.addEditor(name, mobile, adminUser.getId());
             if (result > 0) {
                 return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
             } else {

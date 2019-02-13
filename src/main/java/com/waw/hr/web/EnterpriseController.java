@@ -37,17 +37,15 @@ public class EnterpriseController {
     /**
      * 获取所有企业
      *
-     * @param page 代表当前页数
-     * @param size 代表每页显示多少行
      * @return
      */
-    @GetMapping("/getAllEnterprise")
-    public Result getAppConfig(@RequestParam(defaultValue = "1") Integer page,
-                               @RequestParam(defaultValue = "20") Integer size, Model model) {
-        PageHelper.startPage(page, size);
+    @GetMapping("/getEnterpriseList")
+    public Result getAppConfig(@RequestParam(defaultValue = "1") Integer sp,
+                               @RequestParam(defaultValue = "20") Integer pageSize, Model model) {
+        PageHelper.startPage(sp, pageSize);
         List<Enterprise> enterprises = enterpriseService.getAllEnterprise();
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
     /**

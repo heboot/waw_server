@@ -10,8 +10,8 @@ import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.entity.EmployeeSignLog;
-import com.waw.hr.response.GetEmployeeListResponse;
-import com.waw.hr.response.GetEmployeeSignLogListResponse;
+import com.waw.hr.response.GetEmployeeListListResponse;
+import com.waw.hr.response.GetEmployeeSignLogListListResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.service.EmployeeSignLogService;
@@ -150,7 +150,7 @@ public class EmployeeController {
 
 
         PageInfo<Employee> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetEmployeeListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetEmployeeListListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
 
@@ -198,7 +198,7 @@ public class EmployeeController {
         PageHelper.startPage(page, size);
         List<EmployeeSignLog> employeeSignLogList = employeeSignLogService.getEmployeeSignLogListByEmployeeId(employeeId);
         PageInfo<EmployeeSignLog> pageInfo = new PageInfo<>(employeeSignLogList);
-        return ResultGenerator.genSuccessResult(new GetEmployeeSignLogListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetEmployeeSignLogListListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
 }

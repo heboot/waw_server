@@ -7,19 +7,17 @@ import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Enterprise;
-import com.waw.hr.response.GetAllEnterpriseResponse;
+import com.waw.hr.response.GetAllEnterpriseListResponse;
+import com.waw.hr.response.PreSearchListResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EnterpriseService;
 import com.waw.hr.utils.JWTUtil;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
@@ -39,14 +37,32 @@ public class EnterpriseController {
      *
      * @return
      */
-    @GetMapping("/getEnterpriseList")
+    @PostMapping("/getEnterpriseList")
     public Result getAppConfig(@RequestParam(defaultValue = "1") Integer sp,
                                @RequestParam(defaultValue = "20") Integer pageSize, Model model) {
         PageHelper.startPage(sp, pageSize);
         List<Enterprise> enterprises = enterpriseService.getAllEnterprise();
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
+
+
+    @PostMapping("/preSearch")
+    public Result preSearch() {
+        List<String> hotTags = new ArrayList<>();
+        hotTags.add("临时工");
+        hotTags.add("上海");
+        hotTags.add("暑假工");
+        hotTags.add("寒假工");
+
+        List<String> enterprises = new ArrayList<>();
+        enterprises.add("富士康");
+        enterprises.add("昌硕");
+        enterprises.add("东山精密");
+
+        return ResultGenerator.genSuccessResult(new PreSearchListResponse(hotTags, enterprises));
+    }
+
 
     /**
      * 根据模糊查询企业集合
@@ -61,7 +77,7 @@ public class EnterpriseController {
         PageHelper.startPage(page, size);
         List<Enterprise> enterprises = enterpriseService.getEnterpriseByName(name);
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
     /**

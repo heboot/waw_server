@@ -4,7 +4,7 @@ import com.waw.hr.entity.EmployeeSignLog;
 
 import java.util.List;
 
-public class GetEmployeeSignLogListResponse extends BaseResponse {
+public class GetEmployeeSignLogListListResponse extends BaseListResponse {
 
     private List<EmployeeSignLog> list;
 
@@ -16,7 +16,7 @@ public class GetEmployeeSignLogListResponse extends BaseResponse {
         this.list = list;
     }
 
-    public GetEmployeeSignLogListResponse(int page, int size, int totalPage, List<EmployeeSignLog> list) {
+    public GetEmployeeSignLogListListResponse(int page, int size, int totalPage, List<EmployeeSignLog> list) {
         this.page = page;
         this.size = size;
         this.totalPage = totalPage;

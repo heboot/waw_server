@@ -8,10 +8,8 @@ import com.waw.hr.core.ROLE;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.AdminUser;
-import com.waw.hr.entity.Employee;
-import com.waw.hr.response.BaseResponse;
-import com.waw.hr.response.GetAdminUserListResponse;
-import com.waw.hr.response.GetEmployeeListResponse;
+import com.waw.hr.response.BaseListResponse;
+import com.waw.hr.response.GetAdminUserListListResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.utils.JWTUtil;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 import static com.waw.hr.core.ResultCode.USER_NOT_FOUND;
@@ -44,7 +41,7 @@ public class AdminUserController {
             return ResultGenerator.genFailResult(MValue.MESSAGE_USER_NOT_FOUND, USER_NOT_FOUND);
         }
         System.out.print("登录角色为" + adminUser.getRole());
-        return ResultGenerator.genSuccessResult(new BaseResponse(JWTUtil.sign(username, adminUser.getRole(), CommonValue.SECRET)));
+        return ResultGenerator.genSuccessResult(new BaseListResponse(JWTUtil.sign(username, adminUser.getRole(), CommonValue.SECRET)));
     }
 
 
@@ -149,7 +146,7 @@ public class AdminUserController {
             return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
         }
         PageInfo<AdminUser> pageInfo = new PageInfo<>(adminUsers);
-        return ResultGenerator.genSuccessResult(new GetAdminUserListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAdminUserListListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
 
@@ -179,7 +176,7 @@ public class AdminUserController {
             return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
         }
         PageInfo<AdminUser> pageInfo = new PageInfo<>(adminUsers);
-        return ResultGenerator.genSuccessResult(new GetAdminUserListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAdminUserListListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
     /**

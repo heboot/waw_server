@@ -4,7 +4,7 @@ import com.waw.hr.entity.AdminUser;
 
 import java.util.List;
 
-public class GetAdminUserListResponse extends BaseResponse {
+public class GetAdminUserListListResponse extends BaseListResponse {
 
     private List<AdminUser> list;
 
@@ -16,7 +16,7 @@ public class GetAdminUserListResponse extends BaseResponse {
         this.list = list;
     }
 
-    public GetAdminUserListResponse(int page, int size, int totalPage, List<AdminUser> list) {
+    public GetAdminUserListListResponse(int page, int size, int totalPage, List<AdminUser> list) {
         this.page = page;
         this.size = size;
         this.totalPage = totalPage;

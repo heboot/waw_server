@@ -4,7 +4,7 @@ import com.waw.hr.entity.Enterprise;
 
 import java.util.List;
 
-public class GetAllEnterpriseResponse extends BaseResponse {
+public class GetAllEnterpriseListResponse extends BaseListResponse {
 
     private List<Enterprise> list;
 
@@ -16,7 +16,7 @@ public class GetAllEnterpriseResponse extends BaseResponse {
         this.list = list;
     }
 
-    public GetAllEnterpriseResponse(int page, int size, int totalPage, List<Enterprise> list) {
+    public GetAllEnterpriseListResponse(int page, int size, int totalPage, List<Enterprise> list) {
         this.page = page;
         this.size = size;
         this.totalPage = totalPage;

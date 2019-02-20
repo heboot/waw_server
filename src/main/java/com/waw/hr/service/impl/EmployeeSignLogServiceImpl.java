@@ -5,13 +5,9 @@ import com.waw.hr.core.AbstractService;
 import com.waw.hr.core.ROLE;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
-import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.dao.EmployeeSignLogMapper;
-import com.waw.hr.entity.Employee;
 import com.waw.hr.entity.EmployeeSignLog;
-import com.waw.hr.response.GetEmployeeListResponse;
-import com.waw.hr.response.GetEmployeeSignLogListResponse;
-import com.waw.hr.service.EmployeeService;
+import com.waw.hr.response.GetEmployeeSignLogListListResponse;
 import com.waw.hr.service.EmployeeSignLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +43,7 @@ public class EmployeeSignLogServiceImpl extends AbstractService<EmployeeSignLog>
             employeeSignLogList = employeeSignLogMapper.getEmployeeSignLogListByBrokerId(uid);
         }
         PageInfo<EmployeeSignLog> pageInfo = new PageInfo<>(employeeSignLogList);
-        return ResultGenerator.genSuccessResult(new GetEmployeeSignLogListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetEmployeeSignLogListListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
     @Override

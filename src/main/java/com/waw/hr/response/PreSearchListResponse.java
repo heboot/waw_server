@@ -8,9 +8,21 @@ public class PreSearchListResponse extends BaseResponse {
 
     private List<String> hotEnterpriseList;
 
-    public PreSearchListResponse(List<String> hotTagList, List<String> hotEnterpriseList) {
+    private List<String> hotCityList;
+
+
+    public List<String> getHotCityList() {
+        return hotCityList;
+    }
+
+    public void setHotCityList(List<String> hotCityList) {
+        this.hotCityList = hotCityList;
+    }
+
+    public PreSearchListResponse(List<String> hotTagList, List<String> hotEnterpriseList, List<String> hotCityList) {
         this.hotTagList = hotTagList;
         this.hotEnterpriseList = hotEnterpriseList;
+        this.hotCityList = hotCityList;
     }
 
     public List<String> getHotTagList() {

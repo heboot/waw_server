@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EnterpriseService {
 
-    List<Enterprise> getAllEnterprise();
+    List<Enterprise> getEnterpriseList(String key, Integer sort);
 
     List<Enterprise> getEnterpriseByName(String name);
 
@@ -19,5 +19,9 @@ public interface EnterpriseService {
     Integer addEnterprise(Enterprise enterprise);
 
     Integer updateEnterpriseSubsidy(Integer id, Integer money, String info);
+
+    Integer followEnterprise(String uid, String enterpriseId, int type);
+
+    List<Enterprise> getMyEnterpriseList(String uid);
 
 }

@@ -18,4 +18,10 @@ public class MValue {
 
     public static final String MESSAGE_LOGIN_FAIL = "登录异常，请稍后重试";
 
+    public static final String MESSAGE_FOLLOW_SUC = "关注成功";
+
+    public static final String MESSAGE_FOLLOW_UN_SUC = "取消关注成功";
+
+    public static final String MESSAGE_FOLLOW_FAIL = "操作失败，请稍后重试";
+
 }

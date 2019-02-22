@@ -9,7 +9,9 @@ import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.response.BaseListResponse;
+import com.waw.hr.response.BaseResponse;
 import com.waw.hr.response.GetAdminUserListListResponse;
+import com.waw.hr.response.TokenResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.utils.JWTUtil;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +43,7 @@ public class AdminUserController {
             return ResultGenerator.genFailResult(MValue.MESSAGE_USER_NOT_FOUND, USER_NOT_FOUND);
         }
         System.out.print("登录角色为" + adminUser.getRole());
-        return ResultGenerator.genSuccessResult(new BaseListResponse(JWTUtil.sign(username, adminUser.getRole(), CommonValue.SECRET)));
+        return ResultGenerator.genSuccessResult(new TokenResponse(JWTUtil.sign(username, adminUser.getRole(), CommonValue.SECRET)));
     }
 
 

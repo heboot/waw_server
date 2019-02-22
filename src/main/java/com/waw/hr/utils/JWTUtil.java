@@ -33,6 +33,19 @@ public class JWTUtil {
         }
     }
 
+    public static boolean verifyById(String token, String id, String secret) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withClaim("id", id)
+                    .build();
+            DecodedJWT jwt = verifier.verify(token);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
+    }
+
     /**
      * 获得token中的信息无需secret解密也能获得
      *
@@ -47,15 +60,10 @@ public class JWTUtil {
         }
     }
 
-    /**
-     * 获得token中的信息无需secret解密也能获得
-     *
-     * @return token中包含的用户名
-     */
-    public static Integer getUserRole(String token) {
+    public static String getUserId(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return Integer.parseInt(jwt.getClaim("role").asString());
+            return jwt.getClaim("id").asString();
         } catch (JWTDecodeException e) {
             return null;
         }
@@ -72,11 +80,24 @@ public class JWTUtil {
         try {
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            System.out.print("登录角色为222>" + role);
             // 附带username信息
             return JWT.create()
                     .withClaim("username", username)
                     .withClaim("role", role)
+                    .withExpiresAt(date)
+                    .sign(algorithm);
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+    }
+
+    public static String signById(String id, String secret) {
+        try {
+            Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            // 附带username信息
+            return JWT.create()
+                    .withClaim("id", id)
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {

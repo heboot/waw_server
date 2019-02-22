@@ -19,8 +19,8 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
 
 
     @Override
-    public List<Enterprise> getAllEnterprise() {
-        return enterpriseMapper.getAllEnterprise();
+    public List<Enterprise> getEnterpriseList(String key, Integer sort) {
+        return enterpriseMapper.getEnterpriseList(key, sort);
     }
 
     @Override
@@ -51,6 +51,19 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
     @Override
     public Integer updateEnterpriseSubsidy(Integer id, Integer money, String info) {
         return enterpriseMapper.updateEnterpriseSubsidy(id, money, info);
+    }
+
+    @Override
+    public Integer followEnterprise(String uid, String enterpriseId, int type) {
+        if (type == 0) {
+            return enterpriseMapper.unfollowEnterprise(uid, enterpriseId);
+        }
+        return enterpriseMapper.followEnterprise(uid, enterpriseId);
+    }
+
+    @Override
+    public List<Enterprise> getMyEnterpriseList(String uid) {
+        return enterpriseMapper.getMyEnterpriseList(uid);
     }
 
 

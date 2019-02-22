@@ -33,16 +33,12 @@ public class BaseListResponse extends BaseResponse {
         this.totalPage = totalPage;
     }
 
-    public BaseListResponse(int page, int size, int totalPage, String token) {
+    public BaseListResponse(int page, int size, int totalPage) {
         this.page = page;
         this.size = size;
         this.totalPage = totalPage;
-        this.token = token;
     }
 
-    public BaseListResponse(String token) {
-        this.token = token;
-    }
 
     public BaseListResponse() {
     }

@@ -39,9 +39,11 @@ public class EnterpriseController {
      */
     @PostMapping("/getEnterpriseList")
     public Result getAppConfig(@RequestParam(defaultValue = "1") Integer sp,
-                               @RequestParam(defaultValue = "20") Integer pageSize, Model model) {
+                               @RequestParam(defaultValue = "20") Integer pageSize,
+                               @RequestParam(required = false) String key,
+                               @RequestParam(required = false) Integer sort) {
         PageHelper.startPage(sp, pageSize);
-        List<Enterprise> enterprises = enterpriseService.getAllEnterprise();
+        List<Enterprise> enterprises = enterpriseService.getEnterpriseList(key, sort);
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
         return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
@@ -60,7 +62,73 @@ public class EnterpriseController {
         enterprises.add("昌硕");
         enterprises.add("东山精密");
 
-        return ResultGenerator.genSuccessResult(new PreSearchListResponse(hotTags, enterprises));
+        List<String> hotCityList = new ArrayList<>();
+        hotCityList.add("上海");
+        hotCityList.add("无锡");
+        hotCityList.add("昆山");
+        hotCityList.add("常州");
+        hotCityList.add("苏州");
+
+        return ResultGenerator.genSuccessResult(new PreSearchListResponse(hotTags, enterprises, hotCityList));
+    }
+
+
+    /**
+     * 关注职位
+     *
+     * @param token
+     * @param enterpriseId
+     * @param type
+     * @return
+     */
+    @PostMapping("/follow")
+    public Result follow(@RequestParam String token, @RequestParam String enterpriseId, @RequestParam Integer type) {
+
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        if (enterpriseService.followEnterprise(JWTUtil.getUserId(token), enterpriseId, type) > 0) {
+            if (type == 0) {
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_FOLLOW_UN_SUC);
+            } else {
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_FOLLOW_SUC);
+            }
+        }
+        return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
+    }
+
+
+    /**
+     * 报名某个职位
+     * @param token
+     * @param enterpriseId
+     * @return
+     */
+    @PostMapping("/join")
+    public Result join(@RequestParam String token, @RequestParam String enterpriseId) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+
+
+    }
+
+    /**
+     * 我关注的职位列表
+     */
+    @PostMapping("/getMyEnterpriseList")
+    public Result getMyEnterpriseList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer page,
+                                      @RequestParam(defaultValue = "20") Integer size) {
+
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        PageHelper.startPage(page, size);
+        List<Enterprise> enterprises = enterpriseService.getMyEnterpriseList(JWTUtil.getUserId(token));
+        PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
 

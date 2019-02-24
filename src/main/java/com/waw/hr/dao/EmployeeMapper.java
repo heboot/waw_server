@@ -36,4 +36,12 @@ public interface EmployeeMapper extends Mapper<Employee> {
     List<Employee> getEmployeeListByParentID(@Param("parentId") Integer parentId, @Param("key") String key);
 
     List<Employee> getEmployeeListByBrokerId(@Param("brokerId") Integer BrokerId, @Param("key") String key);
+
+    AdminUser getMyBroker(@Param("brokerId") String borkerId);
+
+    Integer updateEmployeeInfo(@Param("uid") String uid, @Param("name") String name, @Param("avatar") String avatar, @Param("sex") String sex);
+
+    Employee getEmployeeById(@Param("id") String id);
+
+    Integer updateEmployeeIdCardPic(@Param("uid") String uid, @Param("picFace") String picFace, @Param("pic") String pic, @Param("status") int status);
 }

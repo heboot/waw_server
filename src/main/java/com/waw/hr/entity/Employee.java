@@ -28,11 +28,19 @@ public class Employee {
 
     private String idCardPic;
 
+    private String bankCardFront;
+
+    private String bankCardReverse;
+
     private int status;
 
     private int jobStatus;
 
     private int cashStatus;
+
+    private int idCardStatus;
+
+    private int bankCardStatus;
 
     public Integer getParentId() {
         return parentId;
@@ -45,9 +53,41 @@ public class Employee {
     @Transient
     private AdminUser parentUser;
 
-
     @Transient
     private AdminUser brokerUser;
+
+
+    public String getBankCardFront() {
+        return bankCardFront;
+    }
+
+    public void setBankCardFront(String bankCardFront) {
+        this.bankCardFront = bankCardFront;
+    }
+
+    public String getBankCardReverse() {
+        return bankCardReverse;
+    }
+
+    public void setBankCardReverse(String bankCardReverse) {
+        this.bankCardReverse = bankCardReverse;
+    }
+
+    public int getIdCardStatus() {
+        return idCardStatus;
+    }
+
+    public void setIdCardStatus(int idCardStatus) {
+        this.idCardStatus = idCardStatus;
+    }
+
+    public int getBankCardStatus() {
+        return bankCardStatus;
+    }
+
+    public void setBankCardStatus(int bankCardStatus) {
+        this.bankCardStatus = bankCardStatus;
+    }
 
     public AdminUser getParentUser() {
         return parentUser;

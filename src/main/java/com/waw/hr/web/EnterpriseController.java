@@ -101,16 +101,19 @@ public class EnterpriseController {
 
     /**
      * 报名某个职位
+     *
      * @param token
      * @param enterpriseId
      * @return
      */
     @PostMapping("/join")
     public Result join(@RequestParam String token, @RequestParam String enterpriseId) {
+
         if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
+        return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
 
 
     }

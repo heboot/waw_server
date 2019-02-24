@@ -24,4 +24,6 @@ public class MValue {
 
     public static final String MESSAGE_FOLLOW_FAIL = "操作失败，请稍后重试";
 
+    public static final String MESSAGE_SMS_CODE_ERROR = "验证码错误";
+
 }

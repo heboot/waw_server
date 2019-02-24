@@ -1,5 +1,6 @@
 package com.waw.hr.web;
 
+import com.auth0.jwt.JWT;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
@@ -10,8 +11,10 @@ import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.entity.EmployeeSignLog;
+import com.waw.hr.response.EmployeeResponse;
 import com.waw.hr.response.GetEmployeeListListResponse;
 import com.waw.hr.response.GetEmployeeSignLogListListResponse;
+import com.waw.hr.response.MyBrokerResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.service.EmployeeSignLogService;
@@ -36,11 +39,98 @@ public class EmployeeController {
     @Resource
     private AdminUserService adminUserService;
 
+
+    /**
+     * 登录
+     *
+     * @param mobile
+     * @param code
+     * @return
+     */
     @PostMapping("/doEmployeeLogin")
     public Result doEmployeeLogin(@RequestParam String mobile,
                                   @RequestParam String code) {
+//        try {
+//            AVOSCloud.verifySMSCode(code, mobile);
         return employeeService.doLogin(mobile, code);
+//        } catch (AVException e) {
+//            return ResultGenerator.genFailResult(MValue.MESSAGE_SMS_CODE_ERROR);
+//        }
+
     }
+
+    /**
+     * 获取我的经纪人详细信息
+     *
+     * @param token
+     * @param brokerId
+     * @return
+     */
+    @PostMapping("/getMyBroker")
+    public Result getMyBroker(@RequestParam String token,
+                              @RequestParam String brokerId) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        return ResultGenerator.genSuccessResult(new MyBrokerResponse(employeeService.getMyBroker(brokerId)));
+    }
+
+    /**
+     * 更新个人信息
+     *
+     * @param token
+     * @param name
+     * @param avatar
+     * @param sex
+     * @return
+     */
+    @PostMapping("/editInfo")
+    public Result editInfo(@RequestParam String token,
+                           @RequestParam(required = false) String name,
+                           @RequestParam(required = false) String avatar,
+                           @RequestParam(required = false) String sex) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        if (employeeService.updateEmployeeInfo(JWTUtil.getUserId(token), name, avatar, sex) > 0) {
+            return ResultGenerator.genSuccessResult(new EmployeeResponse(employeeService.getEmployeeById(JWTUtil.getUserId(token))));
+        }
+
+        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+
+    }
+
+    /**
+     * 检查身份证认证信息
+     *
+     * @return
+     */
+    @PostMapping("/getInfo")
+    public Result getInfo(@RequestParam String token) {
+
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        return ResultGenerator.genSuccessResult(new EmployeeResponse(employeeService.getEmployeeById(JWTUtil.getUserId(token))));
+
+    }
+
+
+    /**
+     * 提交身份证认证
+     *
+     * @return
+     */
+    public Result submitIdCardAuth(@RequestParam String token,
+                                   @RequestParam String idCardPicFace,
+                                   @RequestParam String idCardPic) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+    }
+
 
     /**
      * 更新员工状态
@@ -130,7 +220,7 @@ public class EmployeeController {
      */
     @GetMapping("/getEmployeeList")
     public Result getEmployeeList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "20") Integer limit,@RequestParam(required = false) String key) {
+                                  @RequestParam(defaultValue = "20") Integer limit, @RequestParam(required = false) String key) {
 
         if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
@@ -143,9 +233,9 @@ public class EmployeeController {
         if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
             enterprises = employeeService.getEmployeeList(key);
         } else if (adminUser.getRole() == ROLE.ROLE_EDITOR) {
-            enterprises = employeeService.getEmployeeListByParentID(adminUser.getId(),key);
+            enterprises = employeeService.getEmployeeListByParentID(adminUser.getId(), key);
         } else if (adminUser.getRole() == ROLE.ROLE_BROKER) {
-            enterprises = employeeService.getEmployeeListByBrokerId(adminUser.getId(),key);
+            enterprises = employeeService.getEmployeeListByBrokerId(adminUser.getId(), key);
         }
 
 

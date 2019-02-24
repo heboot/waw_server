@@ -31,19 +31,19 @@
                id="EmployeeListMap">
 
 
-        <result property="id" column="id" />
+        <result property="id" column="id"/>
         <result property="name" column="name"></result>
         <result property="mobile" column="mobile"></result>
         <result property="createTime" column="create_time"></result>
         <result property="brokerId" column="broker_id"></result>
         <result property="joinWorkTime" column="join_work_time"></result>
-        <result property="sex" column="sex" />
-        <result property="age" column="age" />
-        <result property="idCardPicFace" column="id_card_pic_face" />
-        <result property="idCardPic" column="id_card_pic" />
-        <result property="status" column="status" />
-        <result property="jobStatus" column="job_status" />
-        <result property="cashStatus" column="cash_status" />
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="idCardPicFace" column="id_card_pic_face"/>
+        <result property="idCardPic" column="id_card_pic"/>
+        <result property="status" column="status"/>
+        <result property="jobStatus" column="job_status"/>
+        <result property="cashStatus" column="cash_status"/>
 
         <association column="parent_id" property="parentUser" select="com.waw.hr.dao.AdminUserMapper.getAdminUserByID">
         </association>
@@ -59,12 +59,12 @@
         <!--<result property="execute_time" column="execute_time"></result>-->
         <!--<result property="is_choose" column="is_choose" />-->
         <!--<collection property="pages"-->
-                    <!--ofType="com.xrl.script.server.entity.AppPage">-->
-            <!--&lt;!&ndash; collection:一对多时使用，association:多对一使用 &ndash;&gt;-->
-            <!--<result property="id" column="id" />-->
-            <!--<result property="app_id" column="app_id" />-->
-            <!--<result property="page_type" column="page_type" />-->
-            <!--<result property="page_name" column="page_name" />-->
+        <!--ofType="com.xrl.script.server.entity.AppPage">-->
+        <!--&lt;!&ndash; collection:一对多时使用，association:多对一使用 &ndash;&gt;-->
+        <!--<result property="id" column="id" />-->
+        <!--<result property="app_id" column="app_id" />-->
+        <!--<result property="page_type" column="page_type" />-->
+        <!--<result property="page_name" column="page_name" />-->
         <!--</collection>-->
     </resultMap>
 
@@ -131,10 +131,58 @@
 
     </update>
 
-    <select id="getEmployeeByMobile">
+    <select id="getEmployeeByMobile" resultType="com.waw.hr.entity.Employee">
 
         SELECT * FROM tb_employee where mobile = #{mobile}
 
     </select>
+
+    <select id="getMyBroker" resultType="com.waw.hr.entity.AdminUser">
+
+        SELECT * FRON tb_admin_user WHERE id = #{brokerId}
+
+    </select>
+
+    <update id="updateEmployeeInfo">
+
+        UPDATE tb_employee
+
+        <set>
+
+            <if test="name != null and name != ''">
+
+                name = #{name}
+
+            </if>
+
+            <if test="sex != null and sex != ''">
+
+                sex = #{sex}
+
+            </if>
+
+            <if test="avatar != null and avatar != ''">
+
+                avatar = #{avatar}
+
+            </if>
+
+        </set>
+
+        WHERE id = #{uid}
+
+    </update>
+
+    <select id="getEmployeeById" resultType="com.waw.hr.entity.Employee">
+
+        SELECT * FROM tb_employee WHERE id = #{id}
+
+    </select>
+
+    <update id="updateEmployeeIdCardPic">
+
+        UPDATE tb_employeee SET id_card_pic_face = #{picFace},id_card_pic = #{pic} WHERE id = #{uid}
+
+    </update>
 
 </mapper>

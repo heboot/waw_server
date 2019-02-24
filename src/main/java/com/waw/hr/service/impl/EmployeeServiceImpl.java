@@ -1,12 +1,16 @@
 package com.waw.hr.service.impl;
 
+import com.waw.hr.CommonValue;
 import com.waw.hr.core.AbstractService;
 import com.waw.hr.core.MValue;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.dao.EmployeeMapper;
+import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.response.LoginResponse;
 import com.waw.hr.service.EmployeeService;
+import com.waw.hr.utils.JWTUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,16 +51,19 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
 
     @Override
     public Result doLogin(String mobile, String smsCode) {
-        // TODO: 2019/1/31 验证验证码是否准确
         //验证码正确之后
         if (employeeMapper.getEmployeeByMobile(mobile) == null) {
             Integer result = registerEmployee(mobile, "", String.valueOf(System.currentTimeMillis()));
             if (result != null && result > 0) {
-                return ResultGenerator.genSuccessResult(employeeMapper.getEmployeeByMobile(mobile));
+                Employee employee = employeeMapper.getEmployeeByMobile(mobile);
+                LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
+                return ResultGenerator.genSuccessResult(loginResponse);
             }
             return ResultGenerator.genFailResult(MValue.MESSAGE_LOGIN_FAIL);
         }
-        return ResultGenerator.genSuccessResult(employeeMapper.getEmployeeByMobile(mobile));
+        Employee employee = employeeMapper.getEmployeeByMobile(mobile);
+        LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
+        return ResultGenerator.genSuccessResult(loginResponse);
     }
 
     @Override
@@ -77,12 +84,32 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public List<Employee> getEmployeeListByParentID(Integer parentId,String key) {
-        return employeeMapper.getEmployeeListByParentID(parentId,key);
+    public List<Employee> getEmployeeListByParentID(Integer parentId, String key) {
+        return employeeMapper.getEmployeeListByParentID(parentId, key);
     }
 
     @Override
-    public List<Employee> getEmployeeListByBrokerId(Integer BrokerId,String key) {
-        return employeeMapper.getEmployeeListByBrokerId(BrokerId,key);
+    public List<Employee> getEmployeeListByBrokerId(Integer BrokerId, String key) {
+        return employeeMapper.getEmployeeListByBrokerId(BrokerId, key);
+    }
+
+    @Override
+    public AdminUser getMyBroker(String borkerId) {
+        return employeeMapper.getMyBroker(borkerId);
+    }
+
+    @Override
+    public Integer updateEmployeeInfo(String uid, String name, String avatar, String sex) {
+        return employeeMapper.updateEmployeeInfo(uid, name, avatar, sex);
+    }
+
+    @Override
+    public Employee getEmployeeById(String id) {
+        return employeeMapper.getEmployeeById(id);
+    }
+
+    @Override
+    public Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status) {
+        return employeeMapper.updateEmployeeIdCardPic(uid, picFace, pic, status);
     }
 }

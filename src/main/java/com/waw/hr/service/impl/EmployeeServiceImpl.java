@@ -5,6 +5,7 @@ import com.waw.hr.core.AbstractService;
 import com.waw.hr.core.MValue;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
+import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
@@ -23,6 +24,9 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
 
     @Resource
     private EmployeeMapper employeeMapper;
+
+    @Resource
+    private AdminUserMapper adminUserMapper;
 
     @Override
     public Integer registerEmployee(String mobile, String name, String time) {
@@ -53,12 +57,20 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     public Result doLogin(String mobile, String smsCode) {
         //验证码正确之后
         if (employeeMapper.getEmployeeByMobile(mobile) == null) {
+//            if (adminUserMapper.getAdminUserByMobile(mobile) == null) {
             Integer result = registerEmployee(mobile, "", String.valueOf(System.currentTimeMillis()));
             if (result != null && result > 0) {
                 Employee employee = employeeMapper.getEmployeeByMobile(mobile);
                 LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
                 return ResultGenerator.genSuccessResult(loginResponse);
             }
+//            }
+            //这个手机号是管理员
+//            else {
+//                AdminUser adminUser = adminUserMapper.getAdminUserByMobile(mobile);
+//                LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(adminUser.getId()), CommonValue.SECRET), adminUser);
+//                return ResultGenerator.genSuccessResult(loginResponse);
+//            }
             return ResultGenerator.genFailResult(MValue.MESSAGE_LOGIN_FAIL);
         }
         Employee employee = employeeMapper.getEmployeeByMobile(mobile);

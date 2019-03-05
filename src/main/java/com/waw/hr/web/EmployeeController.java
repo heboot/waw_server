@@ -1,24 +1,20 @@
 package com.waw.hr.web;
 
-import com.auth0.jwt.JWT;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVOSCloud;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
-import com.waw.hr.core.MValue;
-import com.waw.hr.core.ROLE;
-import com.waw.hr.core.Result;
-import com.waw.hr.core.ResultGenerator;
+import com.waw.hr.core.*;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.entity.EmployeeSignLog;
-import com.waw.hr.response.EmployeeResponse;
-import com.waw.hr.response.GetEmployeeListListResponse;
-import com.waw.hr.response.GetEmployeeSignLogListListResponse;
-import com.waw.hr.response.MyBrokerResponse;
+import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.service.EmployeeSignLogService;
 import com.waw.hr.utils.JWTUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,7 +23,7 @@ import java.util.List;
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping(value = {"/employee", "app/employee"})
 public class EmployeeController {
 
     @Resource
@@ -39,6 +35,9 @@ public class EmployeeController {
     @Resource
     private AdminUserService adminUserService;
 
+    @Value("${spring.profiles.active}")
+    private String env;//当前激活的配置文件
+
 
     /**
      * 登录
@@ -47,16 +46,36 @@ public class EmployeeController {
      * @param code
      * @return
      */
-    @PostMapping("/doEmployeeLogin")
+    @PostMapping("/login")
     public Result doEmployeeLogin(@RequestParam String mobile,
                                   @RequestParam String code) {
-//        try {
-//            AVOSCloud.verifySMSCode(code, mobile);
-        return employeeService.doLogin(mobile, code);
-//        } catch (AVException e) {
-//            return ResultGenerator.genFailResult(MValue.MESSAGE_SMS_CODE_ERROR);
-//        }
+        if (!"dev".equals(env)) { //开发环境忽略签名认证
+            try {
+                AVOSCloud.verifySMSCode(code, mobile);
+                return employeeService.doLogin(mobile, code);
+            } catch (AVException e) {
+                return ResultGenerator.genFailResult(MValue.MESSAGE_SMS_CODE_ERROR);
+            }
+        } else {
+            return employeeService.doLogin(mobile, code);
+        }
+    }
 
+    /**
+     * 获取个人信息
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/info")
+    public Result info(@RequestParam String token) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        Employee employee = employeeService.getEmployeeById(JWTUtil.getUserId(token));
+
+        return ResultGenerator.genSuccessResult(new InfoResponse(employee));
     }
 
     /**
@@ -118,6 +137,22 @@ public class EmployeeController {
     }
 
 
+//    @PostMapping("/initIDAuth")
+//    public Result initIDAuth(@RequestParam String token) {
+//
+//        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+//            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+//        }
+//
+//        Employee employee = employeeService.getEmployeeById(JWTUtil.getUserId(token));
+//
+//        if(employee.get)
+//
+//        return ResultGenerator.genSuccessResult(new EmployeeResponse(employeeService.getEmployeeById(JWTUtil.getUserId(token))));
+//
+//    }
+
+
     /**
      * 提交身份证认证
      *
@@ -129,6 +164,13 @@ public class EmployeeController {
         if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
+
+        if (employeeService.updateEmployeeIdCardPic(JWTUtil.getUserId(token), idCardPicFace, idCardPic, AuthStatus.ING.code()) > 0) {
+            return ResultGenerator.genSuccessResult(employeeService.getEmployeeById(JWTUtil.getUserId(token)));
+        }
+
+        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+
     }
 
 

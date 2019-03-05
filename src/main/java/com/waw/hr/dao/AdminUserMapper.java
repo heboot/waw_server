@@ -15,6 +15,8 @@ public interface AdminUserMapper extends Mapper<AdminUser> {
 
     AdminUser getAdminUserByID(Integer id);
 
+    AdminUser getAdminUserByMobile(@Param("mobile") String mobile);
+
     Integer updateAdminUserStatus(@Param("uid") Integer uid, @Param("status") Integer status);
 
 //    List<Enterprise> getEnterpriseByName(@Param("name") String name);

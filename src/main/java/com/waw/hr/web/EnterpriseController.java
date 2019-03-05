@@ -3,15 +3,20 @@ package com.waw.hr.web;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.tools.javac.comp.Enter;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Enterprise;
+import com.waw.hr.entity.EnterpriseListModel;
+import com.waw.hr.response.EnterpriseDetailResponse;
+import com.waw.hr.response.EnterpriseListResponse;
 import com.waw.hr.response.GetAllEnterpriseListResponse;
 import com.waw.hr.response.PreSearchListResponse;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EnterpriseService;
 import com.waw.hr.utils.JWTUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +51,47 @@ public class EnterpriseController {
         List<Enterprise> enterprises = enterpriseService.getEnterpriseList(key, sort);
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
         return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
+    }
+
+    /**
+     * 获取所有企业
+     *
+     * @return
+     */
+    @PostMapping("/enterpriseList")
+    public Result enterpriseList(@RequestParam(defaultValue = "1") Integer sp,
+                                 @RequestParam(defaultValue = "20") Integer pageSize,
+                                 @RequestParam(required = false) String key,
+                                 @RequestParam(required = false) Integer sort) {
+        PageHelper.startPage(sp, pageSize);
+        List<EnterpriseListModel> enterprises = enterpriseService.enterpriseList(key, sort);
+        PageInfo<EnterpriseListModel> pageInfo = new PageInfo<>(enterprises);
+        return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
+    }
+
+
+    @PostMapping("/detail")
+    public Result detail(@RequestParam(required = false) String token, @RequestParam String enterpriseId) {
+
+        Enterprise enterprise = enterpriseService.getEnterpriseById(enterpriseId);
+
+        if (!StringUtils.isEmpty(token)) {
+
+            if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+                return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+            }
+
+            int is_join = enterpriseService.is_join(JWTUtil.getUserId(token), enterpriseId);
+
+            int is_follow = enterpriseService.is_follow(JWTUtil.getUserId(token), enterpriseId);
+
+            enterprise.setIsJoin(is_join);
+
+            enterprise.setIsFollow(is_follow);
+        }
+
+
+        return ResultGenerator.genSuccessResult(new EnterpriseDetailResponse(enterprise));
     }
 
 
@@ -157,7 +203,7 @@ public class EnterpriseController {
      * @return
      */
     @PostMapping("/getEnterpriseById")
-    public Result getEnterpriseById(@RequestParam(value = "id") Integer id) {
+    public Result getEnterpriseById(@RequestParam(value = "id") String id) {
         Enterprise enterprise = enterpriseService.getEnterpriseById(id);
         return ResultGenerator.genSuccessResult(enterprise);
     }
@@ -232,7 +278,7 @@ public class EnterpriseController {
     }
 
     @PostMapping("updateEnterpriseSubsidy")
-    public Result updateEnterpriseSubsidy(@RequestParam() Integer id, @RequestParam(required = false) Integer subsidy_money, @RequestParam(required = false) String subsidy_info) {
+    public Result updateEnterpriseSubsidy(@RequestParam() String id, @RequestParam(required = false) Integer subsidy_money, @RequestParam(required = false) String subsidy_info) {
         if (enterpriseService.getEnterpriseById(id) != null) {
             Integer num = enterpriseService.updateEnterpriseSubsidy(id, subsidy_money, subsidy_info);
             if (num != null && num > 0) {

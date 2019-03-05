@@ -1,6 +1,7 @@
 package com.waw.hr.entity;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -199,6 +200,29 @@ public class Enterprise {
 
     //企业补贴说明
     private String subsidyInfo;
+
+    //本地字段
+    @Transient
+    private int isFollow;
+
+    @Transient
+    private int isJoin;
+
+    public int getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(int isFollow) {
+        this.isFollow = isFollow;
+    }
+
+    public int getIsJoin() {
+        return isJoin;
+    }
+
+    public void setIsJoin(int isJoin) {
+        this.isJoin = isJoin;
+    }
 
     public Integer getSubsidyMoney() {
         return subsidyMoney;

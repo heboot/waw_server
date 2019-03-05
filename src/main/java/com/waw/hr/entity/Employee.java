@@ -10,6 +10,8 @@ public class Employee {
 
     private String name;
 
+    private String avatar;
+
     private String mobile;
 
     private String createTime;
@@ -56,6 +58,13 @@ public class Employee {
     @Transient
     private AdminUser brokerUser;
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getBankCardFront() {
         return bankCardFront;

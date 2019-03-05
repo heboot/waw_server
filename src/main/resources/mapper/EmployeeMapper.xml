@@ -8,7 +8,7 @@
         INSERT INTO tb_employee (
         name,
         mobile,
-        create_time VALUES  (#{name},#{mobile},#{time})
+        create_time ) VALUES  (#{name},#{mobile},#{time})
     </insert>
 
     <select id="getEmployeeList" resultMap="EmployeeListMap">
@@ -181,7 +181,30 @@
 
     <update id="updateEmployeeIdCardPic">
 
-        UPDATE tb_employeee SET id_card_pic_face = #{picFace},id_card_pic = #{pic} WHERE id = #{uid}
+        UPDATE tb_employeee
+
+        <set>
+
+            <if test="picFace != null and picFace != ''">
+
+                id_card_pic_face = #{picFace}
+
+            </if>
+
+            <if test="pic != null and pic != ''">
+
+                id_card_pic = #{pic}
+
+            </if>
+
+            <if test="status != null and status != ''">
+                id_card_status = #{status}
+
+            </if>
+
+        </set>
+
+        WHERE id = #{uid}
 
     </update>
 

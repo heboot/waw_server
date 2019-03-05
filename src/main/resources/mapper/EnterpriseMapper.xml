@@ -20,6 +20,37 @@
 
     </select>
 
+    <!--查询所有的企业信息-->
+    <select id="enterpriseList" resultType="com.waw.hr.entity.EnterpriseListModel">
+        select id,name,salary,subsidy_money from tb_enterprise
+
+        <if test="key != null">
+            WHERE name LIKE concat(concat('%',#{key}),'%')
+        </if>
+
+        <if test="sort == 1">
+
+            order by subsidy_money desc
+
+        </if>
+
+    </select>
+
+
+    <!--是否关注-->
+    <select id="is_follow" resultType="java.lang.Integer">
+
+        SELECT COUNT(id) FROM tb_follow WHERE uid = #{uid} AND eid = #{enterpriseId}
+
+    </select>
+
+    <!--是否报名-->
+    <select id="is_join" resultType="java.lang.Integer">
+
+        SELECT COUNT(id) FROM tb_apply WHERE uid = #{uid} AND eid = #{enterpriseId}
+
+    </select>
+
     <!--根据企业ID查询某个企业-->
     <select id="getEnterpriseById" resultType="com.waw.hr.entity.Enterprise">
         select * from `tb_enterprise` where `id` = #{id}
@@ -47,8 +78,6 @@
         SELECT * FROM tb_enterprise WHERE id in (SELECT eid from tb_follow WHERE uid = #{uid})
 
     </select>
-
-
 
 
     <!--更新职位的补贴信息-->

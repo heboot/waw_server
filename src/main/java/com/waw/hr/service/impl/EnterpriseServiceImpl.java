@@ -3,6 +3,7 @@ package com.waw.hr.service.impl;
 import com.waw.hr.core.AbstractService;
 import com.waw.hr.dao.EnterpriseMapper;
 import com.waw.hr.entity.Enterprise;
+import com.waw.hr.entity.EnterpriseListModel;
 import com.waw.hr.service.EnterpriseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,15 @@ import java.util.List;
 @Service
 @Transactional
 public class EnterpriseServiceImpl extends AbstractService<Enterprise> implements EnterpriseService {
+    @Override
+    public Integer is_follow(String uid, String enterpriseId) {
+        return enterpriseMapper.is_follow(uid, enterpriseId);
+    }
+
+    @Override
+    public Integer is_join(String uid, String enterpriseId) {
+        return enterpriseMapper.is_join(uid, enterpriseId);
+    }
 
     @Resource
     private EnterpriseMapper enterpriseMapper;
@@ -21,6 +31,11 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
     @Override
     public List<Enterprise> getEnterpriseList(String key, Integer sort) {
         return enterpriseMapper.getEnterpriseList(key, sort);
+    }
+
+    @Override
+    public List<EnterpriseListModel> enterpriseList(String key, Integer sort) {
+        return enterpriseMapper.enterpriseList(key, sort);
     }
 
     @Override
@@ -34,7 +49,7 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
     }
 
     @Override
-    public Enterprise getEnterpriseById(Integer id) {
+    public Enterprise getEnterpriseById(String id) {
         return enterpriseMapper.getEnterpriseById(id);
     }
 
@@ -49,7 +64,7 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
     }
 
     @Override
-    public Integer updateEnterpriseSubsidy(Integer id, Integer money, String info) {
+    public Integer updateEnterpriseSubsidy(String id, Integer money, String info) {
         return enterpriseMapper.updateEnterpriseSubsidy(id, money, info);
     }
 

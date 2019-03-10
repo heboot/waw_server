@@ -3,22 +3,20 @@ package com.waw.hr.web;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.tools.javac.comp.Enter;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Enterprise;
 import com.waw.hr.entity.EnterpriseListModel;
-import com.waw.hr.response.EnterpriseDetailResponse;
-import com.waw.hr.response.EnterpriseListResponse;
-import com.waw.hr.response.GetAllEnterpriseListResponse;
-import com.waw.hr.response.PreSearchListResponse;
+import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EnterpriseService;
 import com.waw.hr.utils.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -136,9 +134,9 @@ public class EnterpriseController {
 
         if (enterpriseService.followEnterprise(JWTUtil.getUserId(token), enterpriseId, type) > 0) {
             if (type == 0) {
-                return ResultGenerator.genSuccessResult(MValue.MESSAGE_FOLLOW_UN_SUC);
+                return ResultGenerator.genSuccessResult(new FollowResponse(MValue.MESSAGE_FOLLOW_UN_SUC));
             } else {
-                return ResultGenerator.genSuccessResult(MValue.MESSAGE_FOLLOW_SUC);
+                return ResultGenerator.genSuccessResult(new FollowResponse(MValue.MESSAGE_FOLLOW_SUC));
             }
         }
         return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
@@ -177,7 +175,7 @@ public class EnterpriseController {
         PageHelper.startPage(page, size);
         List<Enterprise> enterprises = enterpriseService.getMyEnterpriseList(JWTUtil.getUserId(token));
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(page, size, (int) pageInfo.getPages(), pageInfo.getList()));
     }
 
 

@@ -2,6 +2,8 @@ package com.waw.hr.core;
 
 public class MValue {
 
+    public static String IMAGE_PRIFIX = "http://img.youzhihr.com/";
+
     public static final String MESSAGE_USER_NOT_FOUND = "用户不存在";
 
     public static final String MESSAGE_TOKEN_ERROR = "token error";

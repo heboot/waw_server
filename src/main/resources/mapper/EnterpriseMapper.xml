@@ -73,7 +73,7 @@
 
     </delete>
 
-    <select id="getMyEnterpriseList">
+    <select id="getMyEnterpriseList" resultType="com.waw.hr.entity.EnterpriseListModel">
 
         SELECT * FROM tb_enterprise WHERE id in (SELECT eid from tb_follow WHERE uid = #{uid})
 

@@ -25,6 +25,11 @@ public class AdminUser {
 
     private String lastLoginTime;
 
+    private String wx_code;
+
+    private String qq_code;
+
+
     @Transient
     private List<String> roles;
 
@@ -109,4 +114,19 @@ public class AdminUser {
         this.status = status;
     }
 
+    public String getWx_code() {
+        return wx_code;
+    }
+
+    public void setWx_code(String wx_code) {
+        this.wx_code = wx_code;
+    }
+
+    public String getQq_code() {
+        return qq_code;
+    }
+
+    public void setQq_code(String qq_code) {
+        this.qq_code = qq_code;
+    }
 }

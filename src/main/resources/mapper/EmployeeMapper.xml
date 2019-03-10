@@ -139,7 +139,7 @@
 
     <select id="getMyBroker" resultType="com.waw.hr.entity.AdminUser">
 
-        SELECT * FRON tb_admin_user WHERE id = #{brokerId}
+        SELECT * FROM tb_admin_user WHERE id = #{brokerId}
 
     </select>
 

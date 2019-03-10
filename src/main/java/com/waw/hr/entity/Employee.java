@@ -1,5 +1,7 @@
 package com.waw.hr.entity;
 
+import com.waw.hr.core.MValue;
+
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -63,7 +65,7 @@ public class Employee {
     }
 
     public void setAvatar(String avatar) {
-        this.avatar = avatar;
+        this.avatar = MValue.IMAGE_PRIFIX + avatar;
     }
 
     public String getBankCardFront() {

@@ -85,7 +85,7 @@ public class EmployeeController {
      * @param brokerId
      * @return
      */
-    @PostMapping("/getMyBroker")
+    @PostMapping("/myBroker")
     public Result getMyBroker(@RequestParam String token,
                               @RequestParam String brokerId) {
         if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {

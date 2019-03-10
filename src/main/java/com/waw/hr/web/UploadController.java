@@ -6,6 +6,7 @@ import com.waw.hr.core.MValue;
 import com.waw.hr.core.QiniuKey;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
+import com.waw.hr.response.UploadTokenResponse;
 import com.waw.hr.utils.JWTUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
-@RequestMapping("/upload")
+@RequestMapping(value = {"/upload", "app/upload"})
 public class UploadController {
 
     @PostMapping("/uploadImage")
@@ -46,5 +47,15 @@ public class UploadController {
         Auth auth = Auth.create(QiniuKey.AK, QiniuKey.SK);
         String upToken = auth.uploadToken(QiniuKey.BUCKET_ENTERPRISE_IMAGE);
         return ResultGenerator.genSuccessResult(upToken);
+    }
+
+    @PostMapping("/getUploadToken")
+    public Result getUploadImageToken(@RequestParam String token) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        Auth auth = Auth.create(QiniuKey.AK, QiniuKey.SK);
+        String upToken = auth.uploadToken(QiniuKey.BUCKET_ENTERPRISE_IMAGE);
+        return ResultGenerator.genSuccessResult(new UploadTokenResponse(upToken));
     }
 }

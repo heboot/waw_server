@@ -67,6 +67,13 @@
 
     </insert>
 
+    <insert id="join">
+
+        INSERT INTO tb_apply (uid,eid,apply_time) VALUES(#{uid},#{enterpriseId},#{time})
+
+    </insert>
+
+
     <delete id="unfollowEnterprise">
 
         DELETE FROM tb_follow WHERE uid = #{uid} and eid = #{enterpriseId}

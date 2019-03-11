@@ -28,6 +28,8 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
     //关注
     Integer followEnterprise(@Param("uid") String uid, @Param("enterpriseId") String enterpriseId);
 
+    Integer join(@Param("uid") String uid, @Param("enterpriseId") String enterpriseId, @Param("time") String time);
+
     Integer unfollowEnterprise(@Param("uid") String uid, @Param("enterpriseId") String enterpriseId);
 
     List<Enterprise> getMyEnterpriseList(@Param("uid") String uid);

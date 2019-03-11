@@ -77,6 +77,11 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
     }
 
     @Override
+    public Integer join(String uid, String enterpriseId, String time) {
+        return enterpriseMapper.join(uid, enterpriseId, time);
+    }
+
+    @Override
     public List<Enterprise> getMyEnterpriseList(String uid) {
         return enterpriseMapper.getMyEnterpriseList(uid);
     }

@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.waw.hr.core.MValue.MESSAGE_JOIN_ED;
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
@@ -157,8 +158,18 @@ public class EnterpriseController {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
-        return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        //先检查是否已经报过名
+        if (enterpriseService.is_join(JWTUtil.getUserId(token), enterpriseId) > 0) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_JOIN_ED);
+        }
 
+        int result = enterpriseService.join(JWTUtil.getUserId(token), enterpriseId, String.valueOf(System.currentTimeMillis()));
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult(new FollowResponse(MValue.MESSAGE_JOIN_SUC));
+        } else {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
+        }
 
     }
 

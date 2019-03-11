@@ -28,4 +28,7 @@ public class MValue {
 
     public static final String MESSAGE_SMS_CODE_ERROR = "验证码错误";
 
+    public static final String MESSAGE_JOIN_ED = "您已经报过名了";
+
+    public static final String MESSAGE_JOIN_SUC = "报名成功";
 }

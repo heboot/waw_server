@@ -25,6 +25,8 @@ public interface EnterpriseService {
 
     Integer followEnterprise(String uid, String enterpriseId, int type);
 
+    Integer join(String uid, String enterpriseId, String time);
+
     Integer is_follow(String uid, String enterpriseId);
 
     Integer is_join(String uid, String enterpriseId);

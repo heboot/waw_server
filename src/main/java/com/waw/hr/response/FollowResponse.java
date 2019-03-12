@@ -1,18 +1,17 @@
 package com.waw.hr.response;
 
 public class FollowResponse {
-
-    private String tip;
-
-    public String getTip() {
-        return tip;
+    public FollowResponse(int is_follow) {
+        this.is_follow = is_follow;
     }
 
-    public void setTip(String tip) {
-        this.tip = tip;
+    private int is_follow;
+
+    public int getIs_follow() {
+        return is_follow;
     }
 
-    public FollowResponse(String tip) {
-        this.tip = tip;
+    public void setIs_follow(int is_follow) {
+        this.is_follow = is_follow;
     }
 }

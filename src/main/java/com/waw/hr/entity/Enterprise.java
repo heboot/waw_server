@@ -201,6 +201,7 @@ public class Enterprise {
     //企业补贴说明
     private String subsidyInfo;
 
+
     //本地字段
     @Transient
     private int isFollow;

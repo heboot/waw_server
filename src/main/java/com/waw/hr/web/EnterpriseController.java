@@ -84,6 +84,8 @@ public class EnterpriseController {
 
             int is_follow = enterpriseService.is_follow(JWTUtil.getUserId(token), enterpriseId);
 
+
+
             enterprise.setIsJoin(is_join);
 
             enterprise.setIsFollow(is_follow);
@@ -135,9 +137,9 @@ public class EnterpriseController {
 
         if (enterpriseService.followEnterprise(JWTUtil.getUserId(token), enterpriseId, type) > 0) {
             if (type == 0) {
-                return ResultGenerator.genSuccessResult(new FollowResponse(MValue.MESSAGE_FOLLOW_UN_SUC));
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_FOLLOW_UN_SUC, new FollowResponse(0));
             } else {
-                return ResultGenerator.genSuccessResult(new FollowResponse(MValue.MESSAGE_FOLLOW_SUC));
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_FOLLOW_SUC, new FollowResponse(1));
             }
         }
         return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
@@ -166,7 +168,7 @@ public class EnterpriseController {
         int result = enterpriseService.join(JWTUtil.getUserId(token), enterpriseId, String.valueOf(System.currentTimeMillis()));
 
         if (result > 0) {
-            return ResultGenerator.genSuccessResult(new FollowResponse(MValue.MESSAGE_JOIN_SUC));
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_JOIN_SUC, new JoinEnterpriseResponse(1));
         } else {
             return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
         }

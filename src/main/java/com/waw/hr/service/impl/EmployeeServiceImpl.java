@@ -124,4 +124,9 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     public Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status) {
         return employeeMapper.updateEmployeeIdCardPic(uid, picFace, pic, status);
     }
+
+    @Override
+    public Integer updateEmployeeBarkCardInfo(String uid, String bankPicFront, String bankPicReverse) {
+        return null;
+    }
 }

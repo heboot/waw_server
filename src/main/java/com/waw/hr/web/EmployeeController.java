@@ -158,9 +158,10 @@ public class EmployeeController {
      *
      * @return
      */
-    public Result submitIdCardAuth(@RequestParam String token,
-                                   @RequestParam String idCardPicFace,
-                                   @RequestParam String idCardPic) {
+    @PostMapping("/auth")
+    public Result auth(@RequestParam String token,
+                       @RequestParam String idCardPicFace,
+                       @RequestParam String idCardPic) {
         if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
@@ -172,6 +173,8 @@ public class EmployeeController {
         return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
 
     }
+
+
 
 
     /**

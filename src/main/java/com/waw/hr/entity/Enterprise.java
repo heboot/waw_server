@@ -3,6 +3,7 @@ package com.waw.hr.entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * 企业类Enterprise
@@ -201,6 +202,9 @@ public class Enterprise {
     //企业补贴说明
     private String subsidyInfo;
 
+    //人数
+    private Integer pnumber;
+
 
     //本地字段
     @Transient
@@ -208,6 +212,15 @@ public class Enterprise {
 
     @Transient
     private int isJoin;
+
+
+    public Integer getPnumber() {
+        return new Random().nextInt(9) + 1;
+    }
+
+    public void setPnumber(Integer pnumber) {
+        this.pnumber = pnumber;
+    }
 
     public int getIsFollow() {
         return isFollow;

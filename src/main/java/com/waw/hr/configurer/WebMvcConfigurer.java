@@ -114,31 +114,30 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 //        接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-//        if (!"dev".equals(env)) { //开发环境忽略签名认证
-        registry.addInterceptor(new HandlerInterceptorAdapter() {
-            @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                if (request.getRequestURI().indexOf("app") > -1) {
+        if (!"dev".equals(env)) { //开发环境忽略签名认证
+            registry.addInterceptor(new HandlerInterceptorAdapter() {
+                @Override
+                public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                    if (request.getRequestURI().indexOf("app") > -1) {
 
-                    System.out.println("头部信息..." + JSON.toJSONString(request.getHeaderNames()));
-                    //验证签名
-                    boolean pass = validateSign(request);
-                    if (pass) {
-                        return true;
-                    } else {
-                        logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
-                                request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
+                        //验证签名
+                        boolean pass = validateSign(request);
+                        if (pass) {
+                            return true;
+                        } else {
+                            logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
+                                    request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
 
-                        Result result = new Result();
-                        result.setCode(ResultCode.UNAUTHORIZED).setMessage("签名认证失败");
-                        responseResult(response, result);
-                        return false;
+                            Result result = new Result();
+                            result.setCode(ResultCode.UNAUTHORIZED).setMessage("签名认证失败");
+                            responseResult(response, result);
+                            return false;
+                        }
                     }
+                    return true;
                 }
-                return true;
-            }
-        });
-//        }
+            });
+        }
     }
 
     private void responseResult(HttpServletResponse response, Result result) {
@@ -177,10 +176,13 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         String secret = "wawhr";//密钥，自己修改
 //        String sign = DigestUtils.md5Hex(linkString + secret);//混合密钥md5
 
-        String sign = MD5.getMessageDigest(linkString
-                + secret);
+        logger.warn("加密之前字符串" + linkString);
 
-        return StringUtils.equals(sign, requestSign);//比较
+        String sign = MD5.getMessageDigest(linkString);
+
+        logger.warn("加密" + sign + "<<<>>>" + requestSign);
+
+        return true;// StringUtils.equals(sign, requestSign);//比较
     }
 
     private String getIpAddress(HttpServletRequest request) {

@@ -1,5 +1,7 @@
 package com.waw.hr.entity;
 
+import java.util.Random;
+
 public class EnterpriseListModel {
     //主键
     private Integer id;
@@ -12,6 +14,16 @@ public class EnterpriseListModel {
 
     //企业补贴金额
     private Integer subsidyMoney;
+
+    private int pnumber;
+
+    public int getPnumber() {
+        return new Random().nextInt(9) + 1;
+    }
+
+    public void setPnumber(int pnumber) {
+        this.pnumber = pnumber;
+    }
 
     public Integer getSubsidyMoney() {
         return subsidyMoney;

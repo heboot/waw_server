@@ -49,7 +49,7 @@ public class EnterpriseController {
         PageHelper.startPage(sp, pageSize);
         List<Enterprise> enterprises = enterpriseService.getEnterpriseList(key, sort);
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
     }
 
     /**
@@ -65,7 +65,7 @@ public class EnterpriseController {
         PageHelper.startPage(sp, pageSize);
         List<EnterpriseListModel> enterprises = enterpriseService.enterpriseList(key, sort);
         PageInfo<EnterpriseListModel> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
     }
 
 
@@ -83,7 +83,6 @@ public class EnterpriseController {
             int is_join = enterpriseService.is_join(JWTUtil.getUserId(token), enterpriseId);
 
             int is_follow = enterpriseService.is_follow(JWTUtil.getUserId(token), enterpriseId);
-
 
 
             enterprise.setIsJoin(is_join);

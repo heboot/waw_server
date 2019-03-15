@@ -44,4 +44,6 @@ public interface EmployeeMapper extends Mapper<Employee> {
     Employee getEmployeeById(@Param("id") String id);
 
     Integer updateEmployeeIdCardPic(@Param("uid") String uid, @Param("picFace") String picFace, @Param("pic") String pic, @Param("status") int status);
+
+    Integer updateEmployeeBarkCardInfo(@Param("uid") String uid, @Param("picFront") String bankPicFront, @Param("picReverse") String bankPicReverse);
 }

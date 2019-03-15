@@ -32,9 +32,9 @@ public class Employee {
 
     private String idCardPic;
 
-    private String bankCardFront;
+//    private String bankCardFront;
 
-    private String bankCardReverse;
+//    private String bankCardReverse;
 
     private int status;
 
@@ -66,22 +66,6 @@ public class Employee {
 
     public void setAvatar(String avatar) {
         this.avatar = MValue.IMAGE_PRIFIX + avatar;
-    }
-
-    public String getBankCardFront() {
-        return bankCardFront;
-    }
-
-    public void setBankCardFront(String bankCardFront) {
-        this.bankCardFront = bankCardFront;
-    }
-
-    public String getBankCardReverse() {
-        return bankCardReverse;
-    }
-
-    public void setBankCardReverse(String bankCardReverse) {
-        this.bankCardReverse = bankCardReverse;
     }
 
     public int getIdCardStatus() {

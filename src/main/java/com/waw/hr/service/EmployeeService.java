@@ -39,4 +39,6 @@ public interface EmployeeService {
 
     Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status);
 
+    Integer updateEmployeeBarkCardInfo(String uid, String bankPicFront, String bankPicReverse);
+
 }

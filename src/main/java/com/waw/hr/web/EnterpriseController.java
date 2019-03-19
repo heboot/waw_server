@@ -6,11 +6,13 @@ import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.entity.AdminUser;
+import com.waw.hr.entity.Banner;
 import com.waw.hr.entity.Enterprise;
-import com.waw.hr.entity.EnterpriseListModel;
+import com.waw.hr.model.EnterpriseListModel;
 import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EnterpriseService;
+import com.waw.hr.service.IndexService;
 import com.waw.hr.utils.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +24,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.waw.hr.core.MValue.MESSAGE_JOIN_ED;
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
@@ -34,6 +35,9 @@ public class EnterpriseController {
 
     @Resource
     private AdminUserService adminUserService;
+
+    @Resource
+    private IndexService indexService;
 
 
     /**
@@ -65,7 +69,8 @@ public class EnterpriseController {
         PageHelper.startPage(sp, pageSize);
         List<EnterpriseListModel> enterprises = enterpriseService.enterpriseList(key, sort);
         PageInfo<EnterpriseListModel> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
+        List<Banner> banners = indexService.bannerList();
+        return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(), banners));
     }
 
 

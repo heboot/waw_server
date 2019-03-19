@@ -1,5 +1,11 @@
-package com.waw.hr.entity;
+package com.waw.hr.model;
 
+import com.waw.hr.entity.Banner;
+import com.waw.hr.entity.EnterpriseTag;
+
+import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class EnterpriseListModel {
@@ -14,6 +20,28 @@ public class EnterpriseListModel {
 
     //企业补贴金额
     private Integer subsidyMoney;
+
+    //本地字段
+    @Transient
+    private List<EnterpriseTag> tags;
+
+
+    public List<EnterpriseTag> getTags() {
+        tags = new ArrayList<>();
+        tags.add(new EnterpriseTag(1001, "周边热闹"));
+        tags.add(new EnterpriseTag(1002, "妹子多"));
+        if (id % 2 == 0) {
+            tags.add(new EnterpriseTag(1003, "周边热闹"));
+        } else {
+            tags.add(new EnterpriseTag(1004, "食宿好"));
+        }
+
+        return tags;
+    }
+
+    public void setTags(List<EnterpriseTag> tags) {
+        this.tags = tags;
+    }
 
     private int pnumber;
 

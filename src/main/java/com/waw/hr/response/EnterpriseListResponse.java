@@ -1,8 +1,9 @@
 package com.waw.hr.response;
 
-import com.waw.hr.entity.Enterprise;
-import com.waw.hr.entity.EnterpriseListModel;
+import com.waw.hr.entity.Banner;
+import com.waw.hr.model.EnterpriseListModel;
 
+import javax.persistence.Transient;
 import java.util.List;
 
 public class EnterpriseListResponse extends BaseListResponse {
@@ -11,6 +12,16 @@ public class EnterpriseListResponse extends BaseListResponse {
 
     public List<EnterpriseListModel> getList() {
         return list;
+    }
+
+    private List<Banner> banners;
+
+    public List<Banner> getBanners() {
+        return banners;
+    }
+
+    public void setBanners(List<Banner> banners) {
+        this.banners = banners;
     }
 
     public void setList(List<EnterpriseListModel> list) {
@@ -22,5 +33,13 @@ public class EnterpriseListResponse extends BaseListResponse {
         this.size = size;
         this.totalPage = totalPage;
         this.list = list;
+    }
+
+    public EnterpriseListResponse(int page, int size, int totalPage, List<EnterpriseListModel> list, List<Banner> banners) {
+        this.page = page;
+        this.size = size;
+        this.totalPage = totalPage;
+        this.list = list;
+        this.banners = banners;
     }
 }

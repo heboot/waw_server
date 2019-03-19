@@ -21,7 +21,7 @@
     </select>
 
     <!--查询所有的企业信息-->
-    <select id="enterpriseList" resultType="com.waw.hr.entity.EnterpriseListModel">
+    <select id="enterpriseList" resultType="com.waw.hr.model.EnterpriseListModel">
         select id,name,salary,subsidy_money from tb_enterprise
 
         <if test="key != null">
@@ -80,7 +80,7 @@
 
     </delete>
 
-    <select id="getMyEnterpriseList" resultType="com.waw.hr.entity.EnterpriseListModel">
+    <select id="getMyEnterpriseList" resultType="com.waw.hr.model.EnterpriseListModel">
 
         SELECT * FROM tb_enterprise WHERE id in (SELECT eid from tb_follow WHERE uid = #{uid})
 

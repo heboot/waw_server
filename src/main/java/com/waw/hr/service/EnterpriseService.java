@@ -1,7 +1,7 @@
 package com.waw.hr.service;
 
 import com.waw.hr.entity.Enterprise;
-import com.waw.hr.entity.EnterpriseListModel;
+import com.waw.hr.model.EnterpriseListModel;
 
 import java.util.List;
 

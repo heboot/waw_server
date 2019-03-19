@@ -3,7 +3,7 @@ package com.waw.hr.service.impl;
 import com.waw.hr.core.AbstractService;
 import com.waw.hr.dao.EnterpriseMapper;
 import com.waw.hr.entity.Enterprise;
-import com.waw.hr.entity.EnterpriseListModel;
+import com.waw.hr.model.EnterpriseListModel;
 import com.waw.hr.service.EnterpriseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

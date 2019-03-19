@@ -1,15 +1,15 @@
 package com.waw.hr.entity;
 
+import com.waw.hr.model.EnterpriseListModel;
+
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import java.util.Date;
-import java.util.Random;
 
 /**
  * 企业类Enterprise
  */
 @Table(name = "tb_enterprise")
-public class Enterprise {
+public class Enterprise extends EnterpriseListModel {
 
     /**
      * 无参构造
@@ -76,14 +76,14 @@ public class Enterprise {
 //    }
 
 
-    //主键
-    private Integer id;
-
-    //企业名称
-    private String name;
-
-    //综合薪资 比如3000-4500元
-    private String salary;
+//    //主键
+//    private Integer id;
+//
+//    //企业名称
+//    private String name;
+//
+//    //综合薪资 比如3000-4500元
+//    private String salary;
 
     //发薪日 比如 每月5日
     private String salaryDate;
@@ -197,13 +197,10 @@ public class Enterprise {
 
 
     //企业补贴金额
-    private Integer subsidyMoney;
+//    private Integer subsidyMoney;
 
     //企业补贴说明
     private String subsidyInfo;
-
-    //人数
-    private Integer pnumber;
 
 
     //本地字段
@@ -213,14 +210,6 @@ public class Enterprise {
     @Transient
     private int isJoin;
 
-
-    public Integer getPnumber() {
-        return new Random().nextInt(9) + 1;
-    }
-
-    public void setPnumber(Integer pnumber) {
-        this.pnumber = pnumber;
-    }
 
     public int getIsFollow() {
         return isFollow;
@@ -238,44 +227,12 @@ public class Enterprise {
         this.isJoin = isJoin;
     }
 
-    public Integer getSubsidyMoney() {
-        return subsidyMoney;
-    }
-
-    public void setSubsidyMoney(Integer subsidyMoney) {
-        this.subsidyMoney = subsidyMoney;
-    }
-
     public String getSubsidyInfo() {
         return subsidyInfo;
     }
 
     public void setSubsidyInfo(String subsidyInfo) {
         this.subsidyInfo = subsidyInfo;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
     }
 
     public String getSalaryDate() {

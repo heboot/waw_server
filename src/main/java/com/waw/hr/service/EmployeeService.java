@@ -1,8 +1,9 @@
 package com.waw.hr.service;
 
 import com.waw.hr.core.Result;
-import com.waw.hr.entity.AdminUser;
+import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.model.EmployeeModel;
 
 import java.util.List;
 
@@ -31,11 +32,11 @@ public interface EmployeeService {
 
     List<Employee> getEmployeeListByBrokerId(Integer BrokerId, String key);
 
-    AdminUser getMyBroker(String borkerId);
+    AdminUserModel getMyBroker(String borkerId);
 
     Integer updateEmployeeInfo(String uid, String name, String avatar, String sex);
 
-    Employee getEmployeeById(String id);
+    EmployeeModel getEmployeeById(String id);
 
     Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status);
 

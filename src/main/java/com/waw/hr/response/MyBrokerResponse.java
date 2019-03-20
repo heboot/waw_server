@@ -1,20 +1,20 @@
 package com.waw.hr.response;
 
-import com.waw.hr.entity.AdminUser;
+import com.waw.hr.model.AdminUserModel;
 
 public class MyBrokerResponse {
 
-    private AdminUser broker;
+    private AdminUserModel broker;
 
-    public AdminUser getBroker() {
+    public AdminUserModel getBroker() {
         return broker;
     }
 
-    public void setBroker(AdminUser broker) {
+    public void setBroker(AdminUserModel broker) {
         this.broker = broker;
     }
 
-    public MyBrokerResponse(AdminUser broker) {
+    public MyBrokerResponse(AdminUserModel broker) {
         this.broker = broker;
     }
 }

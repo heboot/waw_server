@@ -27,7 +27,7 @@
 
     </select>
 
-    <resultMap type="com.waw.hr.entity.Employee"
+    <resultMap type="com.waw.hr.model.EmployeeModel"
                id="EmployeeListMap">
 
 
@@ -131,13 +131,13 @@
 
     </update>
 
-    <select id="getEmployeeByMobile" resultType="com.waw.hr.entity.Employee">
+    <select id="getEmployeeByMobile" resultType="com.waw.hr.model.EmployeeModel">
 
         SELECT * FROM tb_employee where mobile = #{mobile}
 
     </select>
 
-    <select id="getMyBroker" resultType="com.waw.hr.entity.AdminUser">
+    <select id="getMyBroker" resultType="com.waw.hr.model.AdminUserModel">
 
         SELECT * FROM tb_admin_user WHERE id = #{brokerId}
 
@@ -173,7 +173,7 @@
 
     </update>
 
-    <select id="getEmployeeById" resultType="com.waw.hr.entity.Employee">
+    <select id="getEmployeeById" resultType="com.waw.hr.model.EmployeeModel">
 
         SELECT * FROM tb_employee WHERE id = #{id}
 
@@ -181,31 +181,7 @@
 
     <update id="updateEmployeeIdCardPic">
 
-        UPDATE tb_employeee
-
-        <set>
-
-            <if test="picFace != null and picFace != ''">
-
-                id_card_pic_face = #{picFace}
-
-            </if>
-
-            <if test="pic != null and pic != ''">
-
-                id_card_pic = #{pic}
-
-            </if>
-
-            <if test="status != null and status != ''">
-                id_card_status = #{status}
-
-            </if>
-
-        </set>
-
-        WHERE id = #{uid}
-
+        UPDATE tb_employee SET id_card_pic_face = #{picFace},id_card_pic = #{pic},id_card_status = #{idStatus} WHERE id = #{uid}
     </update>
 
 </mapper>

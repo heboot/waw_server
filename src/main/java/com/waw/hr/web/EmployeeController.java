@@ -9,6 +9,7 @@ import com.waw.hr.core.*;
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.entity.EmployeeSignLog;
+import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EmployeeService;
@@ -73,7 +74,7 @@ public class EmployeeController {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
-        Employee employee = employeeService.getEmployeeById(JWTUtil.getUserId(token));
+        EmployeeModel employee = employeeService.getEmployeeById(JWTUtil.getUserId(token));
 
         return ResultGenerator.genSuccessResult(new InfoResponse(employee));
     }
@@ -167,14 +168,12 @@ public class EmployeeController {
         }
 
         if (employeeService.updateEmployeeIdCardPic(JWTUtil.getUserId(token), idCardPicFace, idCardPic, AuthStatus.ING.code()) > 0) {
-            return ResultGenerator.genSuccessResult(employeeService.getEmployeeById(JWTUtil.getUserId(token)));
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_AUTH_COMMIT_SUC, employeeService.getEmployeeById(JWTUtil.getUserId(token)));
         }
 
         return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
 
     }
-
-
 
 
     /**

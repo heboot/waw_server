@@ -1,8 +1,9 @@
 package com.waw.hr.dao;
 
 import com.waw.hr.core.Mapper;
-import com.waw.hr.entity.AdminUser;
+import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.model.EmployeeModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     Integer updateEmployeeBroker(@Param("id") Integer id, @Param("brokerId") Integer brokerId);
 
-    Employee getEmployeeByMobile(@Param("mobile") String mobile);
+    EmployeeModel getEmployeeByMobile(@Param("mobile") String mobile);
 
     Integer updateEmployeeJoinWorkTime(@Param("id") Integer id, @Param("time") String time);
 
@@ -37,13 +38,13 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     List<Employee> getEmployeeListByBrokerId(@Param("brokerId") Integer BrokerId, @Param("key") String key);
 
-    AdminUser getMyBroker(@Param("brokerId") String borkerId);
+    AdminUserModel getMyBroker(@Param("brokerId") String borkerId);
 
     Integer updateEmployeeInfo(@Param("uid") String uid, @Param("name") String name, @Param("avatar") String avatar, @Param("sex") String sex);
 
-    Employee getEmployeeById(@Param("id") String id);
+    EmployeeModel getEmployeeById(@Param("id") String id);
 
-    Integer updateEmployeeIdCardPic(@Param("uid") String uid, @Param("picFace") String picFace, @Param("pic") String pic, @Param("status") int status);
+    Integer updateEmployeeIdCardPic(@Param("uid") String uid, @Param("picFace") String picFace, @Param("pic") String pic, @Param("idStatus") int idStatus);
 
     Integer updateEmployeeBarkCardInfo(@Param("uid") String uid, @Param("picFront") String bankPicFront, @Param("picReverse") String bankPicReverse);
 }

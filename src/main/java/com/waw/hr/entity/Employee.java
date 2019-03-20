@@ -1,32 +1,20 @@
 package com.waw.hr.entity;
 
 import com.waw.hr.core.MValue;
+import com.waw.hr.model.EmployeeModel;
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Table(name = "tb_emplpyee")
-public class Employee {
+public class Employee extends EmployeeModel {
 
-    private Integer id;
-
-    private String name;
-
-    private String avatar;
-
-    private String mobile;
 
     private String createTime;
 
-    private Integer brokerId;
 
     private Integer parentId;
 
-    private String joinWorkTime;
-
-    private int sex;
-
-    private int age;
 
     private String idCardPicFace;
 
@@ -36,93 +24,12 @@ public class Employee {
 
 //    private String bankCardReverse;
 
-    private int status;
-
-    private int jobStatus;
-
-    private int cashStatus;
-
-    private int idCardStatus;
-
-    private int bankCardStatus;
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
 
     @Transient
     private AdminUser parentUser;
 
     @Transient
     private AdminUser brokerUser;
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = MValue.IMAGE_PRIFIX + avatar;
-    }
-
-    public int getIdCardStatus() {
-        return idCardStatus;
-    }
-
-    public void setIdCardStatus(int idCardStatus) {
-        this.idCardStatus = idCardStatus;
-    }
-
-    public int getBankCardStatus() {
-        return bankCardStatus;
-    }
-
-    public void setBankCardStatus(int bankCardStatus) {
-        this.bankCardStatus = bankCardStatus;
-    }
-
-    public AdminUser getParentUser() {
-        return parentUser;
-    }
-
-    public void setParentUser(AdminUser parentUser) {
-        this.parentUser = parentUser;
-    }
-
-    public AdminUser getBrokerUser() {
-        return brokerUser;
-    }
-
-    public void setBrokerUser(AdminUser brokerUser) {
-        this.brokerUser = brokerUser;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public int getJobStatus() {
-        return jobStatus;
-    }
-
-    public void setJobStatus(int jobStatus) {
-        this.jobStatus = jobStatus;
-    }
-
-    public int getCashStatus() {
-        return cashStatus;
-    }
-
-    public void setCashStatus(int cashStatus) {
-        this.cashStatus = cashStatus;
-    }
 
     public String getCreateTime() {
         return createTime;
@@ -132,20 +39,12 @@ public class Employee {
         this.createTime = createTime;
     }
 
-    public Integer getBrokerId() {
-        return brokerId;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setBrokerId(Integer brokerId) {
-        this.brokerId = brokerId;
-    }
-
-    public String getJoinWorkTime() {
-        return joinWorkTime;
-    }
-
-    public void setJoinWorkTime(String joinWorkTime) {
-        this.joinWorkTime = joinWorkTime;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getIdCardPicFace() {
@@ -164,43 +63,19 @@ public class Employee {
         this.idCardPic = idCardPic;
     }
 
-    public Integer getId() {
-        return id;
+    public AdminUser getParentUser() {
+        return parentUser;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setParentUser(AdminUser parentUser) {
+        this.parentUser = parentUser;
     }
 
-    public String getName() {
-        return name;
+    public AdminUser getBrokerUser() {
+        return brokerUser;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setBrokerUser(AdminUser brokerUser) {
+        this.brokerUser = brokerUser;
     }
 }

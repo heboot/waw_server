@@ -7,8 +7,9 @@ import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
-import com.waw.hr.entity.AdminUser;
+import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.response.LoginResponse;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.utils.JWTUtil;
@@ -60,7 +61,7 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
 //            if (adminUserMapper.getAdminUserByMobile(mobile) == null) {
             Integer result = registerEmployee(mobile, "", String.valueOf(System.currentTimeMillis()));
             if (result != null && result > 0) {
-                Employee employee = employeeMapper.getEmployeeByMobile(mobile);
+                EmployeeModel employee = employeeMapper.getEmployeeByMobile(mobile);
                 LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
                 return ResultGenerator.genSuccessResult(loginResponse);
             }
@@ -73,7 +74,7 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
 //            }
             return ResultGenerator.genFailResult(MValue.MESSAGE_LOGIN_FAIL);
         }
-        Employee employee = employeeMapper.getEmployeeByMobile(mobile);
+        EmployeeModel employee = employeeMapper.getEmployeeByMobile(mobile);
         LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
         return ResultGenerator.genSuccessResult(loginResponse);
     }
@@ -106,7 +107,7 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public AdminUser getMyBroker(String borkerId) {
+    public AdminUserModel getMyBroker(String borkerId) {
         return employeeMapper.getMyBroker(borkerId);
     }
 
@@ -116,7 +117,7 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public Employee getEmployeeById(String id) {
+    public EmployeeModel getEmployeeById(String id) {
         return employeeMapper.getEmployeeById(id);
     }
 

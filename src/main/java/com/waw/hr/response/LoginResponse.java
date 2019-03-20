@@ -2,10 +2,11 @@ package com.waw.hr.response;
 
 import com.waw.hr.entity.AdminUser;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.model.EmployeeModel;
 
 public class LoginResponse extends TokenResponse {
 
-    private Employee user;
+    private EmployeeModel user;
 
 //    private AdminUser adminUser;
 //
@@ -17,7 +18,7 @@ public class LoginResponse extends TokenResponse {
 //        this.adminUser = adminUser;
 //    }
 
-    public LoginResponse(String token, Employee user) {
+    public LoginResponse(String token, EmployeeModel user) {
         super(token);
         this.user = user;
     }
@@ -27,11 +28,11 @@ public class LoginResponse extends TokenResponse {
 //        this.adminUser = user;
 //    }
 
-    public Employee getUser() {
+    public EmployeeModel getUser() {
         return user;
     }
 
-    public void setUser(Employee user) {
+    public void setUser(EmployeeModel user) {
         this.user = user;
     }
 }

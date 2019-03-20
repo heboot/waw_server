@@ -31,4 +31,6 @@ public class MValue {
     public static final String MESSAGE_JOIN_ED = "您已经报过名了";
 
     public static final String MESSAGE_JOIN_SUC = "报名成功";
+
+    public static final String MESSAGE_AUTH_COMMIT_SUC = "提交成功，我们会在三个工作日内审核完毕";
 }

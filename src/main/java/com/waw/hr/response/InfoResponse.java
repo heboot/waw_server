@@ -1,20 +1,21 @@
 package com.waw.hr.response;
 
 import com.waw.hr.entity.Employee;
+import com.waw.hr.model.EmployeeModel;
 
 public class InfoResponse {
 
-    private Employee user;
+    private EmployeeModel user;
 
-    public InfoResponse(Employee user) {
+    public InfoResponse(EmployeeModel user) {
         this.user = user;
     }
 
-    public Employee getUser() {
+    public EmployeeModel getUser() {
         return user;
     }
 
-    public void setUser(Employee user) {
+    public void setUser(EmployeeModel user) {
         this.user = user;
     }
 }

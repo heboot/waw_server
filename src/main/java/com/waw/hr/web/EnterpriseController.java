@@ -53,7 +53,7 @@ public class EnterpriseController {
         PageHelper.startPage(sp, pageSize);
         List<Enterprise> enterprises = enterpriseService.getEnterpriseList(key, sort);
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(),(int)pageInfo.getTotal()));
     }
 
     /**

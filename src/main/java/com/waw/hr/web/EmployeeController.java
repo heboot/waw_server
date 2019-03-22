@@ -6,9 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
-import com.waw.hr.entity.AdminUser;
-import com.waw.hr.entity.Employee;
-import com.waw.hr.entity.EmployeeSignLog;
+import com.waw.hr.entity.*;
 import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
@@ -177,6 +175,73 @@ public class EmployeeController {
 
 
     /**
+     * 提交银行卡
+     *
+     * @return
+     */
+    @PostMapping("/bankInfo")
+    public Result bankInfo(@RequestParam String token,
+                           @RequestParam String bankId,
+                           @RequestParam String number,
+                           @RequestParam String bankFront,
+                           @RequestParam String bankReverse) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        if (employeeService.updateEmployeeBarkCardInfo(JWTUtil.getUserId(token), bankId, number, bankFront, bankReverse) > 0) {
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_AUTH_COMMIT_SUC, employeeService.getEmployeeById(JWTUtil.getUserId(token)));
+        }
+
+        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+
+    }
+
+    /**
+     * 推荐
+     *
+     * @return
+     */
+    @PostMapping("/recommendUser")
+    public Result recommendUser(@RequestParam String token,
+                                @RequestParam String name,
+                                @RequestParam String mobile) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        if (employeeService.getRecommendUserByMobile(mobile) != null) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_RECOMMEND_MOBILE_ED);
+        }
+
+        if (employeeService.recommendUser(JWTUtil.getUserId(token), name, mobile) > 0) {
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_RECOMMEND_SUC);
+        }
+
+        return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
+
+    }
+
+    /**
+     * 推荐
+     *
+     * @return
+     */
+    @PostMapping("/myRecommend")
+    public Result myRecommend(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                              @RequestParam(defaultValue = "20") Integer pageSize) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        PageHelper.startPage(sp, pageSize);
+        List<RecommendUser> enterprises = employeeService.getMyRecommendUserList(JWTUtil.getUserId(token));
+        PageInfo<RecommendUser> pageInfo = new PageInfo<>(enterprises);
+        return ResultGenerator.genSuccessResult(new MyRecommendListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
+    }
+
+
+    /**
      * 更新员工状态
      *
      * @param token
@@ -263,17 +328,18 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/getEmployeeList")
-    public Result getEmployeeList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "20") Integer limit, @RequestParam(required = false) String key) {
+    public Result getEmployeeList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                                  @RequestParam(defaultValue = "20") Integer pageSize, @RequestParam(required = false) String key) {
 
         if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
-        PageHelper.startPage(page, limit);
+        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+
+        PageHelper.offsetPage(sp, pageSize);
         List<Employee> enterprises = null;
 
-        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
         if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
             enterprises = employeeService.getEmployeeList(key);
         } else if (adminUser.getRole() == ROLE.ROLE_EDITOR) {
@@ -284,7 +350,7 @@ public class EmployeeController {
 
 
         PageInfo<Employee> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetEmployeeListListResponse(page, limit, (int) pageInfo.getTotal(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new GetEmployeeListListResponse(sp, pageSize, (int) pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
     }
 
 

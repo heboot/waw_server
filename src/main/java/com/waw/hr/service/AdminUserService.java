@@ -23,7 +23,7 @@ public interface AdminUserService {
      * @param createId
      * @return
      */
-    List<AdminUser> getEditorsList(Integer createId,String key);
+    List<AdminUser> getEditorsList(Integer createId, String key);
 
     /**
      * 获取属于自己的经纪人列表
@@ -31,20 +31,22 @@ public interface AdminUserService {
      * @param createId
      * @return
      */
-    List<AdminUser> getBrokerList(Integer createId,String key);
+    List<AdminUser> getBrokerList(Integer createId, String key);
 
     /**
      * 创建代理
+     *
      * @param createId
      * @return
      */
-    Integer addEditor(String name,String mobile,Integer createId);
+    Integer addEditor(String name, String mobile ,Integer createId);
 
     /**
      * 创建经纪人
+     *
      * @param createId
      * @return
      */
-    Integer addBroker(String name,String mobile,Integer createId);
+    Integer addBroker(String name, String mobile, Integer createId);
 
 }

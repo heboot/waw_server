@@ -1,6 +1,7 @@
 package com.waw.hr.service;
 
 import com.waw.hr.core.Result;
+import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.model.EmployeeModel;
@@ -40,6 +41,16 @@ public interface EmployeeService {
 
     Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status);
 
-    Integer updateEmployeeBarkCardInfo(String uid, String bankPicFront, String bankPicReverse);
+    Integer updateEmployeeBarkCardInfo(String uid, String bankId, String bankCode, String bankPicFront, String bankPicReverse);
+
+
+    //推荐用户
+    Integer recommendUser(String uid, String name, String mobile);
+
+    //根据手机号查询这个人是否被推荐过
+    RecommendUser getRecommendUserByMobile(String mobile);
+
+    //获取我推荐的列表
+    List<RecommendUser> getMyRecommendUserList(String uid);
 
 }

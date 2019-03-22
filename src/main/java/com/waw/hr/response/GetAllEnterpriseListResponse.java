@@ -22,4 +22,12 @@ public class GetAllEnterpriseListResponse extends BaseListResponse {
         this.totalPage = totalPage;
         this.list = list;
     }
+
+    public GetAllEnterpriseListResponse(int page, int size, int totalPage, List<Enterprise> list, int total) {
+        this.page = page;
+        this.size = size;
+        this.totalPage = totalPage;
+        this.list = list;
+        this.total = total;
+    }
 }

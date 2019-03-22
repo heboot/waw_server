@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AdminUserMapper extends Mapper<AdminUser> {
 
-    AdminUser getAdminUserByPassword(String name, String pwd);
+    AdminUser getAdminUserByPassword(@Param("name") String name, @Param("pwd") String pwd);
 
     AdminUser getAdminUserByName(String name);
 
@@ -38,7 +38,7 @@ public interface AdminUserMapper extends Mapper<AdminUser> {
      * @param createId
      * @return
      */
-    Integer addEditor(@Param("name") String name, @Param("mobile") String mobile, @Param("createUid") Integer createId, @Param("createTime") String createTime);
+    Integer addEditor(@Param("name") String name, @Param("mobile") String mobile, @Param("createUid") Integer createId, @Param("createTime") String createTime, @Param("role") int role);
 
     /**
      * 获取属于自己的经纪人列表

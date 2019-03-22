@@ -5,7 +5,7 @@
 
     <!--查询所有的企业信息-->
     <select id="getAdminUserByPassword" resultType="com.waw.hr.entity.AdminUser">
-        select * from tb_admin_user where name=#{arg0} and password = #{arg1}
+        select * from tb_admin_user where name=#{name} and password = #{pwd}
     </select>
 
     <!--查询所有的企业信息-->
@@ -25,8 +25,23 @@
         UPDATE tb_admin_user SET status = #{status} WHERE id = #{uid}
     </update>
 
+
+    <!--SELECT * FROM tb_admin_user WHERE role = 5-->
+
+    <!--<if test="createUid != null and createUid != ''">-->
+
+    <!--AND create_uid = #{createUid}-->
+
+    <!--</if>-->
+
+    <!--<if test="key != null and key != ''">-->
+
+    <!--AND name LIKE #{key} or mobile like #{key}-->
+
+    <!--</if>-->
     <select id="getEditorsList" resultType="com.waw.hr.entity.AdminUser">
-        SELECT * FROM tb_admin_user WHERE role = 5
+
+        SELECT * FROM tb_employee WHERE role = 5
 
         <if test="createUid != null and createUid != ''">
 
@@ -39,7 +54,6 @@
             AND name LIKE #{key} or mobile like #{key}
 
         </if>
-
     </select>
 
 
@@ -60,9 +74,13 @@
 
     </select>
 
+
+    <!--      INSERT INTO tb_admin_user(name,mobile,create_uid,create_time,role,status) VALUES(#{name},#{mobile},#{createUid},#{createTime},5,1)-->
     <insert id="addEditor">
 
-        INSERT INTO tb_admin_user(name,mobile,create_uid,create_time,role,status) VALUES(#{name},#{mobile},#{createUid},#{createTime},5,1)
+
+
+      INSERT INTO tb_employee (name,mobile,create_time,role,create_id ) VALUES  (#{name},#{mobile},#{createTime},#{role},#{createUid})
 
     </insert>
 

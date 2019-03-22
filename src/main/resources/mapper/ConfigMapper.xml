@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.waw.hr.dao.IndexMapper">
+<mapper namespace="com.waw.hr.dao.ConfigDataMapper">
 
 
-    <select id="bannerList" resultType="com.waw.hr.entity.Banner">
+    <select id="bankList" resultType="com.waw.hr.entity.BankModel">
 
-         SELECT * FROM tb_banner WHERE status = 1
+         SELECT * FROM tb_bank
 
     </select>
 

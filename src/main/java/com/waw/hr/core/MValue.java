@@ -33,4 +33,10 @@ public class MValue {
     public static final String MESSAGE_JOIN_SUC = "报名成功";
 
     public static final String MESSAGE_AUTH_COMMIT_SUC = "提交成功，我们会在三个工作日内审核完毕";
+
+    public static final String MESSAGE_RECOMMEND_SUC = "推荐成功";
+
+    public static final String MESSAGE_RECOMMEND_MOBILE_ED = "这个手机号已被推荐过了";
+
+    public static final String MESSAGE_FEEDBACK_SUC = "反馈成功";
 }

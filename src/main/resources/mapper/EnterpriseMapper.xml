@@ -9,7 +9,7 @@
         select * from tb_enterprise
 
         <if test="key != null">
-            WHERE name LIKE #{%key%},
+            WHERE name LIKE concat(concat('%',#{key}),'%')
         </if>
 
         <if test="sort == 1">
@@ -17,6 +17,7 @@
             order by subsidy_money desc
 
         </if>
+
 
     </select>
 
@@ -33,6 +34,8 @@
             order by subsidy_money desc
 
         </if>
+
+        AND status = 1
 
     </select>
 

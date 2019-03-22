@@ -7,6 +7,7 @@ import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
+import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.model.EmployeeModel;
@@ -127,7 +128,23 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public Integer updateEmployeeBarkCardInfo(String uid, String bankPicFront, String bankPicReverse) {
-        return null;
+    public Integer updateEmployeeBarkCardInfo(String uid, String bankId, String bankCode, String bankPicFront, String bankPicReverse) {
+        return employeeMapper.updateEmployeeBarkCardInfo(uid, bankId, bankCode, bankPicFront, bankPicFront);
     }
+
+    @Override
+    public Integer recommendUser(String uid, String name, String mobile) {
+        return employeeMapper.recommendUser(uid, name, mobile, String.valueOf(System.currentTimeMillis()));
+    }
+
+    @Override
+    public RecommendUser getRecommendUserByMobile(String mobile) {
+        return employeeMapper.getRecommendUserByMobile(mobile);
+    }
+
+    @Override
+    public List<RecommendUser> getMyRecommendUserList(String uid) {
+        return employeeMapper.getMyRecommendUserList(uid);
+    }
+
 }

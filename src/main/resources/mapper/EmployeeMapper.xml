@@ -11,23 +11,36 @@
         create_time ) VALUES  (#{name},#{mobile},#{time})
     </insert>
 
+
+    <!--resultType="com.waw.hr.entity.Employee"-->
     <select id="getEmployeeList" resultMap="EmployeeListMap">
 
-        select * from tb_employee a
 
-        left join tb_admin_user p on a.parent_id = p.id
-
-        left join tb_admin_user b on a.broker_id = b.id
+        SELECT * FROM tb_employee
 
         <if test="key != null and key != ''">
 
-            WHERE a.name LIKE #{key} OR a.mobile LIKE #{key}
+            WHERE name LIKE #{key} OR mobile LIKE #{key}
 
         </if>
 
+
+        <!--select * from tb_employee a-->
+
+        <!--left join tb_admin_user p on a.parent_id = p.id-->
+
+        <!--left join tb_admin_user b on a.broker_id = b.id-->
+
+        <!--<if test="key != null and key != ''">-->
+
+        <!--WHERE a.name LIKE #{key} OR a.mobile LIKE #{key}-->
+
+        <!--</if>-->
+
     </select>
 
-    <resultMap type="com.waw.hr.model.EmployeeModel"
+
+    <resultMap type="com.waw.hr.entity.Employee"
                id="EmployeeListMap">
 
 
@@ -183,5 +196,30 @@
 
         UPDATE tb_employee SET id_card_pic_face = #{picFace},id_card_pic = #{pic},id_card_status = #{idStatus} WHERE id = #{uid}
     </update>
+
+    <update id="updateEmployeeBarkCardInfo">
+
+        UPDATE tb_employee_bank SET uid = #{uid},bank_id = #{bankId},bank_number = #{bankCode},pic_front = #{picFront},pic_reverse = #{picReverse}
+
+    </update>
+
+    <insert id="recommendUser">
+
+        INSERT INTO tb_recommend (uid,recommend_mobile,name,recommend_time) VALUES (#{uid},#{mobile},#{name},#{time})
+
+    </insert>
+
+    <select id="getRecommendUserByMobile" resultType="com.waw.hr.entity.RecommendUser">
+
+        SELECT ID FROM tb_recommend where mobile = #{mobile}
+
+    </select>
+
+    <select id="getMyRecommendUserList" resultType="com.waw.hr.entity.RecommendUser">
+
+        SELECT * FROM tb_recommend where uid = #{uid}
+
+    </select>
+
 
 </mapper>

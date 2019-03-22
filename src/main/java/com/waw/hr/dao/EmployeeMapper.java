@@ -1,6 +1,7 @@
 package com.waw.hr.dao;
 
 import com.waw.hr.core.Mapper;
+import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
 import com.waw.hr.model.EmployeeModel;
@@ -46,5 +47,14 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     Integer updateEmployeeIdCardPic(@Param("uid") String uid, @Param("picFace") String picFace, @Param("pic") String pic, @Param("idStatus") int idStatus);
 
-    Integer updateEmployeeBarkCardInfo(@Param("uid") String uid, @Param("picFront") String bankPicFront, @Param("picReverse") String bankPicReverse);
+    Integer updateEmployeeBarkCardInfo(@Param("uid") String uid, @Param("bankId") String bankId, @Param("bankCode") String bankCode, @Param("picFront") String bankPicFront, @Param("picReverse") String bankPicReverse);
+
+    Integer recommendUser(@Param("uid") String uid, @Param("name") String name, @Param("mobile") String mobile, @Param("time") String time);
+
+    //根据手机号查询这个人是否被推荐过
+    RecommendUser getRecommendUserByMobile(@Param("mobile") String mobile);
+
+    //获取我推荐的列表
+    List<RecommendUser> getMyRecommendUserList(@Param("uid") String uid);
+
 }

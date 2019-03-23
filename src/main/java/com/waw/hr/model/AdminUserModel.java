@@ -2,6 +2,7 @@ package com.waw.hr.model;
 
 import com.waw.hr.core.MValue;
 import javafx.scene.control.cell.MapValueFactory;
+import org.apache.commons.lang3.StringUtils;
 
 public class AdminUserModel {
 
@@ -119,6 +120,9 @@ public class AdminUserModel {
     }
 
     public String getAvatar() {
+        if (StringUtils.isEmpty(avatar)) {
+            return avatar;
+        }
         return MValue.IMAGE_PRIFIX + avatar;
     }
 

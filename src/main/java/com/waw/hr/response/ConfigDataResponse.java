@@ -1,5 +1,6 @@
 package com.waw.hr.response;
 
+import com.waw.hr.core.MValue;
 import com.waw.hr.entity.BankModel;
 
 import java.util.List;
@@ -13,6 +14,25 @@ public class ConfigDataResponse extends BaseResponse {
 
     private String version;
 
+    private String recommendInfo;
+
+    private String recommendIcon;
+
+    public String getRecommendIcon() {
+        return MValue.IMAGE_PRIFIX + recommendIcon;
+    }
+
+    public void setRecommendIcon(String recommendIcon) {
+        this.recommendIcon = recommendIcon;
+    }
+
+    public String getRecommendInfo() {
+        return recommendInfo;
+    }
+
+    public void setRecommendInfo(String recommendInfo) {
+        this.recommendInfo = recommendInfo;
+    }
 
     public String getKfTel() {
         return kfTel;
@@ -42,5 +62,8 @@ public class ConfigDataResponse extends BaseResponse {
         this.kfTel = kfTel;
         this.bankList = bankList;
         this.version = version;
+    }
+
+    public ConfigDataResponse() {
     }
 }

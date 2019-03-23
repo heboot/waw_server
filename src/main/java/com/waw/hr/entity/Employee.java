@@ -2,6 +2,7 @@ package com.waw.hr.entity;
 
 import com.waw.hr.core.MValue;
 import com.waw.hr.model.EmployeeModel;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -48,6 +49,9 @@ public class Employee extends EmployeeModel {
     }
 
     public String getIdCardPicFace() {
+        if (StringUtils.isEmpty(idCardPicFace)) {
+            return idCardPicFace;
+        }
         return MValue.IMAGE_PRIFIX + idCardPicFace;
     }
 
@@ -56,6 +60,9 @@ public class Employee extends EmployeeModel {
     }
 
     public String getIdCardPic() {
+        if (StringUtils.isEmpty(idCardPic)) {
+            return idCardPic;
+        }
         return MValue.IMAGE_PRIFIX + idCardPic;
     }
 

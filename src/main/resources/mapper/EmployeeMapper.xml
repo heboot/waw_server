@@ -8,7 +8,7 @@
         INSERT INTO tb_employee (
         name,
         mobile,
-        create_time ) VALUES  (#{name},#{mobile},#{time})
+        create_time,create_id,broker_id ) VALUES  (#{name},#{mobile},#{time},#{createId},#{brokerId})
     </insert>
 
 
@@ -38,7 +38,6 @@
         <!--</if>-->
 
     </select>
-
 
 
     <select id="getIdCardList" resultMap="EmployeeListMap">
@@ -229,9 +228,19 @@
 
     </select>
 
-    <select id="switchBroker" resultType="java.lang.Integer">
+    <select id="switchBroker" resultType="java.lang.String">
 
         SELECT ID FROM tb_admin_user WHERE role = 0 AND status > 0
+
+    </select>
+
+    <select id="getEmployeeListByCreateId" resultType="com.waw.hr.model.EmployeeModel">
+
+        SELECT * FROM tb_employee WHERE create_id = #{createId}
+
+        <if test="key != null">
+            name LIKE concat(concat('%',#{key}),'%')
+        </if>
 
     </select>
 

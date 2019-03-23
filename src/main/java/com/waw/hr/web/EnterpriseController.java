@@ -53,7 +53,7 @@ public class EnterpriseController {
         PageHelper.startPage(sp, pageSize);
         List<Enterprise> enterprises = enterpriseService.getEnterpriseList(key, sort);
         PageInfo<Enterprise> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(),(int)pageInfo.getTotal()));
+        return ResultGenerator.genSuccessResult(new GetAllEnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
     }
 
     /**
@@ -70,7 +70,7 @@ public class EnterpriseController {
         List<EnterpriseListModel> enterprises = enterpriseService.enterpriseList(key, sort);
         PageInfo<EnterpriseListModel> pageInfo = new PageInfo<>(enterprises);
         List<Banner> banners = indexService.bannerList();
-        return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(), banners));
+        return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(), banners, (int) pageInfo.getTotal()));
     }
 
 
@@ -81,9 +81,9 @@ public class EnterpriseController {
 
         if (!StringUtils.isEmpty(token)) {
 
-            if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
-                return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
-            }
+//            if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+//                return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+//            }
 
             int is_join = enterpriseService.is_join(JWTUtil.getUserId(token), enterpriseId);
 

@@ -11,7 +11,7 @@ import java.util.List;
 public interface EmployeeService {
 
 
-    Integer registerEmployee(String mobile, String name, String time);
+    Integer registerEmployee(String mobile, String name, String time, String createId );
 
     Integer updateEmployeeStatus(Integer id, Integer status);
 
@@ -54,6 +54,9 @@ public interface EmployeeService {
     List<RecommendUser> getMyRecommendUserList(String uid);
 
     //分配经纪人 返回经纪人ID
-    Integer switchBroker();
+    String switchBroker();
+
+    //获取我录入的员工列表
+    List<Employee> getEmployeeListByCreateId(String createId, String key);
 
 }

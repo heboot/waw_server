@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.waw.hr.core.ResultCode.AUTH_FAIL;
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
@@ -174,7 +175,6 @@ public class EmployeeController {
     }
 
 
-
     /**
      * 提交银行卡
      *
@@ -321,7 +321,7 @@ public class EmployeeController {
     }
 
     /**
-     * 获取员工列表
+     * 获取员工列表 后端使用
      *
      * @param token
      * @param page
@@ -352,6 +352,60 @@ public class EmployeeController {
 
         PageInfo<Employee> pageInfo = new PageInfo<>(enterprises);
         return ResultGenerator.genSuccessResult(new GetEmployeeListListResponse(sp, pageSize, (int) pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
+    }
+
+    /**
+     * 获取员工列表 APP端使用
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/employeeList")
+    public Result employeeList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                               @RequestParam(defaultValue = "20") Integer pageSize, @RequestParam(required = false) String key) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        EmployeeModel employee = employeeService.getEmployeeById(JWTUtil.getUserId(token));
+
+        if (employee == null || employee.getRole() <= 0) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR, AUTH_FAIL);
+        }
+
+        PageHelper.offsetPage(sp, pageSize);
+        List<Employee> employees = employeeService.getEmployeeListByCreateId(JWTUtil.getUserId(token), key);
+
+        PageInfo<Employee> pageInfo = new PageInfo<>(employees);
+        return ResultGenerator.genSuccessResult(new GetEmployeeListListResponse(sp, pageSize, (int) pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
+    }
+
+    /**
+     * 录入员工 APP端使用
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/addEmployee")
+    public Result addEmployee(@RequestParam String token, @RequestParam String name, @RequestParam String mobile) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        EmployeeModel employee = employeeService.getEmployeeById(JWTUtil.getUserId(token));
+
+        if (employee == null || employee.getRole() <= 0) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR, AUTH_FAIL);
+        }
+
+        int result = employeeService.registerEmployee(mobile, name, String.valueOf(System.currentTimeMillis()), JWTUtil.getUserId(token));
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
+        }
+        return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_FAIL);
     }
 
 

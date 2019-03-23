@@ -23,10 +23,10 @@
 
     <!--查询所有的企业信息-->
     <select id="enterpriseList" resultType="com.waw.hr.model.EnterpriseListModel">
-        select id,name,salary,subsidy_money from tb_enterprise
+        select id,name,salary,subsidy_money from tb_enterprise WHERE status = 1
 
         <if test="key != null">
-            WHERE name LIKE concat(concat('%',#{key}),'%')
+            name LIKE concat(concat('%',#{key}),'%')
         </if>
 
         <if test="sort == 1">
@@ -35,7 +35,6 @@
 
         </if>
 
-        AND status = 1
 
     </select>
 

@@ -1,6 +1,7 @@
 package com.waw.hr.model;
 
 import com.waw.hr.core.MValue;
+import org.apache.commons.lang3.StringUtils;
 
 public class EmployeeModel {
 
@@ -48,6 +49,9 @@ public class EmployeeModel {
     }
 
     public String getAvatar() {
+        if (StringUtils.isEmpty(avatar)) {
+            return avatar;
+        }
         return MValue.IMAGE_PRIFIX + avatar;
     }
 

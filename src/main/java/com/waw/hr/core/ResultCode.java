@@ -9,8 +9,9 @@ public enum ResultCode {
     UNAUTHORIZED(50008),//未认证（签名错误）
     NOT_FOUND(404),//接口不存在
     INTERNAL_SERVER_ERROR(500),//服务器内部错误
+    AUTH_FAIL(40008),//服务器内部错误
     //USER
-    USER_NOT_FOUND(100404);
+    USER_NOT_FOUND(10404);
 
     private final int code;
 

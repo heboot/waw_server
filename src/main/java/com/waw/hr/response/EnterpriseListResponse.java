@@ -35,11 +35,12 @@ public class EnterpriseListResponse extends BaseListResponse {
         this.list = list;
     }
 
-    public EnterpriseListResponse(int page, int size, int totalPage, List<EnterpriseListModel> list, List<Banner> banners) {
+    public EnterpriseListResponse(int page, int size, int totalPage, List<EnterpriseListModel> list, List<Banner> banners, int total) {
         this.page = page;
         this.size = size;
         this.totalPage = totalPage;
         this.list = list;
         this.banners = banners;
+        this.total = total;
     }
 }

@@ -28,7 +28,12 @@ public class ConfigController {
     @PostMapping("/appConfig")
     public Result getAppConfig() {
         List<BankModel> bankModelList = configService.bankList();
-        return ResultGenerator.genSuccessResult(new ConfigDataResponse("123456789", bankModelList, "1.0"));
+        ConfigDataResponse configDataResponse = new ConfigDataResponse();
+        configDataResponse.setKfTel("18621242123");
+        configDataResponse.setBankList(bankModelList);
+        configDataResponse.setVersion("1.0");
+        configDataResponse.setRecommendIcon("recommend/icon_recommend.png");
+        return ResultGenerator.genSuccessResult(configDataResponse);
     }
 
 

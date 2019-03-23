@@ -32,8 +32,8 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     private AdminUserMapper adminUserMapper;
 
     @Override
-    public Integer registerEmployee(String mobile, String name, String time) {
-        return employeeMapper.registerEmployee(name, mobile, time);
+    public Integer registerEmployee(String mobile, String name, String time, String createId) {
+        return employeeMapper.registerEmployee(name, mobile, time, createId, String.valueOf(switchBroker()));
     }
 
     @Override
@@ -61,10 +61,9 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
         //验证码正确之后
         if (employeeMapper.getEmployeeByMobile(mobile) == null) {
 //            if (adminUserMapper.getAdminUserByMobile(mobile) == null) {
-            Integer result = registerEmployee(mobile, "", String.valueOf(System.currentTimeMillis()));
+            Integer result = registerEmployee(mobile, "", String.valueOf(System.currentTimeMillis()), null);
             if (result != null && result > 0) {
                 EmployeeModel employee = employeeMapper.getEmployeeByMobile(mobile);
-                employee.setBrokerId(switchBroker());
                 LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
                 return ResultGenerator.genSuccessResult(loginResponse);
             }
@@ -152,19 +151,24 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     private Random random = new Random();
 
     @Override
-    public Integer switchBroker() {
+    public String switchBroker() {
 
-        List<Integer> brokerIds = employeeMapper.switchBroker();
+        List<String> brokerIds = employeeMapper.switchBroker();
 
-        int resultId = 0;
+        String resultId = null;
 
         if (brokerIds.size() > 1) {
-            resultId = random.nextInt(brokerIds.size() - 1);
+            resultId = brokerIds.get(random.nextInt(brokerIds.size() - 1));
         } else {
             resultId = brokerIds.get(0);
         }
 
         return resultId;
+    }
+
+    @Override
+    public List<Employee> getEmployeeListByCreateId(String createId, String key) {
+        return employeeMapper.getEmployeeListByCreateId(createId, key);
     }
 
 }

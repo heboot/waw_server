@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface EmployeeMapper extends Mapper<Employee> {
 
-    Integer registerEmployee(@Param("name") String name, @Param("mobile") String mobile, @Param("time") String time);
+    Integer registerEmployee(@Param("name") String name, @Param("mobile") String mobile, @Param("time") String time, @Param("createId") String createId, @Param("brokerId") String brokerId);
 
     Integer updateEmployeeStatus(@Param("id") Integer id, @Param("status") Integer status);
 
@@ -65,5 +65,9 @@ public interface EmployeeMapper extends Mapper<Employee> {
     List<Employee> getIdCardList();
 
     //分配经纪人 返回经纪人ID
-    List<Integer> switchBroker();
+    List<String> switchBroker();
+
+
+    //获取我录入的员工列表
+    List<Employee> getEmployeeListByCreateId(@Param("createId") String createId, @Param("key") String key);
 }

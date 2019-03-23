@@ -48,7 +48,7 @@ public class Employee extends EmployeeModel {
     }
 
     public String getIdCardPicFace() {
-        return idCardPicFace;
+        return MValue.IMAGE_PRIFIX + idCardPicFace;
     }
 
     public void setIdCardPicFace(String idCardPicFace) {
@@ -56,7 +56,7 @@ public class Employee extends EmployeeModel {
     }
 
     public String getIdCardPic() {
-        return idCardPic;
+        return MValue.IMAGE_PRIFIX + idCardPic;
     }
 
     public void setIdCardPic(String idCardPic) {

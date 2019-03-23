@@ -3,15 +3,10 @@ package com.waw.hr.web;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
-import com.waw.hr.core.MValue;
-import com.waw.hr.core.ROLE;
-import com.waw.hr.core.Result;
-import com.waw.hr.core.ResultGenerator;
+import com.waw.hr.core.*;
 import com.waw.hr.entity.AdminUser;
-import com.waw.hr.response.BaseListResponse;
-import com.waw.hr.response.BaseResponse;
-import com.waw.hr.response.GetAdminUserListListResponse;
-import com.waw.hr.response.TokenResponse;
+import com.waw.hr.entity.Employee;
+import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.utils.JWTUtil;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +39,25 @@ public class AdminUserController {
         }
         System.out.print("登录角色为" + adminUser.getRole());
         return ResultGenerator.genSuccessResult(new TokenResponse(JWTUtil.sign(username, adminUser.getRole(), CommonValue.SECRET)));
+    }
+
+
+    /**
+     * 获取身份证审核列表
+     *
+     * @return
+     */
+    @PostMapping("/idCardList")
+    public Result idCardList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                             @RequestParam(defaultValue = "20") Integer pageSize
+    ) {
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        PageHelper.offsetPage(sp, pageSize);
+        List<Employee> enterprises = adminUserService.getIdCardList();
+        PageInfo<Employee> pageInfo = new PageInfo<>(enterprises);
+        return ResultGenerator.genSuccessResult(new GetEmployeeListListResponse(sp, pageSize, (int) pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
     }
 
 
@@ -217,7 +231,7 @@ public class AdminUserController {
         }
         AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
         if (adminUser.getRole() == ROLE.ROLE_ADMIN || adminUser.getRole() == ROLE.ROLE_EDITOR) {
-            int result = adminUserService.addEditor(name, mobile, adminUser.getId());
+            int result = adminUserService.addBroker(name, mobile, adminUser.getId());
             if (result > 0) {
                 return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
             } else {

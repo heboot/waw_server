@@ -53,4 +53,7 @@ public interface EmployeeService {
     //获取我推荐的列表
     List<RecommendUser> getMyRecommendUserList(String uid);
 
+    //分配经纪人 返回经纪人ID
+    Integer switchBroker();
+
 }

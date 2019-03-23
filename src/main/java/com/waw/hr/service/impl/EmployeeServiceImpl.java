@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -63,6 +64,7 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
             Integer result = registerEmployee(mobile, "", String.valueOf(System.currentTimeMillis()));
             if (result != null && result > 0) {
                 EmployeeModel employee = employeeMapper.getEmployeeByMobile(mobile);
+                employee.setBrokerId(switchBroker());
                 LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
                 return ResultGenerator.genSuccessResult(loginResponse);
             }
@@ -145,6 +147,24 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public List<RecommendUser> getMyRecommendUserList(String uid) {
         return employeeMapper.getMyRecommendUserList(uid);
+    }
+
+    private Random random = new Random();
+
+    @Override
+    public Integer switchBroker() {
+
+        List<Integer> brokerIds = employeeMapper.switchBroker();
+
+        int resultId = 0;
+
+        if (brokerIds.size() > 1) {
+            resultId = random.nextInt(brokerIds.size() - 1);
+        } else {
+            resultId = brokerIds.get(0);
+        }
+
+        return resultId;
     }
 
 }

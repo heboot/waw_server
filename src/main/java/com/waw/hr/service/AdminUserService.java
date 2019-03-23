@@ -1,6 +1,8 @@
 package com.waw.hr.service;
 
 import com.waw.hr.entity.AdminUser;
+import com.waw.hr.entity.Employee;
+import com.waw.hr.entity.EmployeeBank;
 
 import java.util.List;
 
@@ -39,7 +41,7 @@ public interface AdminUserService {
      * @param createId
      * @return
      */
-    Integer addEditor(String name, String mobile ,Integer createId);
+    Integer addEditor(String name, String mobile, Integer createId);
 
     /**
      * 创建经纪人
@@ -48,5 +50,17 @@ public interface AdminUserService {
      * @return
      */
     Integer addBroker(String name, String mobile, Integer createId);
+
+
+    List<EmployeeBank> bankList();
+
+
+    /**
+     * 获取有身份证信息的员工列表
+     *
+     * @return
+     */
+    List<Employee> getIdCardList();
+
 
 }

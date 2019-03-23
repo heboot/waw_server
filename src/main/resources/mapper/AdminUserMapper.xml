@@ -90,6 +90,7 @@
 
     </insert>
 
+
     <!--<insert id="addEditUser">-->
     <!--INSERT  INTO tb_admin_user(name,password,mobile,role) VALUES (#{name},#{password},#{mobile},5)-->
     <!--</insert>-->

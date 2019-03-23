@@ -8,4 +8,5 @@ public interface ConfigService {
 
     List<BankModel> bankList();
 
+
 }

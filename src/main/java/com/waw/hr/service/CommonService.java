@@ -8,4 +8,5 @@ public interface CommonService {
 
     Integer feedback(String uid, String content);
 
+
 }

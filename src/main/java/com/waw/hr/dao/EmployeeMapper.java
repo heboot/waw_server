@@ -57,4 +57,13 @@ public interface EmployeeMapper extends Mapper<Employee> {
     //获取我推荐的列表
     List<RecommendUser> getMyRecommendUserList(@Param("uid") String uid);
 
+    /**
+     * 获取有身份证信息的员工列表
+     *
+     * @return
+     */
+    List<Employee> getIdCardList();
+
+    //分配经纪人 返回经纪人ID
+    List<Integer> switchBroker();
 }

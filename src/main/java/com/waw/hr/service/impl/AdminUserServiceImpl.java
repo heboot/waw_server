@@ -2,8 +2,11 @@ package com.waw.hr.service.impl;
 
 import com.waw.hr.core.AbstractService;
 import com.waw.hr.dao.AdminUserMapper;
+import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.dao.EnterpriseMapper;
 import com.waw.hr.entity.AdminUser;
+import com.waw.hr.entity.Employee;
+import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.Enterprise;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EnterpriseService;
@@ -19,7 +22,8 @@ public class AdminUserServiceImpl extends AbstractService<AdminUser> implements 
 
     @Resource
     private AdminUserMapper adminUserMapper;
-
+    @Resource
+    private EmployeeMapper employeeMapper;
 
     @Override
     public AdminUser getAdminUserByPassword(String name, String pwd) {
@@ -70,6 +74,16 @@ public class AdminUserServiceImpl extends AbstractService<AdminUser> implements 
 
     @Override
     public Integer addBroker(String name, String mobile, Integer createId) {
+        return adminUserMapper.addEditor(name, mobile, createId, String.valueOf(System.currentTimeMillis()), 1);
+    }
+
+    @Override
+    public List<EmployeeBank> bankList() {
         return null;
+    }
+
+    @Override
+    public List<Employee> getIdCardList() {
+        return employeeMapper.getIdCardList();
     }
 }

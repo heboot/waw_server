@@ -40,6 +40,14 @@
     </select>
 
 
+
+    <select id="getIdCardList" resultMap="EmployeeListMap">
+
+        SELECT * FROM tb_employee WHERE id_card_status > 0
+
+    </select>
+
+
     <resultMap type="com.waw.hr.entity.Employee"
                id="EmployeeListMap">
 
@@ -218,6 +226,12 @@
     <select id="getMyRecommendUserList" resultType="com.waw.hr.entity.RecommendUser">
 
         SELECT * FROM tb_recommend where uid = #{uid}
+
+    </select>
+
+    <select id="switchBroker" resultType="java.lang.Integer">
+
+        SELECT ID FROM tb_admin_user WHERE role = 0 AND status > 0
 
     </select>
 

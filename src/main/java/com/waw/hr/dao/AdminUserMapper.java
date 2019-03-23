@@ -2,6 +2,8 @@ package com.waw.hr.dao;
 
 import com.waw.hr.core.Mapper;
 import com.waw.hr.entity.AdminUser;
+import com.waw.hr.entity.Employee;
+import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.Enterprise;
 import org.apache.ibatis.annotations.Param;
 
@@ -56,4 +58,16 @@ public interface AdminUserMapper extends Mapper<AdminUser> {
      * @return
      */
     Integer addBroker(@Param("name") String name, @Param("mobile") String mobile, @Param("createUid") Integer createId);
+
+
+    /**
+     * 获取银行卡列表
+     *
+     * @return
+     */
+    List<EmployeeBank> bankList();
+
+
+
+
 }

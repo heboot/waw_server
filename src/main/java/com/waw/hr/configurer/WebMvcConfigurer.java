@@ -2,10 +2,7 @@ package com.waw.hr.configurer;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
@@ -33,17 +31,18 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import static com.alibaba.fastjson.serializer.SerializerFeature.PrettyFormat;
+import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullListAsEmpty;
+import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullStringAsEmpty;
 
 /**
  * Spring MVC 配置
  */
 @Configuration
-public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+public class WebMvcConfigurer extends WebMvcConfigurationSupport {
 
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
     @Value("${spring.profiles.active}")
@@ -54,13 +53,15 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = new FastJsonConfig();
-//        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue);//保留空的字段
-        config.setSerializerFeatures(SerializerFeature.WriteNullStringAsEmpty);
-        config.setSerializerFeatures(SerializerFeature.WriteNullNumberAsZero);
-        //SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
-        //SerializerFeature.WriteNullNumberAsZero//Number null -> 0
+        config.setSerializerFeatures(SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteNullNumberAsZero,
+                SerializerFeature.WriteNullBooleanAsFalse,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.PrettyFormat);
+//        SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
+//        SerializerFeature.WriteNullNumberAsZero//Number null -> 0
         // 按需配置，更多参考FastJson文档哈
-
         converter.setFastJsonConfig(config);
         converter.setDefaultCharset(Charset.forName("UTF-8"));
         converter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
@@ -115,37 +116,47 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
 //        接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
 //        if (!"dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new HandlerInterceptorAdapter() {
-                @Override
-                public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                    if (request.getRequestURI().indexOf("app") > -1) {
+        registry.addInterceptor(new HandlerInterceptorAdapter() {
+            @Override
+            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                if (request.getRequestURI().indexOf("app") > -1) {
 
-                        //验证签名
-                        boolean pass = validateSign(request);
-                        if (pass) {
-                            return true;
-                        } else {
-                            logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
-                                    request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
+                    //验证签名
+                    boolean pass = validateSign(request);
+                    if (pass) {
+                        return true;
+                    } else {
+                        logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
+                                request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
 
-                            Result result = new Result();
-                            result.setCode(ResultCode.UNAUTHORIZED).setMessage("签名认证失败");
-                            responseResult(response, result);
-                            return false;
-                        }
+                        Result result = new Result();
+                        result.setCode(ResultCode.UNAUTHORIZED).setMessage("签名认证失败");
+                        responseResult(response, result);
+                        return false;
                     }
-                    return true;
                 }
-            });
+                return true;
+            }
+        });
 //        }
     }
+
+    private ValueFilter filter = new ValueFilter() {
+        @Override
+        public Object process(Object obj, String s, Object v) {
+            if (v == null)
+                return "";
+            return v;
+        }
+    };
 
     private void responseResult(HttpServletResponse response, Result result) {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setStatus(200);
         try {
-            response.getWriter().write(JSON.toJSONString(result));
+            response.getWriter().write(JSON.toJSONString(result, filter,
+                    WriteNullStringAsEmpty));
         } catch (IOException ex) {
             logger.error(ex.getMessage());
         }

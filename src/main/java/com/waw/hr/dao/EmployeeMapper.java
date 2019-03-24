@@ -1,6 +1,7 @@
 package com.waw.hr.dao;
 
 import com.waw.hr.core.Mapper;
+import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
@@ -70,4 +71,8 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     //获取我录入的员工列表
     List<Employee> getEmployeeListByCreateId(@Param("createId") String createId, @Param("key") String key);
+
+    //获取员工的身份证审核信息
+    List<EmployeeBank> getEmployeeBankList();
+
 }

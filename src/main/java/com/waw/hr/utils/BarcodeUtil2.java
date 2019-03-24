@@ -12,6 +12,7 @@ public class BarcodeUtil2 {
 
     /**
      * 编码
+     *
      * @param contents
      * @param width
      * @param height

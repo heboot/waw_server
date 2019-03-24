@@ -1,6 +1,9 @@
 package com.waw.hr.entity;
 
+import com.waw.hr.model.EmployeeModel;
+
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "tb_employee_bank")
 public class EmployeeBank {
@@ -9,8 +12,71 @@ public class EmployeeBank {
 
     private int uid;
 
-    private int bank;
+    private int bankId;
 
+    private String bankNumber;
 
+    private String picFront;
 
+    private String picReverse;
+
+    //本地字段
+    @Transient
+    private EmployeeModel employeeModel;
+
+    public EmployeeModel getEmployeeModel() {
+        return employeeModel;
+    }
+
+    public void setEmployeeModel(EmployeeModel employeeModel) {
+        this.employeeModel = employeeModel;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(int bankId) {
+        this.bankId = bankId;
+    }
+
+    public String getBankNumber() {
+        return bankNumber;
+    }
+
+    public void setBankNumber(String bankNumber) {
+        this.bankNumber = bankNumber;
+    }
+
+    public String getPicFront() {
+        return picFront;
+    }
+
+    public void setPicFront(String picFront) {
+        this.picFront = picFront;
+    }
+
+    public String getPicReverse() {
+        return picReverse;
+    }
+
+    public void setPicReverse(String picReverse) {
+        this.picReverse = picReverse;
+    }
 }

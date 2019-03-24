@@ -239,10 +239,32 @@
         SELECT * FROM tb_employee WHERE create_id = #{createId}
 
         <if test="key != null">
-            name LIKE concat(concat('%',#{key}),'%')
+            name LIKE concat('%',#{key},'%')
         </if>
 
     </select>
 
+    <select id="getEmployeeBankList" resultMap="EmployeeBankListMap">
+
+        SELECT * FROM tb_employee_bank
+
+    </select>
+
+    <resultMap type="com.waw.hr.entity.EmployeeBank"
+               id="EmployeeBankListMap">
+
+
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"></result>
+        <result property="bankId" column="bank_id"></result>
+        <result property="bankNumber" column="bank_number"></result>
+        <result property="picFront" column="pic_front"></result>
+        <result property="picReverse" column="pic_reverse"></result>
+
+        <association column="uid" property="employeeModel"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeById">
+        </association>
+
+    </resultMap>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.waw.hr.service;
 
 import com.waw.hr.core.Result;
+import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface EmployeeService {
 
 
-    Integer registerEmployee(String mobile, String name, String time, String createId );
+    Integer registerEmployee(String mobile, String name, String time, String createId);
 
     Integer updateEmployeeStatus(Integer id, Integer status);
 
@@ -58,5 +59,8 @@ public interface EmployeeService {
 
     //获取我录入的员工列表
     List<Employee> getEmployeeListByCreateId(String createId, String key);
+
+    //获取员工的身份证审核信息
+    List<EmployeeBank> getEmployeeBankList();
 
 }

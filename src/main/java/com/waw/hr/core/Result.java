@@ -1,6 +1,8 @@
 package com.waw.hr.core;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ValueFilter;
 
 /**
  * 统一API响应结果封装
@@ -37,8 +39,18 @@ public class Result<T> {
         return this;
     }
 
+    private ValueFilter filter = new ValueFilter() {
+        @Override
+        public Object process(Object obj, String s, Object v) {
+            if (v == null)
+                return "";
+            return v;
+        }
+    };
+
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return JSON.toJSONString(this, filter,
+                SerializerFeature.WriteNullStringAsEmpty);
     }
 }

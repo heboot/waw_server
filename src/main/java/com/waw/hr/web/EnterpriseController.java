@@ -69,6 +69,11 @@ public class EnterpriseController {
         PageHelper.startPage(sp, pageSize);
         List<EnterpriseListModel> enterprises = enterpriseService.enterpriseList(key, sort);
         PageInfo<EnterpriseListModel> pageInfo = new PageInfo<>(enterprises);
+
+        if (!StringUtils.isEmpty(key) || (sort != null && sort == 1)) {
+            return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
+        }
+
         List<Banner> banners = indexService.bannerList();
         return ResultGenerator.genSuccessResult(new EnterpriseListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList(), banners, (int) pageInfo.getTotal()));
     }

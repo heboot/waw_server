@@ -198,6 +198,7 @@ public class EmployeeController {
 
     }
 
+
     /**
      * 推荐
      *
@@ -364,7 +365,7 @@ public class EmployeeController {
     public Result employeeList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
                                @RequestParam(defaultValue = "20") Integer pageSize, @RequestParam(required = false) String key) {
 
-        if (!JWTUtil.verify(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
@@ -379,6 +380,29 @@ public class EmployeeController {
 
         PageInfo<Employee> pageInfo = new PageInfo<>(employees);
         return ResultGenerator.genSuccessResult(new GetEmployeeListListResponse(sp, pageSize, (int) pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
+    }
+
+
+    /**
+     * 获取员工银行卡列表 后端使用
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/employeeBankList")
+    public Result employeeBankList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                                   @RequestParam(defaultValue = "20") Integer pageSize, @RequestParam(required = false) String key) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+
+        PageHelper.offsetPage(sp, pageSize);
+        List<EmployeeBank> employeeList = employeeService.getEmployeeBankList();
+
+        PageInfo<EmployeeBank> pageInfo = new PageInfo<>(employeeList);
+        return ResultGenerator.genSuccessResult(new GetEmployeeBankListResponse(sp, pageSize, (int) pageInfo.getPages(), pageInfo.getList(), (int) pageInfo.getTotal()));
     }
 
     /**

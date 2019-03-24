@@ -13,8 +13,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("app/config")
-public class ConfigController {
+@RequestMapping("app/shop")
+public class ShopController {
 
 
     @Resource
@@ -25,8 +25,8 @@ public class ConfigController {
      *
      * @return
      */
-    @PostMapping("/appConfig")
-    public Result getAppConfig() {
+    @PostMapping("/shopList")
+    public Result shopList() {
         List<BankModel> bankModelList = configService.bankList();
         ConfigDataResponse configDataResponse = new ConfigDataResponse();
         configDataResponse.setKfTel("18621242123");

@@ -7,6 +7,7 @@ import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
+import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
@@ -169,6 +170,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public List<Employee> getEmployeeListByCreateId(String createId, String key) {
         return employeeMapper.getEmployeeListByCreateId(createId, key);
+    }
+
+    @Override
+    public List<EmployeeBank> getEmployeeBankList() {
+        return employeeMapper.getEmployeeBankList();
     }
 
 }

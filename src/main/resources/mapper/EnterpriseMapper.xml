@@ -9,7 +9,7 @@
         select * from tb_enterprise
 
         <if test="key != null">
-            WHERE name LIKE concat(concat('%',#{key}),'%')
+            WHERE name LIKE  concat('%',#{key},'%')
         </if>
 
         <if test="sort == 1">
@@ -26,7 +26,7 @@
         select id,name,salary,subsidy_money from tb_enterprise WHERE status = 1
 
         <if test="key != null">
-            name LIKE concat(concat('%',#{key}),'%')
+          AND  name LIKE concat('%',#{key},'%')
         </if>
 
         <if test="sort == 1">

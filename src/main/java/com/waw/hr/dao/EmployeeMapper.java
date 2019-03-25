@@ -48,7 +48,9 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     Integer updateEmployeeIdCardPic(@Param("uid") String uid, @Param("picFace") String picFace, @Param("pic") String pic, @Param("idStatus") int idStatus);
 
-    Integer updateEmployeeBarkCardInfo(@Param("uid") String uid, @Param("bankId") String bankId, @Param("bankCode") String bankCode, @Param("picFront") String bankPicFront, @Param("picReverse") String bankPicReverse);
+    Integer updateEmployeeBarkCardInfo(@Param("uid") String uid, @Param("bankId") String bankId, @Param("bankName") String bankName, @Param("bankCode") String bankCode, @Param("picFront") String bankPicFront, @Param("picReverse") String bankPicReverse, @Param("time") String time);
+
+    Integer insertEmployeeBarkCardInfo(@Param("uid") String uid, @Param("bankId") String bankId, @Param("bankCode") String bankCode, @Param("picFront") String bankPicFront, @Param("picReverse") String bankPicReverse);
 
     Integer recommendUser(@Param("uid") String uid, @Param("name") String name, @Param("mobile") String mobile, @Param("time") String time);
 
@@ -74,5 +76,13 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     //获取员工的身份证审核信息
     List<EmployeeBank> getEmployeeBankList();
+
+    //查询这个员工是否认证过银行卡
+    Integer getEmployeeBankInfoCount(@Param("uid") String uid);
+
+    //获取某个员工的最新的身份证认证信息
+    EmployeeBank getEmployeeBankInfoById(@Param("uid") String uid);
+
+    Integer updateEmployeeBankStatus(@Param("uid") String uid, @Param("status") int status);
 
 }

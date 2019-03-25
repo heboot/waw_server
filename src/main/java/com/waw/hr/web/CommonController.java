@@ -20,7 +20,7 @@ import java.util.List;
 import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
-@RequestMapping("app/common")
+@RequestMapping(value = {"/common", "app/common"})
 public class CommonController {
 
 
@@ -43,7 +43,7 @@ public class CommonController {
         int result = commonService.feedback(JWTUtil.getUserId(token), content);
 
         if (result > 0) {
-            return ResultGenerator.genSuccessResult(MValue.MESSAGE_FEEDBACK_SUC);
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_FEEDBACK_SUC,null);
         }
 
         return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);

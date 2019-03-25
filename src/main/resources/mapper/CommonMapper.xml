@@ -12,7 +12,7 @@
 
     <insert id="feedback">
 
-        INSERT INTO tb_feedback VALUES (#{uid},#{content},#{time})
+        INSERT INTO tb_feedback (uid,content,create_time) VALUES (#{uid},#{content},#{time})
 
     </insert>
 

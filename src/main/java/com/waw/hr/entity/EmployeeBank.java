@@ -1,6 +1,8 @@
 package com.waw.hr.entity;
 
+import com.waw.hr.core.MValue;
 import com.waw.hr.model.EmployeeModel;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -19,6 +21,16 @@ public class EmployeeBank {
     private String picFront;
 
     private String picReverse;
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     //本地字段
     @Transient
@@ -65,7 +77,10 @@ public class EmployeeBank {
     }
 
     public String getPicFront() {
-        return picFront;
+        if (StringUtils.isEmpty(picFront)) {
+            return picFront;
+        }
+        return MValue.IMAGE_PRIFIX + picFront;
     }
 
     public void setPicFront(String picFront) {
@@ -73,7 +88,10 @@ public class EmployeeBank {
     }
 
     public String getPicReverse() {
-        return picReverse;
+        if (StringUtils.isEmpty(picReverse)) {
+            return picReverse;
+        }
+        return MValue.IMAGE_PRIFIX + picReverse;
     }
 
     public void setPicReverse(String picReverse) {

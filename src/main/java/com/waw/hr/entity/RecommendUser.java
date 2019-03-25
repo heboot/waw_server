@@ -1,6 +1,10 @@
 package com.waw.hr.entity;
 
+import com.waw.hr.utils.DateUtil;
+
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.Date;
 
 @Table(name = "tb_recommend")
 public class RecommendUser {
@@ -15,14 +19,44 @@ public class RecommendUser {
 
     private String createTime;
 
-    private int joinStatus;
+    @Transient
+    private Integer joinStatus;
 
-    public int getJoinStatus() {
+    @Transient
+    private String joinTime;
+
+    @Transient
+    private int joinDays;
+
+    public String getJoinTime() {
+        return joinTime;
+    }
+
+    public void setJoinTime(String joinTime) {
+        this.joinTime = joinTime;
+    }
+
+    public int getJoinDays() {
+        if (joinTime != null) {
+            return DateUtil.countDays(new Date(Long.parseLong(joinTime)));
+        }
+        return joinDays;
+    }
+
+    public void setJoinDays(Integer joinDays) {
+        this.joinDays = joinDays;
+    }
+
+    public Integer getJoinStatus() {
         return joinStatus;
     }
 
-    public void setJoinStatus(int joinStatus) {
+    public void setJoinStatus(Integer joinStatus) {
         this.joinStatus = joinStatus;
+    }
+
+    public void setJoinDays(int joinDays) {
+        this.joinDays = joinDays;
     }
 
     public String getCreateTime() {

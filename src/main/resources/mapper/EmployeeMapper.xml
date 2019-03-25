@@ -206,13 +206,19 @@
 
     <update id="updateEmployeeBarkCardInfo">
 
-        UPDATE tb_employee_bank SET uid = #{uid},bank_id = #{bankId},bank_number = #{bankCode},pic_front = #{picFront},pic_reverse = #{picReverse}
+        INSERT tb_employee_bank SET uid = #{uid},bank_id = #{bankId},name = #{bankName},bank_number = #{bankCode},pic_front = #{picFront},pic_reverse = #{picReverse},create_time = #{time}
 
     </update>
 
+    <select id="getEmployeeBankInfoCount" resultType="java.lang.Integer">
+
+        SELECT COUNT(ID) FROM tb_employee WHERE uid = #{uid}
+
+    </select>
+
     <insert id="recommendUser">
 
-        INSERT INTO tb_recommend (uid,recommend_mobile,name,recommend_time) VALUES (#{uid},#{mobile},#{name},#{time})
+        INSERT INTO tb_recommend (uid,mobile,name,create_time) VALUES (#{uid},#{mobile},#{name},#{time})
 
     </insert>
 
@@ -222,7 +228,7 @@
 
     </select>
 
-    <select id="getMyRecommendUserList" resultType="com.waw.hr.entity.RecommendUser">
+    <select id="getMyRecommendUserList" resultMap="EmployeeRecommendListMap">
 
         SELECT * FROM tb_recommend where uid = #{uid}
 
@@ -249,6 +255,44 @@
         SELECT * FROM tb_employee_bank
 
     </select>
+
+    <select id="getEmployeeJoinStatus" resultType="java.lang.Integer">
+
+        SELECT job_status FROM tb_employee WHERE id = #{uid}
+
+    </select>
+
+    <select id="getEmployeeJoinTime" resultType="java.lang.String">
+
+        SELECT join_work_time FROM tb_employee WHERE id = #{uid}
+
+    </select>
+
+    <select id="getEmployeeBankInfoById" resultType="com.waw.hr.entity.EmployeeBank">
+
+        SELECT * FROM tb_employee_bank order by create_time DESC limit 1;
+
+    </select>
+
+
+    <resultMap type="com.waw.hr.entity.RecommendUser"
+               id="EmployeeRecommendListMap">
+
+
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"></result>
+        <result property="name" column="name"></result>
+        <result property="mobile" column="mobile"></result>
+
+        <association column="uid" property="joinStatus"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeJoinStatus">
+        </association>
+
+        <association column="uid" property="joinTime"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeJoinTime">
+        </association>
+
+    </resultMap>
 
     <resultMap type="com.waw.hr.entity.EmployeeBank"
                id="EmployeeBankListMap">

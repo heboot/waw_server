@@ -13,6 +13,7 @@ import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.service.EmployeeSignLogService;
 import com.waw.hr.utils.JWTUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -182,19 +183,51 @@ public class EmployeeController {
      */
     @PostMapping("/bankInfo")
     public Result bankInfo(@RequestParam String token,
-                           @RequestParam String bankId,
-                           @RequestParam String number,
-                           @RequestParam String bankFront,
-                           @RequestParam String bankReverse) {
+                           String bankId,
+                           String number,
+                           String name,
+                           String bankFront,
+                           String bankReverse) {
         if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
-        if (employeeService.updateEmployeeBarkCardInfo(JWTUtil.getUserId(token), bankId, number, bankFront, bankReverse) > 0) {
-            return ResultGenerator.genSuccessResult(MValue.MESSAGE_AUTH_COMMIT_SUC, employeeService.getEmployeeById(JWTUtil.getUserId(token)));
+        if (StringUtils.isEmpty(bankId) && StringUtils.isEmpty(name)) {
+            EmployeeBank employeeBank = employeeService.getEmployeeBankInfoById(JWTUtil.getUserId(token));
+            if (employeeBank != null) {
+                return ResultGenerator.genSuccessResult(new BankInfoResponse(employeeBank));
+            }
+            return ResultGenerator.genFailResult("你还没有提交认证");
+
+        } else {
+            if (employeeService.updateEmployeeBarkCardInfo(JWTUtil.getUserId(token), bankId, name, number, bankFront, bankReverse, String.valueOf(System.currentTimeMillis())) > 0) {
+                return ResultGenerator.genSuccessResult(MValue.MESSAGE_AUTH_COMMIT_SUC, employeeService.getEmployeeById(JWTUtil.getUserId(token)));
+            } else {
+                return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+            }
         }
 
-        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+
+    }
+
+
+    /**
+     * 获取银行卡
+     *
+     * @return
+     */
+    @PostMapping("/myBankInfo")
+    public Result bankInfo(@RequestParam String token) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        EmployeeBank employeeBank = employeeService.getEmployeeBankInfoById(JWTUtil.getUserId(token));
+        if (employeeBank != null) {
+            return ResultGenerator.genSuccessResult(new BankInfoResponse(employeeBank));
+        }
+        return ResultGenerator.genFailResult("你还没有提交认证");
+
 
     }
 
@@ -217,7 +250,7 @@ public class EmployeeController {
         }
 
         if (employeeService.recommendUser(JWTUtil.getUserId(token), name, mobile) > 0) {
-            return ResultGenerator.genSuccessResult(MValue.MESSAGE_RECOMMEND_SUC);
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_RECOMMEND_SUC, null);
         }
 
         return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
@@ -414,7 +447,7 @@ public class EmployeeController {
     @PostMapping("/addEmployee")
     public Result addEmployee(@RequestParam String token, @RequestParam String name, @RequestParam String mobile) {
 
-        if (!JWTUtil.verify(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
@@ -427,7 +460,7 @@ public class EmployeeController {
         int result = employeeService.registerEmployee(mobile, name, String.valueOf(System.currentTimeMillis()), JWTUtil.getUserId(token));
 
         if (result > 0) {
-            return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC, null);
         }
         return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_FAIL);
     }

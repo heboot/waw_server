@@ -1,10 +1,7 @@
 package com.waw.hr.service.impl;
 
 import com.waw.hr.CommonValue;
-import com.waw.hr.core.AbstractService;
-import com.waw.hr.core.MValue;
-import com.waw.hr.core.Result;
-import com.waw.hr.core.ResultGenerator;
+import com.waw.hr.core.*;
 import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.entity.EmployeeBank;
@@ -130,8 +127,12 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public Integer updateEmployeeBarkCardInfo(String uid, String bankId, String bankCode, String bankPicFront, String bankPicReverse) {
-        return employeeMapper.updateEmployeeBarkCardInfo(uid, bankId, bankCode, bankPicFront, bankPicFront);
+    public Integer updateEmployeeBarkCardInfo(String uid, String bankId, String name, String bankCode, String bankPicFront, String bankPicReverse, String time) {
+        Integer result = employeeMapper.updateEmployeeBarkCardInfo(uid, bankId, name, bankCode, bankPicFront, bankPicFront, String.valueOf(System.currentTimeMillis()));
+        if (result != null && result > 0) {
+            employeeMapper.updateEmployeeBankStatus(uid, AuthStatus.ING.code());
+        }
+        return employeeMapper.updateEmployeeBarkCardInfo(uid, bankId, name, bankCode, bankPicFront, bankPicFront, String.valueOf(System.currentTimeMillis()));
     }
 
     @Override
@@ -175,6 +176,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public List<EmployeeBank> getEmployeeBankList() {
         return employeeMapper.getEmployeeBankList();
+    }
+
+    @Override
+    public EmployeeBank getEmployeeBankInfoById(String uid) {
+        return employeeMapper.getEmployeeBankInfoById(uid);
     }
 
 }

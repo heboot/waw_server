@@ -42,7 +42,7 @@ public interface EmployeeService {
 
     Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status);
 
-    Integer updateEmployeeBarkCardInfo(String uid, String bankId, String bankCode, String bankPicFront, String bankPicReverse);
+    Integer updateEmployeeBarkCardInfo(String uid, String bankId, String name, String bankCode, String bankPicFront, String bankPicReverse,String time);
 
 
     //推荐用户
@@ -63,4 +63,6 @@ public interface EmployeeService {
     //获取员工的身份证审核信息
     List<EmployeeBank> getEmployeeBankList();
 
+    //获取某个员工的最新的身份证认证信息
+    EmployeeBank getEmployeeBankInfoById(String uid);
 }

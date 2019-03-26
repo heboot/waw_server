@@ -4,12 +4,18 @@
 <mapper namespace="com.waw.hr.dao.EmployeeMapper">
 
 
-    <insert id="registerEmployee">
+    <insert id="registerEmployee" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO tb_employee (
         name,
         mobile,
-        create_time,create_id,broker_id ) VALUES  (#{name},#{mobile},#{time},#{createId},#{brokerId})
+        create_time,create_id,broker_id) VALUES  (#{name},#{mobile},#{time},#{createId},#{brokerId})
     </insert>
+
+    <update id="updateBarCode">
+
+        UPDATE tb_employee  SET bar_code = #{barCode},bar_code_pic = #{barCodePic}
+
+    </update>
 
 
     <!--resultType="com.waw.hr.entity.Employee"-->

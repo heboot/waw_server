@@ -18,6 +18,7 @@ public class EmployeeModel {
     private int sex;
 
     private int age;
+
     private int status;
 
     private int jobStatus;
@@ -31,6 +32,29 @@ public class EmployeeModel {
     private int role;
 
     private String joinWorkTime;
+
+    private String barCode;
+
+    private String barCodePic;
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
+    }
+
+    public String getBarCodePic() {
+        if (StringUtils.isEmpty(barCodePic)) {
+            return barCodePic;
+        }
+        return MValue.IMAGE_PRIFIX + barCodePic;
+    }
+
+    public void setBarCodePic(String barCodePic) {
+        this.barCodePic = barCodePic;
+    }
 
     public Integer getId() {
         return id;

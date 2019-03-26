@@ -12,7 +12,9 @@ import java.util.List;
 
 public interface EmployeeMapper extends Mapper<Employee> {
 
-    Integer registerEmployee(@Param("name") String name, @Param("mobile") String mobile, @Param("time") String time, @Param("createId") String createId, @Param("brokerId") String brokerId);
+    Integer registerEmployee(@Param("name") String name, @Param("mobile") String mobile, @Param("time") String time, @Param("createId") String createId, @Param("brokerId") String brokerId);// @Param("barCode") String barCode, @Param("barCodePic") String barCodePic
+
+    Integer updateBarCode(@Param("barCode") String barCode, @Param("barCodePic") String barCodePic);
 
     Integer updateEmployeeStatus(@Param("id") Integer id, @Param("status") Integer status);
 

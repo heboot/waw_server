@@ -27,7 +27,7 @@ public class DateUtil {
     /**
      * 英文简写（默认）如：2010-12-01
      */
-    public static String FORMAT_YMD = "yyyy-MM-dd";
+    public static String FORMAT_YMD = "yyyyMMdd";
 
     /**
      * 英文全称  如：2010-12-01 23:15

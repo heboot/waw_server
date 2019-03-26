@@ -11,7 +11,9 @@ import com.waw.hr.entity.Employee;
 import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.response.LoginResponse;
 import com.waw.hr.service.EmployeeService;
+import com.waw.hr.utils.BarcodeUtil2;
 import com.waw.hr.utils.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +28,25 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Resource
     private EmployeeMapper employeeMapper;
 
-    @Resource
-    private AdminUserMapper adminUserMapper;
+    @Autowired
+    private BarcodeUtil2 barcodeUtil2;
+
 
     @Override
     public Integer registerEmployee(String mobile, String name, String time, String createId) {
-        return employeeMapper.registerEmployee(name, mobile, time, createId, String.valueOf(switchBroker()));
+        String brokerId = String.valueOf(switchBroker());
+
+        Integer insertId = employeeMapper.registerEmployee(name, mobile, time, createId, brokerId);
+
+        String barCode = barcodeUtil2.getUserBarCode(String.valueOf(insertId), brokerId, "00", null);
+
+        String qiniuKey = "barcode/register" + System.currentTimeMillis() + ".png";
+
+        barcodeUtil2.executeBarcode(qiniuKey, barCode);
+
+        employeeMapper.updateBarCode(barCode, qiniuKey);
+
+        return insertId;
     }
 
     @Override
@@ -59,9 +74,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
         //验证码正确之后
         if (employeeMapper.getEmployeeByMobile(mobile) == null) {
 //            if (adminUserMapper.getAdminUserByMobile(mobile) == null) {
+
             Integer result = registerEmployee(mobile, "", String.valueOf(System.currentTimeMillis()), null);
             if (result != null && result > 0) {
                 EmployeeModel employee = employeeMapper.getEmployeeByMobile(mobile);
+
                 LoginResponse loginResponse = new LoginResponse(JWTUtil.signById(String.valueOf(employee.getId()), CommonValue.SECRET), employee);
                 return ResultGenerator.genSuccessResult(loginResponse);
             }

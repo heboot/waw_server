@@ -4,6 +4,7 @@ import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
+import com.waw.hr.entity.BanlanceEntity;
 import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
@@ -198,6 +199,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public EmployeeBank getEmployeeBankInfoById(String uid) {
         return employeeMapper.getEmployeeBankInfoById(uid);
+    }
+
+    @Override
+    public List<BanlanceEntity> getEmployeeBalanceLog(String uid) {
+        return employeeMapper.getEmployeeBalanceLog(uid);
     }
 
 }

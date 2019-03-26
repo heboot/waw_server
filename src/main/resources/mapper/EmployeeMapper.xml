@@ -317,4 +317,10 @@
 
     </resultMap>
 
+    <select id="getEmployeeBalanceLog" resultType="com.waw.hr.entity.BanlanceEntity">
+
+        SELECT * FROM tb_balance_log WHERE uid = #{uid}
+
+    </select>
+
 </mapper>

@@ -63,7 +63,7 @@ public class EmployeeController {
     }
 
     /**
-     * 获取个人信息
+     * 获取个人信息 APP使用
      *
      * @param token
      * @return
@@ -80,7 +80,7 @@ public class EmployeeController {
     }
 
     /**
-     * 获取我的经纪人详细信息
+     * 获取我的经纪人详细信息 APP使用
      *
      * @param token
      * @param brokerId
@@ -96,7 +96,7 @@ public class EmployeeController {
     }
 
     /**
-     * 更新个人信息
+     * 更新个人信息 APP使用
      *
      * @param token
      * @param name
@@ -122,7 +122,7 @@ public class EmployeeController {
     }
 
     /**
-     * 检查身份证认证信息
+     * 获取个人信息详情 app使用
      *
      * @return
      */
@@ -136,22 +136,6 @@ public class EmployeeController {
         return ResultGenerator.genSuccessResult(new EmployeeResponse(employeeService.getEmployeeById(JWTUtil.getUserId(token))));
 
     }
-
-
-//    @PostMapping("/initIDAuth")
-//    public Result initIDAuth(@RequestParam String token) {
-//
-//        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
-//            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
-//        }
-//
-//        Employee employee = employeeService.getEmployeeById(JWTUtil.getUserId(token));
-//
-//        if(employee.get)
-//
-//        return ResultGenerator.genSuccessResult(new EmployeeResponse(employeeService.getEmployeeById(JWTUtil.getUserId(token))));
-//
-//    }
 
 
     /**
@@ -177,7 +161,7 @@ public class EmployeeController {
 
 
     /**
-     * 提交银行卡
+     * 提交银行卡 APP使用
      *
      * @return
      */
@@ -212,7 +196,7 @@ public class EmployeeController {
 
 
     /**
-     * 获取银行卡
+     * 获取银行卡 APP使用
      *
      * @return
      */
@@ -233,7 +217,7 @@ public class EmployeeController {
 
 
     /**
-     * 推荐
+     * 推荐 APP使用
      *
      * @return
      */
@@ -258,7 +242,7 @@ public class EmployeeController {
     }
 
     /**
-     * 推荐
+     * 我的推荐 APP使用
      *
      * @return
      */
@@ -273,6 +257,24 @@ public class EmployeeController {
         List<RecommendUser> enterprises = employeeService.getMyRecommendUserList(JWTUtil.getUserId(token));
         PageInfo<RecommendUser> pageInfo = new PageInfo<>(enterprises);
         return ResultGenerator.genSuccessResult(new MyRecommendListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
+    }
+
+    /**
+     * 我的推荐 APP使用
+     *
+     * @return
+     */
+    @PostMapping("/balanceLog")
+    public Result balanceLog(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                             @RequestParam(defaultValue = "20") Integer pageSize) {
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        PageHelper.startPage(sp, pageSize);
+        List<BanlanceEntity> banlanceEntityList = employeeService.getEmployeeBalanceLog(JWTUtil.getUserId(token));
+        PageInfo<BanlanceEntity> pageInfo = new PageInfo<>(banlanceEntityList);
+        return ResultGenerator.genSuccessResult(new MyBalanceListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
     }
 
 

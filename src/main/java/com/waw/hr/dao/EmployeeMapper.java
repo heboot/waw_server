@@ -1,6 +1,7 @@
 package com.waw.hr.dao;
 
 import com.waw.hr.core.Mapper;
+import com.waw.hr.entity.BanlanceEntity;
 import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
@@ -86,5 +87,8 @@ public interface EmployeeMapper extends Mapper<Employee> {
     EmployeeBank getEmployeeBankInfoById(@Param("uid") String uid);
 
     Integer updateEmployeeBankStatus(@Param("uid") String uid, @Param("status") int status);
+
+    //获取某个员工的账户记录
+    List<BanlanceEntity> getEmployeeBalanceLog(@Param("uid") String uid);
 
 }

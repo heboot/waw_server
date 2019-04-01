@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.entity.*;
+import com.waw.hr.model.ApplyModel;
+import com.waw.hr.model.BarCodeInfo;
 import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
@@ -132,8 +134,59 @@ public class EmployeeController {
         if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
-
         return ResultGenerator.genSuccessResult(new EmployeeResponse(employeeService.getEmployeeById(JWTUtil.getUserId(token))));
+
+    }
+
+    /**
+     * 获取个人信息详情 后端使用
+     *
+     * @return
+     */
+    @PostMapping("/getEmployeeApplyList")
+    public Result getInfo(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                          @RequestParam(defaultValue = "20") Integer pageSize) {
+
+//        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+//            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+//        }
+        PageHelper.startPage(sp, pageSize);
+        List<ApplyModel> enterprises = employeeService.getApplyEmployeeList();
+        PageInfo<ApplyModel> pageInfo = new PageInfo<>(enterprises);
+
+        return ResultGenerator.genSuccessResult(new ApplyListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
+
+    }
+
+    /**
+     * 获取个人信息详情 app使用
+     *
+     * @return
+     */
+    @PostMapping("/barCode")
+    public Result barCode(@RequestParam String token, @RequestParam String barCode) {
+
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        Employee employeeModel = employeeService.getEmployeeByBarCode(barCode);
+
+        BarCodeInfo barCodeInfo = new BarCodeInfo();
+
+        barCodeInfo.setAvatar(employeeModel.getAvatar() == null ? "" : employeeModel.getAvatar());
+        barCodeInfo.setName(employeeModel.getName() == null ? "" : employeeModel.getName());
+        barCodeInfo.setSex(employeeModel.getSex());
+        barCodeInfo.setBrokerName(employeeModel.getBrokerUser().getName());
+        barCodeInfo.setMobile(employeeModel.getMobile());
+        if (employeeModel.getJobStatus() != 1) {
+            barCodeInfo.setJobInfo("未入职");
+        } else if (employeeModel.getJobStatus() == 1) {
+//            barCodeInfo.setJobInfo(employeeModel.get);
+        }
+
+
+        return ResultGenerator.genSuccessResult(new BarCodeInfoResponse(barCodeInfo));
 
     }
 
@@ -360,8 +413,6 @@ public class EmployeeController {
      * 获取员工列表 后端使用
      *
      * @param token
-     * @param page
-     * @param limit
      * @return
      */
     @GetMapping("/getEmployeeList")

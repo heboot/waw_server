@@ -9,6 +9,7 @@ import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.response.LoginResponse;
 import com.waw.hr.service.EmployeeService;
@@ -39,13 +40,15 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
 
         Integer insertId = employeeMapper.registerEmployee(name, mobile, time, createId, brokerId);
 
-        String barCode = barcodeUtil2.getUserBarCode(String.valueOf(insertId), brokerId, "00", null);
+        EmployeeModel employeeModel = employeeMapper.getEmployeeByMobile(mobile);
 
-        String qiniuKey = "barcode/register" + System.currentTimeMillis() + ".png";
+        String barCode = barcodeUtil2.getUserBarCode("waw" + String.valueOf(employeeModel.getId()), brokerId, "00", null);
+
+        String qiniuKey = "barcode/register/ " + String.valueOf(employeeModel.getId()) + "/" + System.currentTimeMillis() + ".png";
 
         barcodeUtil2.executeBarcode(qiniuKey, barCode);
 
-        employeeMapper.updateBarCode(barCode, qiniuKey);
+        employeeMapper.updateBarCode(String.valueOf(employeeModel.getId()), barCode, qiniuKey);
 
         return insertId;
     }
@@ -140,6 +143,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
+    public Employee getEmployeeByBarCode(String barCode) {
+        return employeeMapper.getEmployeeByBarCode(barCode);
+    }
+
+    @Override
     public Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status) {
         return employeeMapper.updateEmployeeIdCardPic(uid, picFace, pic, status);
     }
@@ -204,6 +212,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public List<BanlanceEntity> getEmployeeBalanceLog(String uid) {
         return employeeMapper.getEmployeeBalanceLog(uid);
+    }
+
+    @Override
+    public List<ApplyModel> getApplyEmployeeList() {
+        return employeeMapper.getApplyEmployeeList();
     }
 
 }

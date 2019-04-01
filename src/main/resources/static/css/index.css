@@ -1,0 +1,166 @@
+﻿﻿html,
+body {
+
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.bg {
+
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, rgba(20, 146, 255, 1) 0%, rgba(0, 106, 255, 1) 100%)
+}
+
+.left{
+	padding-left: 100px;
+	text-align: center;
+	float: left;
+	height: 100%;
+	position: relative;
+	width: 50%;
+}
+
+.right{
+	text-align: left;
+	float: left;
+	height: 100%;
+	width: 50%;
+}
+
+.appimg {
+
+	width: 280px;
+	height: 568px;
+}
+
+.mm{
+
+	left: 330px;
+	position:absolute;
+	margin-top: 15%;
+
+}
+
+
+
+.content {
+
+	width: 100%;
+	height: 97%;
+
+}
+
+.mbottom{
+	position: absolute;
+	z-index: 444;
+	height: 3%;
+	width: 100%;
+}
+
+.oval {
+	margin-top: 25%;
+
+	width: 455px;
+	height: 455px;
+	background: rgba(255, 255, 255, 1);
+	opacity: 0.2;
+	border-radius: 50%;
+}
+
+.mapp {
+	background: yellow;
+	width: 500px;
+	height: 500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+
+.tip {
+
+	margin-top: 5%;
+
+}
+
+.logo{
+	margin-top: 13%;
+	margin-left: 100px;
+	width: 148px;
+	height: 148px;
+
+}
+
+.downloadbtn {
+	margin-top: 20px;
+	color: #006BFF;
+	width: 310px;
+	height: 56px;
+	background: rgba(255, 255, 255, 1);
+	border-radius: 4px;
+	font-size: 24px; margin-left: 35px;
+
+}
+
+.download_text {
+	width: 142px;
+	margin-left: 270px;
+	background-color: rgba(0, 107, 255, 1);
+	height: 33px;
+	font-size: 214px;
+	position: absolute;
+	font-family: PingFangSC-Regular;
+	font-weight: 400;
+	color: #006BFF;
+	line-height: 33px;
+}
+
+
+
+.download_tip {
+	margin-left: 100px;
+
+}
+
+.pp {
+	font-weight: 600;
+	font-size: 32px;
+	font-family: PingFangSC-Semibold;
+	color: #fff;
+	letter-spacing: 3px;
+}
+
+.pp2 {
+	font-size: 34px;
+	font-family: PingFangSC-Semibold;
+	color: #fff;
+	letter-spacing: 3px;
+}
+
+.downloadContainer {
+	margin-left: 100px;
+	margin-top: 40px;
+	display: flex;
+}
+
+.qrimg {
+
+
+	width: 166px;
+	height: 166px;
+	background: rgba(255, 255, 255, 1);
+	border-radius: 2px;
+}
+
+.downloadTip {
+	margin-left: 80px;
+	margin-top: 30px;
+	font-size: 26px;
+	font-family: PingFangSC-Semibold;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 1);
+	line-height: 36px;
+}

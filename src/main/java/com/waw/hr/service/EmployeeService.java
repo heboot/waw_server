@@ -6,6 +6,7 @@ import com.waw.hr.entity.EmployeeBank;
 import com.waw.hr.entity.RecommendUser;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.entity.Employee;
+import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
 
 import java.util.List;
@@ -41,6 +42,9 @@ public interface EmployeeService {
 
     EmployeeModel getEmployeeById(String id);
 
+
+    Employee getEmployeeByBarCode(String barCode);
+
     Integer updateEmployeeIdCardPic(String uid, String picFace, String pic, int status);
 
     Integer updateEmployeeBarkCardInfo(String uid, String bankId, String name, String bankCode, String bankPicFront, String bankPicReverse, String time);
@@ -69,4 +73,7 @@ public interface EmployeeService {
 
     //获取某个员工的账户记录
     List<BanlanceEntity> getEmployeeBalanceLog(String uid);
+
+    //获取报名列表
+    List<ApplyModel> getApplyEmployeeList();
 }

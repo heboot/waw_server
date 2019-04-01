@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		  crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<title>有职招聘，入职赚补贴</title>
+</head>
+<body>
+<div class="bg">
+
+	<div class="content">
+		<div class="left">
+			<img class="oval" />
+			<img class="mm" src="img/bg_app.png" />
+
+
+
+		</div>
+
+		<div class="right">
+
+			<img class="logo" src="img/logo.png" />
+
+			<div class="tip">
+				<p class="pp">有职招聘,入职赚补贴</p>
+				<p class="pp">找 到 心 仪 的 工 作</p>
+
+			</div>
+			<div class="downloadContainer">
+				<img class="qrimg" src="img/qrcode.png" />
+			</div>
+			<!-- <p class="downloadTip">现在下载，立享补贴</p> -->
+			<button class="downloadbtn" onclick="window.location.href='http://img.youzhihr.com//app/youzhi.apk'">现在下载，享受补贴</button>
+
+		</div>
+
+	</div>
+
+	<div class="mbottom">
+		<span style="color: white;">上海富阔劳务派遣有限公司 沪ICP备19002275号</span>
+	</div>
+
+</div>
+
+
+
+
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function browserRedirect() {
+        var sUserAgent = navigator.userAgent.toLowerCase();
+        var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+        var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+        var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+        var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+        var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+        var bIsAndroid = sUserAgent.match(/android/i) == "android";
+        var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+        var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+
+        if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+            // alert("phone");
+            window.location.href = "/mindex.html";
+        } else {
+            // alert("pc");
+        }
+    }
+
+    browserRedirect();
+</script>
+</body>
+</html>

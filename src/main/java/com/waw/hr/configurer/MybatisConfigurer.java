@@ -2,6 +2,7 @@ package com.waw.hr.configurer;
 
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,6 @@ public class MybatisConfigurer {
         factory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
         //****开启驼峰命名
         factory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
-
         return factory.getObject();
     }
 

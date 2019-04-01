@@ -13,7 +13,7 @@
 
     <update id="updateBarCode">
 
-        UPDATE tb_employee  SET bar_code = #{barCode},bar_code_pic = #{barCodePic}
+        UPDATE tb_employee  SET bar_code = #{barCode},bar_code_pic = #{barCodePic} WHERE id = #{uid}
 
     </update>
 
@@ -163,6 +163,12 @@
 
     </select>
 
+    <select id="getEmployeeByBarCode" resultMap="EmployeeListMap">
+
+        SELECT * FROM tb_employee where bar_code = #{barCode}
+
+    </select>
+
     <select id="getMyBroker" resultType="com.waw.hr.model.AdminUserModel">
 
         SELECT * FROM tb_admin_user WHERE id = #{brokerId}
@@ -200,6 +206,12 @@
     </update>
 
     <select id="getEmployeeById" resultType="com.waw.hr.model.EmployeeModel">
+
+        SELECT * FROM tb_employee WHERE id = #{id}
+
+    </select>
+
+    <select id="getEmployeeDataById" resultMap="EmployeeListMap">
 
         SELECT * FROM tb_employee WHERE id = #{id}
 
@@ -322,5 +334,33 @@
         SELECT * FROM tb_balance_log WHERE uid = #{uid}
 
     </select>
+
+    <select id="getApplyEmployeeList" resultMap="ApplyEmployeeMap">
+
+        SELECT * FROM tb_apply
+
+    </select>
+
+
+    <resultMap type="com.waw.hr.model.ApplyModel"
+               id="ApplyEmployeeMap">
+
+
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"></result>
+        <result property="eid" column="eid"></result>
+        <result property="applyTime" column="apply_time"></result>
+
+        <association column="uid" property="employeeModel"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeDataById">
+        </association>
+
+        <association column="eid" property="enterprise"
+                     select="com.waw.hr.dao.EnterpriseMapper.getEnterpriseById">
+        </association>
+
+
+    </resultMap>
+
 
 </mapper>

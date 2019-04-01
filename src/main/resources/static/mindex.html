@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/mindex.css" />
+	</head>
+	<body>
+		<div class="bg">
+			<div class="content">
+				<div class="mapp">
+					<img class="oval">
+					</img>
+
+				</div>
+				<img src="img/bg_app.png" class="appimg" />
+
+				<div class="tip">
+					<p class="pp">有职招聘,入职赚补贴</p>
+					<p class="pp">找 到 心 仪 的 工 作</p>
+					<p class="pp">点击下载，立享补贴</p>
+					<!-- <img class="downloadbtn" /> -->
+				</div>
+
+
+				<img class="qrimg" />
+				<div>
+						
+				</div>
+			</div>
+
+
+		</div>
+ <script type="text/javascript">
+        function browserRedirect() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+            document.writeln("您的浏览设备为：");
+            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+                // alert("phone");
+				// window.location.href="mindex.html"; 
+            } else {
+               window.location.href="index.html"; 
+            }
+        }
+
+        browserRedirect();
+</script>
+
+
+	</body>
+</html>

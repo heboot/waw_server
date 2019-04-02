@@ -25,6 +25,9 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
 
     Integer updateEnterpriseSubsidy(@Param("id") String id, @Param("money") Integer money, @Param("info") String info);
 
+    //更新打包价格
+    Integer updateEnterprisePackageMoney(@Param("id") String id, @Param("money") Integer money);
+
     //关注
     Integer followEnterprise(@Param("uid") String uid, @Param("enterpriseId") String enterpriseId);
 

@@ -250,5 +250,11 @@
         delete from `tb_enterprise` where id = #{id}
     </delete>
 
+    <update id="updateEnterprisePackageMoney">
+
+        UPDATE tb_enterprise SET package_money = #{money} WHERE id = #{id}
+
+    </update>
+
 
 </mapper>

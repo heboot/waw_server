@@ -202,6 +202,9 @@ public class Enterprise extends EnterpriseListModel {
     //企业补贴说明
     private String subsidyInfo;
 
+    //打包给渠道商的价格
+    private String packageMoney;
+
 
     //本地字段
     @Transient
@@ -210,6 +213,13 @@ public class Enterprise extends EnterpriseListModel {
     @Transient
     private int isJoin;
 
+    public String getPackageMoney() {
+        return packageMoney;
+    }
+
+    public void setPackageMoney(String packageMoney) {
+        this.packageMoney = packageMoney;
+    }
 
     public int getIsFollow() {
         return isFollow;

@@ -138,25 +138,6 @@ public class EmployeeController {
 
     }
 
-    /**
-     * 获取个人信息详情 后端使用
-     *
-     * @return
-     */
-    @PostMapping("/getEmployeeApplyList")
-    public Result getInfo(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
-                          @RequestParam(defaultValue = "20") Integer pageSize) {
-
-//        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
-//            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
-//        }
-        PageHelper.startPage(sp, pageSize);
-        List<ApplyModel> enterprises = employeeService.getApplyEmployeeList();
-        PageInfo<ApplyModel> pageInfo = new PageInfo<>(enterprises);
-
-        return ResultGenerator.genSuccessResult(new ApplyListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
-
-    }
 
     /**
      * 获取个人信息详情 app使用
@@ -327,7 +308,7 @@ public class EmployeeController {
         PageHelper.startPage(sp, pageSize);
         List<BanlanceEntity> banlanceEntityList = employeeService.getEmployeeBalanceLog(JWTUtil.getUserId(token));
         PageInfo<BanlanceEntity> pageInfo = new PageInfo<>(banlanceEntityList);
-        return ResultGenerator.genSuccessResult(new MyBalanceListResponse(sp, pageSize, pageInfo.getPages(), pageInfo.getList()));
+        return ResultGenerator.genSuccessResult(new MyBalanceListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
 
@@ -566,4 +547,40 @@ public class EmployeeController {
         return ResultGenerator.genSuccessResult(new GetEmployeeSignLogListListResponse(page, size, (int) pageInfo.getTotal(), pageInfo.getList()));
     }
 
+
+    /**
+     * 获取报名列表 后端使用
+     *
+     * @return
+     */
+    @PostMapping("/getEmployeeApplyList")
+    public Result getEmployeeApplyList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                                       @RequestParam(defaultValue = "20") Integer pageSize) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        PageHelper.startPage(sp, pageSize);
+        List<ApplyModel> enterprises = employeeService.getApplyEmployeeList();
+        PageInfo<ApplyModel> pageInfo = new PageInfo<>(enterprises);
+        return ResultGenerator.genSuccessResult(new ApplyListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
+    }
+
+    /**
+     * 获取入职列表 后端使用
+     *
+     * @return
+     */
+    @PostMapping("/getEmployeeJoinList")
+    public Result getEmployeeJoinList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
+                                      @RequestParam(defaultValue = "20") Integer pageSize) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+        PageHelper.startPage(sp, pageSize);
+        List<ApplyModel> enterprises = employeeService.getApplyEmployeeList();
+        PageInfo<ApplyModel> pageInfo = new PageInfo<>(enterprises);
+        return ResultGenerator.genSuccessResult(new ApplyListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
+    }
 }

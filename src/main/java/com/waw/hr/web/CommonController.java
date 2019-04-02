@@ -5,9 +5,12 @@ import com.waw.hr.core.MValue;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.BankModel;
+import com.waw.hr.entity.CityEntity;
 import com.waw.hr.response.ConfigDataResponse;
+import com.waw.hr.response.GetCityListResponse;
 import com.waw.hr.service.CommonService;
 import com.waw.hr.service.ConfigService;
+import com.waw.hr.service.ShopService;
 import com.waw.hr.utils.JWTUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,9 @@ public class CommonController {
     @Resource
     private CommonService commonService;
 
+    @Resource
+    private ShopService shopService;
+
     /**
      * 获取所有企业
      *
@@ -43,10 +49,23 @@ public class CommonController {
         int result = commonService.feedback(JWTUtil.getUserId(token), content);
 
         if (result > 0) {
-            return ResultGenerator.genSuccessResult(MValue.MESSAGE_FEEDBACK_SUC,null);
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_FEEDBACK_SUC, null);
         }
 
         return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
+
+
+    }
+
+    /**
+     * 获取所有企业
+     *
+     * @return
+     */
+    @PostMapping("/cityList")
+    public Result cityList() {
+        List<CityEntity> cityEntities = shopService.cityList();
+        return ResultGenerator.genSuccessResult(new GetCityListResponse(cityEntities));
 
 
     }

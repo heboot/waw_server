@@ -1,23 +1,33 @@
 package com.waw.hr.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.waw.hr.CommonValue;
+import com.waw.hr.core.MValue;
 import com.waw.hr.core.Result;
 import com.waw.hr.core.ResultGenerator;
 import com.waw.hr.entity.BankModel;
 import com.waw.hr.entity.CityEntity;
+import com.waw.hr.entity.Enterprise;
 import com.waw.hr.entity.ShopEntity;
 import com.waw.hr.model.ShopListModel;
 import com.waw.hr.response.ConfigDataResponse;
+import com.waw.hr.response.GetShopListResponse;
 import com.waw.hr.response.ShopListResponse;
 import com.waw.hr.service.ConfigService;
 import com.waw.hr.service.ShopService;
+import com.waw.hr.utils.JWTUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.waw.hr.core.ResultCode.UNAUTHORIZED;
 
 @RestController
 @RequestMapping(value = {"/shop", "app/shop"})
@@ -34,11 +44,6 @@ public class ShopController {
      */
     @PostMapping("/shopList")
     public Result shopList() {
-//List 以ID分组 Map<Integer,List<Apple>>
-//        Map<Integer, List<Apple>> groupBy = appleList.stream().collect(Collectors.groupingBy(Apple::getId));
-
-//        System.err.println("groupBy:"+groupBy);
-//        {1=[Apple{id=1, name='苹果1', money=3.25, num=10}, Apple{id=1, name='苹果2', money=1.35, num=20}], 2=[Apple{id=2, name='香蕉', money=2.89, num=30}], 3=[Apple{id=3, name='荔枝', money=9.99, num=40}]}
         List<ShopEntity> shopEntities = shopService.shopList();
 
         List<CityEntity> cityEntities = shopService.cityList();
@@ -77,6 +82,46 @@ public class ShopController {
         shopListResponse.setList(resultList);
 
         return ResultGenerator.genSuccessResult(shopListResponse);
+
+    }
+
+    /**
+     * 获取所有门店 后端使用
+     *
+     * @return
+     */
+    @PostMapping("/getShopList")
+    public Result getShopList(@RequestParam(defaultValue = "1") Integer page,
+                              @RequestParam(defaultValue = "20") Integer size) {
+        List<ShopEntity> shopEntities = shopService.shopList();
+
+        PageHelper.startPage(page, size);
+        PageInfo<ShopEntity> pageInfo = new PageInfo<>(shopEntities);
+
+        return ResultGenerator.genSuccessResult(new GetShopListResponse(page, size, pageInfo.getPages(), (int) pageInfo.getTotal(), shopEntities));
+
+    }
+
+    @PostMapping("/addShop")
+    public Result addShop(@RequestParam String token,
+                          @RequestParam String name,
+                          @RequestParam String address,
+                          @RequestParam String location,
+                          @RequestParam String workTime,
+                          @RequestParam int type,
+                          @RequestParam String cityId) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        int result = shopService.addShop(name, address, location.split(",")[1], location.split(",")[0], null, workTime, type, cityId);
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_CREATE_SUC);
+        }
+
+        return ResultGenerator.genFailResult(MValue.MESSAGE_CREATE_FAIL);
 
     }
 

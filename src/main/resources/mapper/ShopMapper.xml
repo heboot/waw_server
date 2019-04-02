@@ -16,6 +16,14 @@
 
     </select>
 
+    <insert id="addShop">
+
+        INSERT INTO tb_shop
+        (name,address,lat,lng,broker_id,work_time,type,city_id,create_time,status)
+        VALUES (#{name},#{address},#{lat},#{lng},#{brokerId},#{workTime},#{type},#{cityId},#{createTime})
+
+    </insert>
+
     <resultMap type="com.waw.hr.entity.ShopEntity"
                id="ShopListMap">
 
@@ -37,7 +45,19 @@
                      select="com.waw.hr.dao.ShopMapper.getBrokerMobileById">
         </association>
 
+        <association column="city_id" property="city"
+                     select="com.waw.hr.dao.ShopMapper.getCityName">
+        </association>
+
     </resultMap>
+
+
+    <select id="getCityName" resultType="java.lang.String">
+
+        SELECT title FROM tb_city where id = #{city_id}
+
+    </select>
+
 
     <select id="getBrokerMobileById" resultType="java.lang.String">
 

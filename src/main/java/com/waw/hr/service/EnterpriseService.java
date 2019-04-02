@@ -23,6 +23,8 @@ public interface EnterpriseService {
 
     Integer updateEnterpriseSubsidy(String id, Integer money, String info);
 
+    Integer updateEnterprisePackageMoney(String id, Integer money);
+
     Integer followEnterprise(String uid, String enterpriseId, int type);
 
     Integer join(String uid, String enterpriseId, String time);
@@ -32,8 +34,6 @@ public interface EnterpriseService {
     Integer is_join(String uid, String enterpriseId);
 
     List<Enterprise> getMyEnterpriseList(String uid);
-
-
 
 
 }

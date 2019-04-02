@@ -11,4 +11,6 @@ public interface ShopService {
     List<ShopEntity> shopList();
 
     List<CityEntity> cityList();
+
+    Integer addShop(String name, String address, String lat, String lng, String brokerId, String workTime, int type, String cityId);
 }

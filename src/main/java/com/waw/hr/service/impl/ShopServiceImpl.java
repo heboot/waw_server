@@ -26,4 +26,9 @@ public class ShopServiceImpl implements ShopService {
     public List<CityEntity> cityList() {
         return shopMapper.cityList();
     }
+
+    @Override
+    public Integer addShop(String name, String address, String lat, String lng, String brokerId, String workTime, int type, String cityId) {
+        return shopMapper.addShop(name, address, lat, lng, brokerId, workTime, type, cityId, String.valueOf(System.currentTimeMillis()));
+    }
 }

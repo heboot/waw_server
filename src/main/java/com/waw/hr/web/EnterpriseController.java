@@ -297,10 +297,32 @@ public class EnterpriseController {
         }
     }
 
+    /**
+     * 更新补贴金额
+     *
+     * @param id
+     * @param subsidy_money
+     * @param subsidy_info
+     * @return
+     */
     @PostMapping("updateEnterpriseSubsidy")
     public Result updateEnterpriseSubsidy(@RequestParam() String id, @RequestParam(required = false) Integer subsidy_money, @RequestParam(required = false) String subsidy_info) {
         if (enterpriseService.getEnterpriseById(id) != null) {
             Integer num = enterpriseService.updateEnterpriseSubsidy(id, subsidy_money, subsidy_info);
+            if (num != null && num > 0) {
+                return ResultGenerator.genSuccessResult();
+            } else {
+                throw new ServiceException("更新失败，请联系管理员");
+            }
+        } else {
+            throw new ServiceException("更新失败2，请联系管理员");
+        }
+    }
+
+    @PostMapping("updateEnterprisePackageMoney")
+    public Result updateEnterprisePackageMoney(@RequestParam() String id, @RequestParam Integer money) {
+        if (enterpriseService.getEnterpriseById(id) != null) {
+            Integer num = enterpriseService.updateEnterprisePackageMoney(id, money);
             if (num != null && num > 0) {
                 return ResultGenerator.genSuccessResult();
             } else {

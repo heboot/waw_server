@@ -14,4 +14,6 @@ public interface ShopMapper extends Mapper<ShopEntity> {
 
     List<CityEntity> cityList();
 
+    Integer addShop(@Param("name") String name, @Param("address") String address, @Param("lat") String lat, @Param("lng") String lng, @Param("brokerId") String brokerId, @Param("workTime") String workTime, @Param("type") int type, @Param("cityId") String cityId, @Param("createTime") String createTime);
+
 }

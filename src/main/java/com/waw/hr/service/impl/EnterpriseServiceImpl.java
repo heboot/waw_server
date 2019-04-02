@@ -1,22 +1,16 @@
 package com.waw.hr.service.impl;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVOSCloud;
 import com.waw.hr.core.AbstractService;
 import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.dao.EnterpriseMapper;
 import com.waw.hr.entity.Enterprise;
-import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.model.EnterpriseListModel;
 import com.waw.hr.service.EnterpriseService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -78,6 +72,11 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
     @Override
     public Integer updateEnterpriseSubsidy(String id, Integer money, String info) {
         return enterpriseMapper.updateEnterpriseSubsidy(id, money, info);
+    }
+
+    @Override
+    public Integer updateEnterprisePackageMoney(String id, Integer money) {
+        return enterpriseMapper.updateEnterprisePackageMoney(id, money);
     }
 
     @Override

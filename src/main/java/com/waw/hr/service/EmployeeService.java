@@ -76,4 +76,8 @@ public interface EmployeeService {
 
     //获取报名列表
     List<ApplyModel> getApplyEmployeeList();
+
+
+    //获取入职列表
+    List<ApplyModel> getJoinEmployeeList();
 }

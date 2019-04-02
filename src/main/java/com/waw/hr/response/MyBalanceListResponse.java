@@ -17,10 +17,9 @@ public class MyBalanceListResponse extends BaseListResponse {
         this.list = list;
     }
 
-    public MyBalanceListResponse(int page, int size, int totalPage, List<BanlanceEntity> list) {
-        this.page = page;
-        this.size = size;
-        this.totalPage = totalPage;
+
+    public MyBalanceListResponse(int page, int size, int totalPage, int total, List<BanlanceEntity> list) {
+        super(page, size, totalPage, total);
         this.list = list;
     }
 }

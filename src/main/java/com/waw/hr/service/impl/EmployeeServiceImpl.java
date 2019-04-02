@@ -219,4 +219,9 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
         return employeeMapper.getApplyEmployeeList();
     }
 
+    @Override
+    public List<ApplyModel> getJoinEmployeeList() {
+        return null;
+    }
+
 }

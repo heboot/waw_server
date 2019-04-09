@@ -4,11 +4,8 @@ import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
-import com.waw.hr.entity.BanlanceEntity;
-import com.waw.hr.entity.EmployeeBank;
-import com.waw.hr.entity.RecommendUser;
+import com.waw.hr.entity.*;
 import com.waw.hr.model.AdminUserModel;
-import com.waw.hr.entity.Employee;
 import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.response.LoginResponse;
@@ -66,6 +63,16 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public Integer updateEmployeeCashStatus(Integer id, Integer status) {
         return employeeMapper.updateEmployeeCashStatus(id, status);
+    }
+
+    @Override
+    public Integer updateEmployeeBankStatus(Integer id, Integer status) {
+        return employeeMapper.updateEmployeeBankStatus(id, status);
+    }
+
+    @Override
+    public Integer updateEmployeeIDCradStatus(Integer id, Integer status) {
+        return employeeMapper.updateEmployeeIDCradStatus(id, status);
     }
 
     @Override
@@ -133,7 +140,7 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public Integer updateEmployeeInfo(String uid, String name, String avatar, String sex) {
+    public Integer updateEmployeeInfo(String uid, String name, String avatar, Integer sex) {
         return employeeMapper.updateEmployeeInfo(uid, name, avatar, sex);
     }
 
@@ -222,6 +229,48 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public List<ApplyModel> getJoinEmployeeList() {
         return null;
+    }
+
+
+    /**
+     * 更换经纪人
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public AdminUserModel changeBroker(String id, String remark) {
+
+        EmployeeModel employeeModel = getEmployeeById(id);
+
+        List<String> brokerIds = employeeMapper.switchBroker();
+
+        String newId = null;
+
+        brokerIds.remove(String.valueOf(employeeModel.getBrokerId()));
+
+        if (brokerIds.size() > 1) {
+            newId = brokerIds.get(random.nextInt(brokerIds.size() - 1));
+        } else {
+            newId = brokerIds.get(0);
+        }
+
+        AdminUserModel adminUser;
+
+        //如果经纪人log表插入成功 开始更新员工表
+        if (employeeMapper.changeBroker(id, remark, String.valueOf(employeeModel.getBrokerId()), newId, String.valueOf(System.currentTimeMillis())) > 0) {
+            adminUser = getMyBroker(newId);
+            int result = updateEmployeeBroker(Integer.parseInt(id), Integer.parseInt(newId));
+            if (result > 0) {
+                return adminUser;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getChangeBrokerTime(String uid) {
+        return employeeMapper.getChangeBrokerTime(uid);
     }
 
 }

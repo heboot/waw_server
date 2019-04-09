@@ -201,8 +201,7 @@
 
         </set>
 
-        WHERE id = #{uid}
-
+        WHERE id = ${uid}
     </update>
 
     <select id="getEmployeeById" resultType="com.waw.hr.model.EmployeeModel">
@@ -361,6 +360,32 @@
 
 
     </resultMap>
+
+    <update id="updateEmployeeBankStatus">
+
+        UPDATE tb_employee SET bank_card_status = #{status} WHERE id = #{uid}
+
+    </update>
+
+    <update id="updateEmployeeIDCradStatus">
+
+        UPDATE tb_employee SET id_card_status = #{status} WHERE id = #{id}
+
+    </update>
+
+
+    <!--更换经纪人 先往经纪人log表里插入一条记录 再去更新员工表里的brokerId字段-->
+    <insert id="changeBroker">
+
+        INSERT INTO tb_broker_log (uid,broker_id,new_broker_id,remark,create_time) VALUES (#{uid},#{brokerId},#{newBrokerId},#{remark},#{time})
+
+    </insert>
+
+    <select id="getChangeBrokerTime" resultType="java.lang.String">
+
+        SELECT create_time FROM tb_broker_log WHERE uid = #{uid}
+
+    </select>
 
 
 </mapper>

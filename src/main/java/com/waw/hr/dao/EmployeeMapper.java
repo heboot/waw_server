@@ -46,7 +46,7 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     AdminUserModel getMyBroker(@Param("brokerId") String borkerId);
 
-    Integer updateEmployeeInfo(@Param("uid") String uid, @Param("name") String name, @Param("avatar") String avatar, @Param("sex") String sex);
+    Integer updateEmployeeInfo(@Param("uid") String uid, @Param("name") String name, @Param("avatar") String avatar, @Param("sex") Integer sex);
 
     EmployeeModel getEmployeeById(@Param("id") String id);
 
@@ -98,5 +98,15 @@ public interface EmployeeMapper extends Mapper<Employee> {
     List<ApplyModel> getApplyEmployeeList();
 
     Employee getEmployeeDataById(@Param("id") String uid);
+
+    Integer updateEmployeeBankStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    Integer updateEmployeeIDCradStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    //更换经纪人
+    Integer changeBroker(@Param("uid") String id, @Param("remark") String remark, @Param("brokerId") String brokerId, @Param("newBrokerId") String newBrokerId, @Param("time") String time);
+
+    //查询上次更换经纪人的时间
+    String getChangeBrokerTime(@Param("uid") String uid);
 
 }

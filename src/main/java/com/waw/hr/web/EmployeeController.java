@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.entity.*;
+import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.BarCodeInfo;
 import com.waw.hr.model.EmployeeModel;
@@ -14,12 +15,14 @@ import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.service.EmployeeSignLogService;
+import com.waw.hr.utils.DateUtil;
 import com.waw.hr.utils.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 import static com.waw.hr.core.ResultCode.AUTH_FAIL;
@@ -110,7 +113,7 @@ public class EmployeeController {
     public Result editInfo(@RequestParam String token,
                            @RequestParam(required = false) String name,
                            @RequestParam(required = false) String avatar,
-                           @RequestParam(required = false) String sex) {
+                           @RequestParam(required = false) Integer sex) {
         if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
@@ -565,6 +568,77 @@ public class EmployeeController {
         PageInfo<ApplyModel> pageInfo = new PageInfo<>(enterprises);
         return ResultGenerator.genSuccessResult(new ApplyListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
     }
+
+    /**
+     * 更新员工银行卡审核状态 后端使用
+     *
+     * @return
+     */
+    @PostMapping("/updateEmployeeBankStatus")
+    public Result updateEmployeeBankStatus(@RequestParam String token, @RequestParam String uid, @RequestParam int status) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        int result = employeeService.updateEmployeeBankStatus(Integer.parseInt(uid), status);
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_UPDATE_SUC);
+        }
+        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+    }
+
+    /**
+     * 更新员工身份证审核状态 后端使用
+     *
+     * @return
+     */
+    @PostMapping("/updateEmployeeIDCardStatus")
+    public Result updateEmployeeIDCardStatus(@RequestParam String token, @RequestParam String uid, @RequestParam int status) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        int result = employeeService.updateEmployeeIDCradStatus(Integer.parseInt(uid), status);
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_UPDATE_SUC);
+        }
+        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+    }
+
+
+    /**
+     * 更换经纪人
+     *
+     * @return
+     */
+    @PostMapping("/changeBroker")
+    public Result changeBroker(@RequestParam String token,
+                               @RequestParam String remark
+    ) {
+
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        String date = employeeService.getChangeBrokerTime(JWTUtil.getUserId(token));
+
+        //小于30天不可以更换
+        if (date != null && DateUtil.countDays(new Date(Long.parseLong(date))) < 30) {
+            return ResultGenerator.genFailResult("30天内只允许更换一次经纪人哦~");
+        }
+
+        AdminUserModel adminUserModel = employeeService.changeBroker(JWTUtil.getUserId(token), remark);
+
+        if (adminUserModel != null) {
+            return ResultGenerator.genSuccessResult(new ChangeBrokerResponse(adminUserModel));
+        }
+        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+    }
+
 
     /**
      * 获取入职列表 后端使用

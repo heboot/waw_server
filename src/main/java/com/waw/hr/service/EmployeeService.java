@@ -1,13 +1,11 @@
 package com.waw.hr.service;
 
 import com.waw.hr.core.Result;
-import com.waw.hr.entity.BanlanceEntity;
-import com.waw.hr.entity.EmployeeBank;
-import com.waw.hr.entity.RecommendUser;
+import com.waw.hr.entity.*;
 import com.waw.hr.model.AdminUserModel;
-import com.waw.hr.entity.Employee;
 import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,6 +19,10 @@ public interface EmployeeService {
     Integer updateEmployeeJobStatus(Integer id, Integer status);
 
     Integer updateEmployeeCashStatus(Integer id, Integer status);
+
+    Integer updateEmployeeBankStatus(Integer id, Integer status);
+
+    Integer updateEmployeeIDCradStatus(Integer id, Integer status);
 
     Integer updateEmployeeBroker(Integer id, Integer brokerId);
 
@@ -38,7 +40,7 @@ public interface EmployeeService {
 
     AdminUserModel getMyBroker(String borkerId);
 
-    Integer updateEmployeeInfo(String uid, String name, String avatar, String sex);
+    Integer updateEmployeeInfo(String uid, String name, String avatar, Integer sex);
 
     EmployeeModel getEmployeeById(String id);
 
@@ -80,4 +82,10 @@ public interface EmployeeService {
 
     //获取入职列表
     List<ApplyModel> getJoinEmployeeList();
+
+    //更换经纪人
+    AdminUserModel changeBroker(String id, String remark);
+
+    //查询上次更换经纪人的时间
+    String getChangeBrokerTime(String uid);
 }

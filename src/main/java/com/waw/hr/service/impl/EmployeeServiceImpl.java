@@ -8,6 +8,7 @@ import com.waw.hr.entity.*;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
+import com.waw.hr.model.JoinModel;
 import com.waw.hr.response.LoginResponse;
 import com.waw.hr.service.EmployeeService;
 import com.waw.hr.utils.BarcodeUtil2;
@@ -53,6 +54,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     @Override
     public Integer updateEmployeeStatus(Integer id, Integer status) {
         return employeeMapper.updateEmployeeStatus(id, status);
+    }
+
+    @Override
+    public Integer updateEmployeeBalance(Integer id, String balance) {
+        return employeeMapper.updateEmployeeBalance(id, balance);
     }
 
     @Override
@@ -227,8 +233,8 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
     }
 
     @Override
-    public List<ApplyModel> getJoinEmployeeList() {
-        return null;
+    public List<JoinModel> getJoinEmployeeList() {
+        return employeeMapper.getJoinEmployeeList();
     }
 
 
@@ -296,6 +302,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Integer insertJoinLog(String uid, String eid) {
+        return employeeMapper.insertJoinLog(uid, eid, String.valueOf(System.currentTimeMillis()));
     }
 
 }

@@ -67,7 +67,14 @@ public interface AdminUserMapper extends Mapper<AdminUser> {
      */
     List<EmployeeBank> bankList();
 
-
+    /**
+     * 发放入职补贴
+     *
+     * @param employeeId
+     * @param money
+     * @return
+     */
+    Integer sendEmployeeJoinSubsidyMoney(@Param("id") String employeeId, @Param("money") String money, @Param("type") int type, @Param("remark") String remark, @Param("time") String time);
 
 
 }

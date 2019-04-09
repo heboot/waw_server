@@ -1,6 +1,5 @@
 package com.waw.hr.model;
 
-import com.waw.hr.entity.Banner;
 import com.waw.hr.entity.EnterpriseTag;
 
 import javax.persistence.Transient;
@@ -31,7 +30,7 @@ public class EnterpriseListModel {
         tags.add(new EnterpriseTag(1001, "周边热闹"));
         tags.add(new EnterpriseTag(1002, "妹子多"));
         if (id % 2 == 0) {
-            tags.add(new EnterpriseTag(1003, "周边热闹"));
+            tags.add(new EnterpriseTag(1003, "路程近"));
         } else {
             tags.add(new EnterpriseTag(1004, "食宿好"));
         }

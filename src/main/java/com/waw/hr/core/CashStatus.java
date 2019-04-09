@@ -3,7 +3,7 @@ package com.waw.hr.core;
 public enum CashStatus {
 
     BASIC(0),//不可提现
-    CAN(1),//不可提现
+    CAN(1),//可提现
     CASH_ED(2);//已经提现
 
 

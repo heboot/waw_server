@@ -59,7 +59,8 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
                 SerializerFeature.WriteNullNumberAsZero,
                 SerializerFeature.WriteNullBooleanAsFalse,
                 SerializerFeature.WriteMapNullValue,
-                SerializerFeature.PrettyFormat);
+                SerializerFeature.PrettyFormat,
+                SerializerFeature.DisableCircularReferenceDetect);
 //        SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
 //        SerializerFeature.WriteNullNumberAsZero//Number null -> 0
         // 按需配置，更多参考FastJson文档哈

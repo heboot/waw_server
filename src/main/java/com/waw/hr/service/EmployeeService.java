@@ -5,6 +5,7 @@ import com.waw.hr.entity.*;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
+import com.waw.hr.model.JoinModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface EmployeeService {
     Integer registerEmployee(String mobile, String name, String time, String createId);
 
     Integer updateEmployeeStatus(Integer id, Integer status);
+
+    Integer updateEmployeeBalance(Integer id, String balance);
 
     Integer updateEmployeeJobStatus(Integer id, Integer status);
 
@@ -81,7 +84,7 @@ public interface EmployeeService {
 
 
     //获取入职列表
-    List<ApplyModel> getJoinEmployeeList();
+    List<JoinModel> getJoinEmployeeList();
 
     //更换经纪人
     AdminUserModel changeBroker(String id, String remark);
@@ -94,4 +97,7 @@ public interface EmployeeService {
 
     //查询最新的一条提现记录是否被处理
     boolean selectLastCashLog(String uid);
+
+    //插入一条入职记录
+    Integer insertJoinLog(String uid, String eid);
 }

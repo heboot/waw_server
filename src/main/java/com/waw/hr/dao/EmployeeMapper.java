@@ -5,6 +5,7 @@ import com.waw.hr.entity.*;
 import com.waw.hr.model.AdminUserModel;
 import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
+import com.waw.hr.model.JoinModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -94,9 +95,12 @@ public interface EmployeeMapper extends Mapper<Employee> {
     //获取报名列表
     List<ApplyModel> getApplyEmployeeList();
 
+    //获取报名列表
+    List<JoinModel> getJoinEmployeeList();
+
     Employee getEmployeeDataById(@Param("id") String uid);
 
-    Integer updateEmployeeBankStatus(@Param("id") Integer id, @Param("status") Integer status);
+    Integer updateEmployeeBankStatus(@Param("uid") Integer id, @Param("status") Integer status);
 
     Integer updateEmployeeIDCradStatus(@Param("id") Integer id, @Param("status") Integer status);
 
@@ -112,5 +116,12 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     //插入提现记录
     int insertCashLog(@Param("uid") String uid, @Param("money") String money, @Param("status") int status, @Param("updateTime") String updateTime, @Param("createTime") String createTime);
+
+
+    //插入一条入职记录
+    Integer insertJoinLog(@Param("uid") String uid, @Param("eid") String eid, @Param("time") String time);//插入一条入职记录
+
+    //更新用户余额 高危操作
+    Integer updateEmployeeBalance(@Param("id") Integer id, @Param("balance") String balance);
 
 }

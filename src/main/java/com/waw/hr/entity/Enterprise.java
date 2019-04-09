@@ -202,7 +202,7 @@ public class Enterprise extends EnterpriseListModel {
     //企业补贴说明
     private String subsidyInfo;
 
-    //打包给渠道商的价格
+    //打包给渠道商的价格 不再使用
     private String packageMoney;
 
 

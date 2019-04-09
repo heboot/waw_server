@@ -35,5 +35,7 @@ public interface EnterpriseService {
 
     List<Enterprise> getMyEnterpriseList(String uid);
 
+    Integer insertSubsidyLog(String id, Integer money, String info);
+
 
 }

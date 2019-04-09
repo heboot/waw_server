@@ -90,6 +90,12 @@
 
     </insert>
 
+    <insert id="sendEmployeeJoinSubsidyMoney">
+
+        INSERT INTO tb_balance_log (uid,money,type,remark,create_time) VALUES (#{id},#{money},#{type},#{remark},#{time})
+
+    </insert>
+
 
     <!--<insert id="addEditUser">-->
     <!--INSERT  INTO tb_admin_user(name,password,mobile,role) VALUES (#{name},#{password},#{mobile},5)-->

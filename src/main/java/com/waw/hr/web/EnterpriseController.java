@@ -309,7 +309,8 @@ public class EnterpriseController {
     public Result updateEnterpriseSubsidy(@RequestParam() String id, @RequestParam(required = false) Integer subsidy_money, @RequestParam(required = false) String subsidy_info) {
         if (enterpriseService.getEnterpriseById(id) != null) {
             Integer num = enterpriseService.updateEnterpriseSubsidy(id, subsidy_money, subsidy_info);
-            if (num != null && num > 0) {
+            Integer insertNum = enterpriseService.insertSubsidyLog(id, subsidy_money, subsidy_info);
+            if ((num != null && num > 0) && (insertNum != null && insertNum > 0)) {
                 return ResultGenerator.genSuccessResult();
             } else {
                 throw new ServiceException("更新失败，请联系管理员");

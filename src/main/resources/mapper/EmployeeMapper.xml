@@ -76,22 +76,6 @@
 
         <association column="broker_id" property="brokerUser" select="com.waw.hr.dao.AdminUserMapper.getAdminUserByID">
         </association>
-
-        <!--<result property="id" column="id" />-->
-        <!--<result property="name" column="name"></result>-->
-        <!--<result property="icon" column="icon"></result>-->
-        <!--<result property="apk_url" column="apk_url"></result>-->
-        <!--<result property="package_name" column="package_name"></result>-->
-        <!--<result property="execute_time" column="execute_time"></result>-->
-        <!--<result property="is_choose" column="is_choose" />-->
-        <!--<collection property="pages"-->
-        <!--ofType="com.xrl.script.server.entity.AppPage">-->
-        <!--&lt;!&ndash; collection:一对多时使用，association:多对一使用 &ndash;&gt;-->
-        <!--<result property="id" column="id" />-->
-        <!--<result property="app_id" column="app_id" />-->
-        <!--<result property="page_type" column="page_type" />-->
-        <!--<result property="page_name" column="page_name" />-->
-        <!--</collection>-->
     </resultMap>
 
 
@@ -340,6 +324,11 @@
 
     </select>
 
+    <select id="getJoinEmployeeList" resultMap="JoinEmployeeMap">
+
+        SELECT * FROM tb_join
+
+    </select>
 
     <resultMap type="com.waw.hr.model.ApplyModel"
                id="ApplyEmployeeMap">
@@ -349,6 +338,26 @@
         <result property="uid" column="uid"></result>
         <result property="eid" column="eid"></result>
         <result property="applyTime" column="apply_time"></result>
+
+        <association column="uid" property="employeeModel"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeDataById">
+        </association>
+
+        <association column="eid" property="enterprise"
+                     select="com.waw.hr.dao.EnterpriseMapper.getEnterpriseById">
+        </association>
+
+
+    </resultMap>
+
+    <resultMap type="com.waw.hr.model.JoinModel"
+               id="JoinEmployeeMap">
+
+
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"></result>
+        <result property="eid" column="eid"></result>
+        <result property="joinTime" column="join_time"></result>
 
         <association column="uid" property="employeeModel"
                      select="com.waw.hr.dao.EmployeeMapper.getEmployeeDataById">
@@ -377,7 +386,8 @@
     <!--更换经纪人 先往经纪人log表里插入一条记录 再去更新员工表里的brokerId字段-->
     <insert id="changeBroker">
 
-        INSERT INTO tb_broker_log (uid,broker_id,new_broker_id,remark,create_time) VALUES (#{uid},#{brokerId},#{newBrokerId},#{remark},#{time})
+        INSERT INTO tb_broker_log (uid,broker_id,new_broker_id,remark,create_time) VALUES
+        (#{uid},#{brokerId},#{newBrokerId},#{remark},#{time})
 
     </insert>
 
@@ -395,7 +405,14 @@
 
     <insert id="insertCashLog">
 
-        INSERT tb_cash_log (uid,money,status,update_time,create_time)  VALUES (#{uid},#{money},#{status},#{updateTime},#{createTime})
+        INSERT tb_cash_log (uid,money,status,update_time,create_time) VALUES
+        (#{uid},#{money},#{status},#{updateTime},#{createTime})
+
+    </insert>
+
+    <insert id="insertJoinLog">
+
+        INSERT tb_join (uid,eid,create_time,join_time) VALUES (#{uid},#{eid},#{time},#{time})
 
     </insert>
 

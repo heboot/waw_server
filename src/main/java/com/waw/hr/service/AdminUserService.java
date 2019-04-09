@@ -63,4 +63,16 @@ public interface AdminUserService {
     List<Employee> getIdCardList();
 
 
+    /**
+     * 发放入职补贴
+     *
+     * @param employeeId
+     * @param money
+     * @return
+     */
+    Integer sendEmployeeJoinSubsidyMoney(String employeeId, String money);
+
+
+
+
 }

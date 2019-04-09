@@ -111,5 +111,10 @@ public class EnterpriseServiceImpl extends AbstractService<Enterprise> implement
         return enterpriseMapper.getMyEnterpriseList(uid);
     }
 
+    @Override
+    public Integer insertSubsidyLog(String id, Integer money, String info) {
+        return enterpriseMapper.insertSubsidyLog(id, money, String.valueOf(System.currentTimeMillis()), info);
+    }
+
 
 }

@@ -9,7 +9,7 @@
         select * from tb_enterprise
 
         <if test="key != null">
-            WHERE name LIKE  concat('%',#{key},'%')
+            WHERE name LIKE concat('%',#{key},'%')
         </if>
 
         <if test="sort == 1">
@@ -26,7 +26,7 @@
         select id,name,salary,subsidy_money from tb_enterprise WHERE status = 1
 
         <if test="key != null">
-          AND  name LIKE concat('%',#{key},'%')
+            AND name LIKE concat('%',#{key},'%')
         </if>
 
         <if test="sort == 1">
@@ -87,6 +87,22 @@
         SELECT * FROM tb_enterprise WHERE id in (SELECT eid from tb_follow WHERE uid = #{uid})
 
     </select>
+
+
+    <!--<resultMap type="com.waw.hr.model.EnterpriseListModel"-->
+    <!--id="EnterpriseListModelMap">-->
+    <!--<result property="id" column="id"/>-->
+    <!--<result property="name" column="name"></result>-->
+    <!--<result property="salary" column="salary"></result>-->
+
+    <!--<association column="id" property="subsidyMoney"-->
+    <!--select="com.waw.hr.dao.EnterpriseMapper.getEnterpriseSubsidyMoney">-->
+    <!--</association>-->
+    <!--</resultMap>-->
+
+    <!--<select id="getEnterpriseSubsidyMoney" resultType="java.lang.Integer">-->
+    <!--SELECT money FROM tb_enterprise_money_log WHERE eid = #{id}-->
+    <!--</select>-->
 
 
     <!--更新职位的补贴信息-->
@@ -255,6 +271,12 @@
         UPDATE tb_enterprise SET package_money = #{money} WHERE id = #{id}
 
     </update>
+
+    <insert id="insertSubsidyLog">
+
+        INSERT INTO tb_enterprise_money_log (eid,money,create_time,info) VALUES (#{id},#{money},#{createTime},#{info})
+
+    </insert>
 
 
 </mapper>

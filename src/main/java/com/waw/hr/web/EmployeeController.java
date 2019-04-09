@@ -7,10 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.entity.*;
-import com.waw.hr.model.AdminUserModel;
-import com.waw.hr.model.ApplyModel;
-import com.waw.hr.model.BarCodeInfo;
-import com.waw.hr.model.EmployeeModel;
+import com.waw.hr.model.*;
 import com.waw.hr.response.*;
 import com.waw.hr.service.AdminUserService;
 import com.waw.hr.service.EmployeeService;
@@ -350,21 +347,27 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/updateEmployeeJobStatus")
-    public Result updateEmployeeJobStatus(@RequestParam String token, @RequestParam Integer employeeId,
+    public Result updateEmployeeJobStatus(@RequestParam String token,
+                                          @RequestParam Integer employeeId,
+                                          @RequestParam(required = false) String eid,
                                           @RequestParam Integer status) {
         if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
 
-        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
-        if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
-            int result = employeeService.updateEmployeeJobStatus(employeeId, status);
-            if (result > 0) {
-                return ResultGenerator.genSuccessResult(MValue.MESSAGE_UPDATE_SUC);
-            }
-            return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+//        AdminUser adminUser = adminUserService.getAdminUserByName(JWTUtil.getUsername(token));
+//        if (adminUser.getRole() == ROLE.ROLE_ADMIN) {
+        int result = employeeService.updateEmployeeJobStatus(employeeId, status);
+
+        if (status == JobStatus.ING.code()) {
+            int insertResult = employeeService.insertJoinLog(String.valueOf(employeeId), eid);
         }
-        return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult(MValue.MESSAGE_UPDATE_SUC);
+        }
+        return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
+//        }
     }
 
     /**
@@ -560,9 +563,9 @@ public class EmployeeController {
     public Result getEmployeeApplyList(@RequestParam String token, @RequestParam(defaultValue = "1") Integer sp,
                                        @RequestParam(defaultValue = "20") Integer pageSize) {
 
-        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
-            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
-        }
+//        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+//            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+//        }
         PageHelper.startPage(sp, pageSize);
         List<ApplyModel> enterprises = employeeService.getApplyEmployeeList();
         PageInfo<ApplyModel> pageInfo = new PageInfo<>(enterprises);
@@ -682,8 +685,68 @@ public class EmployeeController {
             return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
         }
         PageHelper.startPage(sp, pageSize);
-        List<ApplyModel> enterprises = employeeService.getApplyEmployeeList();
-        PageInfo<ApplyModel> pageInfo = new PageInfo<>(enterprises);
-        return ResultGenerator.genSuccessResult(new ApplyListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
+        List<JoinModel> enterprises = employeeService.getJoinEmployeeList();
+        PageInfo<JoinModel> pageInfo = new PageInfo<>(enterprises);
+        return ResultGenerator.genSuccessResult(new JoinListResponse(sp, pageSize, pageInfo.getPages(), (int) pageInfo.getTotal(), pageInfo.getList()));
     }
+
+
+    /**
+     * 给员工发送厂商补贴
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/sendEmployeeJoinSubsidyMoney")
+    public Result sendEmployeeJoinSubsidyMoney(
+            @RequestParam String token,
+            @RequestParam String employeeId,
+            @RequestParam int money) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+
+        EmployeeModel employeeModel = employeeService.getEmployeeById(employeeId);
+
+        Double balance;
+
+        if (!StringUtils.isEmpty(employeeModel.getBalance())) {
+            balance = Double.parseDouble(employeeModel.getBalance());
+            balance = balance + money;
+        } else {
+            balance = (double) money;
+        }
+
+        int result = adminUserService.sendEmployeeJoinSubsidyMoney(employeeId, String.valueOf(balance));
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult("发送成功", null);
+        }
+
+        return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
+    }
+
+    /**
+     * 更新用户提现记录 为已打款
+     */
+    @PostMapping("/updateEmployeeCashLogStatus")
+    public Result updateEmployeeCashLogStatus(
+            @RequestParam String token,
+            @RequestParam String employeeId,
+            @RequestParam String cashId) {
+
+        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+
+        if (result > 0) {
+            return ResultGenerator.genSuccessResult("发送成功", null);
+        }
+
+        return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
+    }
+
 }

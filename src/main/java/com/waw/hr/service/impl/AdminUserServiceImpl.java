@@ -1,6 +1,7 @@
 package com.waw.hr.service.impl;
 
 import com.waw.hr.core.AbstractService;
+import com.waw.hr.core.BalanceType;
 import com.waw.hr.dao.AdminUserMapper;
 import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.dao.EnterpriseMapper;
@@ -85,5 +86,10 @@ public class AdminUserServiceImpl extends AbstractService<AdminUser> implements 
     @Override
     public List<Employee> getIdCardList() {
         return employeeMapper.getIdCardList();
+    }
+
+    @Override
+    public Integer sendEmployeeJoinSubsidyMoney(String employeeId, String money) {
+        return adminUserMapper.sendEmployeeJoinSubsidyMoney(employeeId, money, BalanceType.JOIN_SUBSIDY.code(), "入职补贴", String.valueOf(System.currentTimeMillis()));
     }
 }

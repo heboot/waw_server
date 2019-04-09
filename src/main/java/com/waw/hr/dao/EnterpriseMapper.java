@@ -40,4 +40,6 @@ public interface EnterpriseMapper extends Mapper<Enterprise> {
     Integer is_follow(@Param("uid") String uid, @Param("enterpriseId") String enterpriseId);
 
     Integer is_join(@Param("uid") String uid, @Param("enterpriseId") String enterpriseId);
+
+    Integer insertSubsidyLog(@Param("id") String id, @Param("money") Integer money, @Param("createTime") String createTime, @Param("info") String info);
 }

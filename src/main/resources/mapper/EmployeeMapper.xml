@@ -387,5 +387,16 @@
 
     </select>
 
+    <select id="selectLastCashLog" resultType="com.waw.hr.entity.CashLogModel">
+
+        SELECT * FROM tb_cash_log WHERE uid = #{uid} order by create_time DESC limit 1;
+
+    </select>
+
+    <insert id="insertCashLog">
+
+        INSERT tb_cash_log (uid,money,status,update_time,create_time)  VALUES (#{uid},#{money},#{status},#{updateTime},#{createTime})
+
+    </insert>
 
 </mapper>

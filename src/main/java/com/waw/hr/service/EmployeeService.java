@@ -88,4 +88,10 @@ public interface EmployeeService {
 
     //查询上次更换经纪人的时间
     String getChangeBrokerTime(String uid);
+
+    //插入提现记录
+    int insertCashLog(String uid, String money);
+
+    //查询最新的一条提现记录是否被处理
+    boolean selectLastCashLog(String uid);
 }

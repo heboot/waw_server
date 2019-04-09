@@ -37,6 +37,26 @@ public class EmployeeModel {
 
     private String barCodePic;
 
+    private String balance;
+
+    private String cashTime;
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getCashTime() {
+        return cashTime;
+    }
+
+    public void setCashTime(String cashTime) {
+        this.cashTime = cashTime;
+    }
+
     public String getBarCode() {
         return barCode;
     }

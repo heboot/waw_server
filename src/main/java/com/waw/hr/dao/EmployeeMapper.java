@@ -1,11 +1,8 @@
 package com.waw.hr.dao;
 
 import com.waw.hr.core.Mapper;
-import com.waw.hr.entity.BanlanceEntity;
-import com.waw.hr.entity.EmployeeBank;
-import com.waw.hr.entity.RecommendUser;
+import com.waw.hr.entity.*;
 import com.waw.hr.model.AdminUserModel;
-import com.waw.hr.entity.Employee;
 import com.waw.hr.model.ApplyModel;
 import com.waw.hr.model.EmployeeModel;
 import org.apache.ibatis.annotations.Param;
@@ -108,5 +105,12 @@ public interface EmployeeMapper extends Mapper<Employee> {
 
     //查询上次更换经纪人的时间
     String getChangeBrokerTime(@Param("uid") String uid);
+
+
+    //查询最新的一条提现记录是否被处理
+    CashLogModel selectLastCashLog(@Param("uid") String uid);
+
+    //插入提现记录
+    int insertCashLog(@Param("uid") String uid, @Param("money") String money, @Param("status") int status, @Param("updateTime") String updateTime, @Param("createTime") String createTime);
 
 }

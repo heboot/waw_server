@@ -273,4 +273,29 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
         return employeeMapper.getChangeBrokerTime(uid);
     }
 
+    @Override
+    public int insertCashLog(String uid, String money) {
+        return employeeMapper.insertCashLog(uid, money, CashStatus.BASIC.code(), String.valueOf(System.currentTimeMillis()), String.valueOf(System.currentTimeMillis()));
+    }
+
+
+    /**
+     * 查询最后一条提现记录是否被处理
+     * 如果没有被处理 不能提现哦
+     *
+     * @param uid
+     * @return
+     */
+    @Override
+    public boolean selectLastCashLog(String uid) {
+        CashLogModel cashLogModel = employeeMapper.selectLastCashLog(uid);
+        if (cashLogModel != null) {
+            if (cashLogModel.getStatus() == CashStatus.CASH_ED.code()) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -639,6 +639,35 @@ public class EmployeeController {
         return ResultGenerator.genFailResult(MValue.MESSAGE_UPDATE_FAIL);
     }
 
+    /**
+     * 更换经纪人
+     *
+     * @return
+     */
+    @PostMapping("/cash")
+    public Result account(@RequestParam String token) {
+
+        if (!JWTUtil.verifyById(token, JWTUtil.getUserId(token), CommonValue.SECRET)) {
+            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
+        }
+
+        EmployeeModel employeeModel = employeeService.getEmployeeById(JWTUtil.getUserId(token));
+
+        if (StringUtils.isEmpty(employeeModel.getBalance()) || Double.parseDouble(employeeModel.getBalance()) <= 0) {
+            return ResultGenerator.genFailResult("当前没有可提现余额，提现失败！");
+        } else {
+            if (employeeService.selectLastCashLog(JWTUtil.getUserId(token))) {
+                // TODO: 2019/4/9  可以提现 插入记录
+                if (employeeService.insertCashLog(JWTUtil.getUserId(token), employeeModel.getBalance()) > 0) {
+                    return ResultGenerator.genSuccessResult("申请成功，预计2个工作日到账");
+                }
+                return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
+            } else {
+                return ResultGenerator.genFailResult("提现过于频繁，请过几天重试");
+            }
+        }
+    }
+
 
     /**
      * 获取入职列表 后端使用

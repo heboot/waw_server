@@ -14,6 +14,8 @@ public class JoinModel {
 
     private String joinTime;
 
+    private int subsidyStatus;
+
     @Transient
     private Enterprise enterprise;
 
@@ -66,5 +68,13 @@ public class JoinModel {
 
     public void setEmployeeModel(EmployeeModel employeeModel) {
         this.employeeModel = employeeModel;
+    }
+
+    public int getSubsidyStatus() {
+        return subsidyStatus;
+    }
+
+    public void setSubsidyStatus(int subsidyStatus) {
+        this.subsidyStatus = subsidyStatus;
     }
 }

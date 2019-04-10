@@ -18,6 +18,16 @@ public class ConfigDataResponse extends BaseResponse {
 
     private String recommendIcon;
 
+    private String cashTip;
+
+    public String getCashTip() {
+        return cashTip;
+    }
+
+    public void setCashTip(String cashTip) {
+        this.cashTip = cashTip;
+    }
+
     public String getRecommendIcon() {
         return MValue.IMAGE_PRIFIX + recommendIcon;
     }

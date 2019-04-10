@@ -271,7 +271,7 @@
 
     <select id="getEmployeeBankInfoById" resultType="com.waw.hr.entity.EmployeeBank">
 
-        SELECT * FROM tb_employee_bank order by create_time DESC limit 1;
+        SELECT * FROM tb_employee_bank  WHERE uid = #{uid} order by create_time DESC limit 1;
 
     </select>
 
@@ -358,6 +358,7 @@
         <result property="uid" column="uid"></result>
         <result property="eid" column="eid"></result>
         <result property="joinTime" column="join_time"></result>
+        <result property="subsidyStatus" column="subsidy_status"></result>
 
         <association column="uid" property="employeeModel"
                      select="com.waw.hr.dao.EmployeeMapper.getEmployeeDataById">
@@ -415,5 +416,11 @@
         INSERT tb_join (uid,eid,create_time,join_time) VALUES (#{uid},#{eid},#{time},#{time})
 
     </insert>
+
+    <update id="updateEmployeeBalance">
+
+        UPDATE tb_employee SET balance = #{balance} WHERE id = #{id}
+
+    </update>
 
 </mapper>

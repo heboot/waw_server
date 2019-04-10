@@ -32,6 +32,7 @@ public class ConfigController {
         configDataResponse.setKfTel("18621242123");
         configDataResponse.setBankList(bankModelList);
         configDataResponse.setVersion("1.0");
+        configDataResponse.setCashTip("入职奖励以当天报价为准。\n 入职满足打卡条件后方可提现");
         configDataResponse.setRecommendInfo("好友入职，你就得100元推荐费");
         configDataResponse.setRecommendIcon("recommend/icon_recommend.png");
         return ResultGenerator.genSuccessResult(configDataResponse);

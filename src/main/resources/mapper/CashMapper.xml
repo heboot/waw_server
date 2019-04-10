@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waw.hr.dao.CashMapper">
+
+
+    <select id="cashList" resultMap="CashLogMap">
+
+        SELECT * FROM tb_cash_log
+
+        <if test="cashed != null">
+            status == 2;
+        </if>
+
+
+    </select>
+
+    <select id="recommendList" resultMap="CashLogMap">
+
+        SELECT * FROM tb_recommend
+
+        <if test="cashed != null">
+            status == 1;
+        </if>
+
+
+    </select>
+
+    <insert id="addCashBalanceLog">
+
+        INSERT INTO tb_balance_log (uid,money,type,remark,create_time) VALUES (#{uid},#{money},#{type},#{remark},#{createTime})
+
+    </insert>
+
+    <update id="updateEmployeeCashLogStatus">
+
+        UPDATE tb_cash_log SET status = 1 WHERE id = #{cashId}
+
+    </update>
+
+
+    <resultMap type="com.waw.hr.entity.CashLogModel"
+               id="CashLogMap">
+
+
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+        <result property="status" column="status"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="createTime" column="create_time"></result>
+
+        <association column="uid" property="employeeModel"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeById">
+        </association>
+
+        <association column="uid" property="bankModel"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeBankInfoById">
+        </association>
+    </resultMap>
+
+
+    <resultMap type="com.waw.hr.entity.RecommendUser"
+               id="RecommendLogMap">
+
+
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"></result>
+        <result property="name" column="name"></result>
+        <result property="mobile" column="mobile"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="moneyStatus" column="money_status"></result>
+        <association column="uid" property="employeeModel"
+                     select="com.waw.hr.dao.EmployeeMapper.getEmployeeById">
+        </association>
+
+
+    </resultMap>
+
+
+</mapper>

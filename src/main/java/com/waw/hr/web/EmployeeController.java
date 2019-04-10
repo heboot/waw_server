@@ -662,7 +662,7 @@ public class EmployeeController {
             if (employeeService.selectLastCashLog(JWTUtil.getUserId(token))) {
                 // TODO: 2019/4/9  可以提现 插入记录
                 if (employeeService.insertCashLog(JWTUtil.getUserId(token), employeeModel.getBalance()) > 0) {
-                    return ResultGenerator.genSuccessResult("申请成功，预计2个工作日到账");
+                    return ResultGenerator.genSuccessResult("申请成功，预计2个工作日到账", null);
                 }
                 return ResultGenerator.genFailResult(MValue.MESSAGE_FOLLOW_FAIL);
             } else {
@@ -728,25 +728,6 @@ public class EmployeeController {
         return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
     }
 
-    /**
-     * 更新用户提现记录 为已打款
-     */
-    @PostMapping("/updateEmployeeCashLogStatus")
-    public Result updateEmployeeCashLogStatus(
-            @RequestParam String token,
-            @RequestParam String employeeId,
-            @RequestParam String cashId) {
 
-        if (!JWTUtil.verify(token, JWTUtil.getUsername(token), CommonValue.SECRET)) {
-            return ResultGenerator.genFailResult(MValue.MESSAGE_TOKEN_ERROR, UNAUTHORIZED);
-        }
-
-
-        if (result > 0) {
-            return ResultGenerator.genSuccessResult("发送成功", null);
-        }
-
-        return ResultGenerator.genFailResult(MValue.MESSAGE_ROLE_ERROR);
-    }
 
 }

@@ -39,4 +39,8 @@ public class MValue {
     public static final String MESSAGE_RECOMMEND_MOBILE_ED = "这个手机号已被推荐过了";
 
     public static final String MESSAGE_FEEDBACK_SUC = "反馈成功";
+
+
+    public static final String MESSAGE_CASH_BALANCE_ERROR = "用户余额不足";
+
 }

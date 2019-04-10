@@ -1,5 +1,6 @@
 package com.waw.hr.entity;
 
+import com.waw.hr.model.EmployeeModel;
 import com.waw.hr.utils.DateUtil;
 
 import javax.persistence.Table;
@@ -19,14 +20,27 @@ public class RecommendUser {
 
     private String createTime;
 
+    private int moneyStatus;
+
     @Transient
-    private Integer joinStatus;
+    private Integer joinStatus = 0;
 
     @Transient
     private String joinTime;
 
     @Transient
     private int joinDays;
+
+    @Transient
+    private EmployeeModel employeeModel;
+
+    public EmployeeModel getEmployeeModel() {
+        return employeeModel;
+    }
+
+    public void setEmployeeModel(EmployeeModel employeeModel) {
+        this.employeeModel = employeeModel;
+    }
 
     public String getJoinTime() {
         return joinTime;
@@ -99,5 +113,11 @@ public class RecommendUser {
         this.uid = uid;
     }
 
+    public int getMoneyStatus() {
+        return moneyStatus;
+    }
 
+    public void setMoneyStatus(int moneyStatus) {
+        this.moneyStatus = moneyStatus;
+    }
 }

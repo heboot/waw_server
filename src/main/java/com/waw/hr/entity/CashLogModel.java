@@ -1,6 +1,9 @@
 package com.waw.hr.entity;
 
+import com.waw.hr.model.EmployeeModel;
+
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "tb_cash_log")
 public class CashLogModel {
@@ -16,6 +19,28 @@ public class CashLogModel {
     private String updateTime;
 
     private String createTime;
+
+    @Transient
+    private EmployeeModel employeeModel;
+
+    @Transient
+    private EmployeeBank bankModel;
+
+    public EmployeeBank getBankModel() {
+        return bankModel;
+    }
+
+    public void setBankModel(EmployeeBank bankModel) {
+        this.bankModel = bankModel;
+    }
+
+    public EmployeeModel getEmployeeModel() {
+        return employeeModel;
+    }
+
+    public void setEmployeeModel(EmployeeModel employeeModel) {
+        this.employeeModel = employeeModel;
+    }
 
     public int getId() {
         return id;

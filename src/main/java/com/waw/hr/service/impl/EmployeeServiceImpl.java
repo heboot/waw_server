@@ -3,6 +3,7 @@ package com.waw.hr.service.impl;
 import com.waw.hr.CommonValue;
 import com.waw.hr.core.*;
 import com.waw.hr.dao.AdminUserMapper;
+import com.waw.hr.dao.CashMapper;
 import com.waw.hr.dao.EmployeeMapper;
 import com.waw.hr.entity.*;
 import com.waw.hr.model.AdminUserModel;
@@ -30,6 +31,7 @@ public class EmployeeServiceImpl extends AbstractService<Employee> implements Em
 
     @Autowired
     private BarcodeUtil2 barcodeUtil2;
+
 
 
     @Override
